@@ -20,24 +20,24 @@ def setup_exploration_tools(session_id: str = "default") -> ToolRegistry:
     
     # DOM extraction tools
     registry.register(dom_tools.extract_dom_tree)
-    registry.register(dom_tools.extract_interactive_elements)
-    registry.register(dom_tools.extract_accessibility_tree)
-    registry.register(dom_tools.detect_page_sections)
-    registry.register(dom_tools.detect_technologies)
+    # registry.register(dom_tools.extract_interactive_elements)
+    # registry.register(dom_tools.extract_accessibility_tree)
+    # registry.register(dom_tools.detect_page_sections)
+    # registry.register(dom_tools.detect_technologies)
     
     # Visual analysis tools
-    registry.register(visual_tools.take_full_page_screenshot)
-    registry.register(visual_tools.take_element_screenshot)
-    registry.register(visual_tools.extract_visual_layout)
-    registry.register(visual_tools.detect_visual_groups)
-    registry.register(visual_tools.analyze_element_visibility)
+    # registry.register(visual_tools.take_full_page_screenshot)
+    # registry.register(visual_tools.take_element_screenshot)
+    # registry.register(visual_tools.extract_visual_layout)
+    # registry.register(visual_tools.detect_visual_groups)
+    # registry.register(visual_tools.analyze_element_visibility)
     
     # Interactive exploration tools
-    registry.register(interactive_tools.explore_clickable_elements)
-    registry.register(interactive_tools.detect_dynamic_content)
-    registry.register(interactive_tools.detect_interaction_flows)
-    registry.register(interactive_tools.explore_hover_effects)
-    registry.register(interactive_tools.test_interactive_element)
+    # registry.register(interactive_tools.explore_clickable_elements)
+    # registry.register(interactive_tools.detect_dynamic_content)
+    # registry.register(interactive_tools.detect_interaction_flows)
+    # registry.register(interactive_tools.explore_hover_effects)
+    # registry.register(interactive_tools.test_interactive_element)
     
     logger.info(f"✅ Registered {len(registry._tools)} exploration tools")
     return registry

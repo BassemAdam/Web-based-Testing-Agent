@@ -27,7 +27,7 @@ class ElementCandidate(BaseModel):
     element_type: str = Field(..., description="Type of element: button, input, link, form, etc.")
     
     # Multiple locator strategies (for self-healing)
-    locators: Dict[str, str] = Field(
+    locators: Dict[str, Any] = Field(
         default_factory=dict,
         description="Multiple ways to find this element: css, xpath, text, role, etc."
     )

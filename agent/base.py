@@ -68,10 +68,12 @@ class Agent(ABC):
 
     # LLM WRAPPER
     @observe(name="llm-call", as_type="generation")
-    def llm_generate(self, state: BaseAgentState):
+    def llm_generate(self, state: BaseAgentState, tools: list = None):
         # TODO: wrap code to generate from llm -- self.tool_registry.to_client_tools to convert to client format
         try:
-            tools = self.tool_registry.to_client_tools(self.llm.config.provider)
+            if tools is None:
+                tools = self.tool_registry.to_client_tools(self.llm.config.provider)
+            
             response = self.llm.generate(state.messages, tools=tools)
             return response
         except Exception as error:

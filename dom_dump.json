@@ -1,0 +1,848 @@
+{
+  "tag": "body",
+  "id": null,
+  "classes": [
+    "d-flex",
+    "flex-column",
+    "min-vh-100"
+  ],
+  "attributes": {},
+  "text": null,
+  "children": [
+    {
+      "tag": "noscript",
+      "id": null,
+      "classes": [],
+      "attributes": {},
+      "text": "<iframe b-c6774jch2u src=\"https://www.googletagmanager.com/ns.html?id=GTM-WCB7CTR4\" height=\"0\" width=\"0\" style=\"display:none;visibility:hidden\"></iframe>",
+      "children": []
+    },
+    {
+      "tag": "header",
+      "id": null,
+      "classes": [],
+      "attributes": {},
+      "text": null,
+      "children": [
+        {
+          "tag": "nav",
+          "id": "main-navbar",
+          "classes": [
+            "navbar",
+            "navbar-expand-md",
+            "mt-3"
+          ],
+          "attributes": {},
+          "text": null,
+          "children": [
+            {
+              "tag": "div",
+              "id": null,
+              "classes": [
+                "container",
+                "px-3",
+                "py-2",
+                "d-flex",
+                "flex-row",
+                "align-items-center"
+              ],
+              "attributes": {},
+              "text": null,
+              "children": [
+                {
+                  "tag": "a",
+                  "id": null,
+                  "classes": [
+                    "navbar-brand",
+                    "nav-icon",
+                    "d-md-flex",
+                    "align-items-center",
+                    "me-3"
+                  ],
+                  "attributes": {
+                    "href": "/"
+                  },
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "img",
+                      "id": null,
+                      "classes": [
+                        "icon-style"
+                      ],
+                      "attributes": {
+                        "src": "/Images/logo-light-mode.svg"
+                      },
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "button",
+                  "id": null,
+                  "classes": [
+                    "navbar-toggler",
+                    "d-md-none",
+                    "ms-auto"
+                  ],
+                  "attributes": {
+                    "type": "button",
+                    "aria-label": "Toggle navigation"
+                  },
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "span",
+                      "id": null,
+                      "classes": [
+                        "navbar-toggler-icon"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "id": "mobileMenu",
+                  "classes": [
+                    "collapse",
+                    "d-md-none",
+                    "mt-2"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "ul",
+                      "id": null,
+                      "classes": [
+                        "navbar-nav",
+                        "w-100"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "ul",
+                  "id": null,
+                  "classes": [
+                    "d-none",
+                    "d-md-flex",
+                    "navbar-nav",
+                    "ms-auto",
+                    "align-items-center"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "li",
+                      "id": null,
+                      "classes": [
+                        "nav-item",
+                        "nav-icon",
+                        "me-3"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    },
+                    {
+                      "tag": "li",
+                      "id": null,
+                      "classes": [
+                        "nav-item",
+                        "me-3"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "tag": "main",
+      "id": null,
+      "classes": [
+        "container",
+        "flex-grow-1",
+        "main-content"
+      ],
+      "attributes": {
+        "role": "main"
+      },
+      "text": null,
+      "children": [
+        {
+          "tag": "link",
+          "id": null,
+          "classes": [],
+          "attributes": {
+            "href": "/css/WelcomePage/Welcome.css?v=AKtFNj95Jl7L-yU6ASnI16tSRKTfdAziYWoOHbohCuw"
+          },
+          "text": null,
+          "children": []
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "background-wrapper",
+            "background-wrapper-main"
+          ],
+          "attributes": {},
+          "text": null,
+          "children": []
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "background-wrapper",
+            "background-wrapper-layer"
+          ],
+          "attributes": {},
+          "text": null,
+          "children": []
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "layer1-wrapper"
+          ],
+          "attributes": {},
+          "text": null,
+          "children": []
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "content-wrapper"
+          ],
+          "attributes": {},
+          "text": null,
+          "children": [
+            {
+              "tag": "div",
+              "id": null,
+              "classes": [
+                "container",
+                "hero-content",
+                "mb-2"
+              ],
+              "attributes": {},
+              "text": null,
+              "children": [
+                {
+                  "tag": "div",
+                  "id": null,
+                  "classes": [
+                    "hero-text"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "h2",
+                      "id": null,
+                      "classes": [
+                        "hero-title"
+                      ],
+                      "attributes": {},
+                      "text": "Fully Managed Coastal Rentals",
+                      "children": []
+                    },
+                    {
+                      "tag": "p",
+                      "id": null,
+                      "classes": [
+                        "hero-subtitle"
+                      ],
+                      "attributes": {},
+                      "text": "Discover Premium villas, Chalets, and studios in the finest compounds, where every detail is taken care of.",
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "link",
+                  "id": null,
+                  "classes": [],
+                  "attributes": {
+                    "href": "https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+                  },
+                  "text": null,
+                  "children": []
+                },
+                {
+                  "tag": "script",
+                  "id": null,
+                  "classes": [],
+                  "attributes": {
+                    "src": "https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"
+                  },
+                  "text": null,
+                  "children": []
+                },
+                {
+                  "tag": "div",
+                  "id": null,
+                  "classes": [
+                    "container"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "form",
+                      "id": "searchBarForm",
+                      "classes": [
+                        "search-bar"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "link",
+                  "id": null,
+                  "classes": [],
+                  "attributes": {
+                    "href": "https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+                  },
+                  "text": null,
+                  "children": []
+                },
+                {
+                  "tag": "script",
+                  "id": null,
+                  "classes": [],
+                  "attributes": {
+                    "src": "https://cdn.jsdelivr.net/npm/flatpickr"
+                  },
+                  "text": null,
+                  "children": []
+                },
+                {
+                  "tag": "script",
+                  "id": null,
+                  "classes": [],
+                  "attributes": {
+                    "src": "https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/ar.js"
+                  },
+                  "text": null,
+                  "children": []
+                },
+                {
+                  "tag": "script",
+                  "id": null,
+                  "classes": [],
+                  "attributes": {},
+                  "text": "document.addEventListener('DOMContentLoaded', async function () {\n        // Get URL parameters to populate form fields\n        const urlParams = new URLSearchParams(window.location.search);\n\n        const areaIdParam = urlParams.get('commonFilter.AreaId');\n        // Fetch location dropdown areas\n        const select = document.getElementById(\"location\");\n\n        try {\n            const response = await fetch(\"/api/areas\");\n            if (!response.ok) throw new Error(\"Failed to fetch areas\");\n\n            const areas = await response.json();\n            areas.forEach(area => {\n                const option = document.createElement(\"option\");\n                option.value = area.id;\n                option.textContent = area.name;\n                if (areaIdParam && area.id.toString() === areaIdParam) {\n                    option.selected = true;\n                }\n                select.appendChild(option);\n            });\n            // Initialize Choices.js after options are populated\n            if (window.locationChoices) {\n                window.locationChoices.destroy();\n            }\n            window.locationChoices = new Choices(select, {\n                searchEnabled: false,\n                itemSelectText: '',\n                shouldSort: false,\n                placeholder: true,\n                placeholderValue: 'select-location',\n                classNames: {\n                    containerOuter: 'choices-custom-location'\n                }\n            });\n\n            if (areaIdParam) {\n                window.locationChoices.setChoiceByValue(areaIdParam);\n            } \n        } catch (error) {\n            console.error(\"Error loading areas:\", error);\n        }\n\n        function updateHiddenFields() {\n            // Set values to empty string when value is null (dash state), otherwise set the actual value\n            document.getElementById('hiddenAdults').value = counters.adults.value !== null ? counters.adults.value : '';\n            document.getElementById('hiddenChildren').value = counters.children.value !== null ? counters.children.value : '';\n            document.getElementById('hiddenRooms').value = counters.rooms.value !== null ? counters.rooms.value : '';\n        }\n\n        const petsToggle = document.getElementById('petsToggle');\n        const hiddenPets = document.getElementById('hiddenPetsAllowed');\n\n        // Populate pets toggle from URL\n        const petsParam = urlParams.get('commonFilter.PetsAllowed');\n        if (petsParam === 'true') {\n            petsToggle.checked = true;\n            hiddenPets.value = 'true';\n        }\n\n        petsToggle.addEventListener('change', function () {\n            hiddenPets.value = petsToggle.checked ? 'true' : 'false';\n        });\n\n        // Custom dropdown with counters\n        const dropdown = document.getElementById('guestDropdown');\n        const optionsDisplay = document.getElementById('optionsDisplay');\n\n        const counters = {\n            adults: {\n                elem: document.getElementById('adultsCount'),\n                value: null,\n                min: null,\n                max: null,\n                hasInteracted: false\n            },\n            children: {\n                elem: document.getElementById('childrenCount'),\n                value: null,\n                min: null,\n                max: null,\n                hasInteracted: false\n            },\n            rooms: {\n                elem: document.getElementById('roomsCount'),\n                value: null,\n                min: null,\n                max: null,\n                hasInteracted: false\n            }\n        };\n\n        // Populate counters from URL parameters\n        const adultsParam = urlParams.get('commonFilter.Adults');\n        const childrenParam = urlParams.get('commonFilter.Children');\n        const roomsParam = urlParams.get('commonFilter.Rooms');\n\n        if (adultsParam && adultsParam !== '') {\n            const adultsValue = parseInt(adultsParam);\n            if (!isNaN(adultsValue) && adultsValue > 0) {\n                counters.adults.value = adultsValue;\n                counters.adults.hasInteracted = true;\n            }\n        }\n\n        if (childrenParam && childrenParam !== '') {\n            const childrenValue = parseInt(childrenParam);\n            if (!isNaN(childrenValue) && childrenValue > 0) {\n                counters.children.value = childrenValue;\n                counters.children.hasInteracted = true;\n            }\n        }\n\n        if (roomsParam && roomsParam !== '') {\n            const roomsValue = parseInt(roomsParam);\n            if (!isNaN(roomsValue) && roomsValue > 0) {\n                counters.rooms.value = roomsValue;\n                counters.rooms.hasInteracted = true;\n            }\n        }\n\n        Object.keys(counters).forEach(key => {\n            const counter = counters[key];\n            counter.elem.textContent = counter.value !== null ? counter.value : '\u2014';\n        });\n\n        function updateSelectText() {\n            const {adults, children, rooms} = counters;\n            const adultsText = adults.value !== null ? adults.value : '\u2014';\n            const childrenText = children.value !== null ? children.value : '\u2014';\n            const roomsText = rooms.value !== null ? rooms.value : '\u2014';\n            const htmlLang = document.documentElement.lang.toLowerCase();\n            const isArabic = htmlLang.split(\"-\")[0] === 'ar';\n            var text = `${adultsText} Adults, ${childrenText} Children, ${roomsText} Bedroom${rooms.value !== 1 ? 's' : ''}`;\n            if (isArabic) {\n                text = `${adultsText} \u0628\u0627\u0644\u063a\u0648\u0646, ${childrenText} \u0627\u0637\u0641\u0627\u0644, ${roomsText} \u063a\u0631\u0641 \u0646\u0648\u0645${rooms.value !== 1 ? '' : '\u0629'}`;\n            }\n\n            optionsDisplay.textContent = text;\n        }\n\n        updateSelectText();\n        updateHiddenFields();\n\n        optionsDisplay.addEventListener('click', function (e) {\n            e.preventDefault();\n            e.stopPropagation();\n            dropdown.classList.toggle('dropdown-open');\n        });\n\n        document.addEventListener('click', function (e) {\n            if (!dropdown.contains(e.target)) {\n                dropdown.classList.remove('dropdown-open');\n            }\n        });\n\n        // Counter logic\n        document.querySelectorAll('.counter-btn').forEach(btn => {\n            btn.addEventListener('click', function () {\n                const row = this.closest('.option-row');\n                const optionNameElement = row.querySelector('.option-name');\n                const counterType = optionNameElement.getAttribute('data-counter');\n                const isPlus = this.classList.contains('plus');\n\n                if (counterType && counters[counterType]) {\n                    const counter = counters[counterType];\n\n                    if (isPlus) {\n                        // First interaction: set to 1, then increment normally\n                        if (counter.value === null) {\n                            counter.value = 1;\n                            counter.hasInteracted = true;\n                        } else {\n                            counter.value++;\n                        }\n                    } else {\n                        // Minus button\n                        if (counter.value === null) {\n                            // Do nothing if it's null and user presses minus\n                            return;\n                        }\n                        if (counter.value > 1) {\n                            counter.value--;\n                        } else if (counter.value === 1) {\n                            // If it reaches 1 and user presses minus, go back to null (dash)\n                            counter.value = null;\n                            counter.hasInteracted = false;\n                        }\n                    }\n\n                    // Update display\n                    counter.elem.textContent = counter.value !== null ? counter.value : '\u2014';\n                    updateSelectText();\n                    updateHiddenFields();\n                }\n            });\n        });\n\n    window.calendar = new CustomCalendar();\n    window.calendar.init();\n    const checkInParam = urlParams.get('checkInStr');\n    const checkOutParam = urlParams.get('checkOutStr');\n    const flexibilityParam = urlParams.get('commonFilter.FlexibilityInDays') || '0';\n\n    if (checkInParam && checkOutParam) {\n        window.calendar.setDates(checkInParam, checkOutParam, parseInt(flexibilityParam));\n    }\n        // Open calendar when date inputs are clicked\n    document.querySelectorAll('.date-group').forEach(group => {\n        group.addEventListener('click', function () {\n            window.calendar.open();\n        });\n    });\n    });\n        document.getElementById(\"searchBarForm\")?.addEventListener(\"submit\", function (e) {\n        e.preventDefault();\n        handleUnifiedSubmit(this, document.getElementById(\"filtersForm\"));\n    });",
+                  "children": []
+                },
+                {
+                  "tag": "style",
+                  "id": null,
+                  "classes": [],
+                  "attributes": {},
+                  "text": "/* Style for the outer container */\n    .choices-custom-location {\n        border: 1px solid transparent !important; /* Set border color to transparent */\n        border-radius: 8px; /* Add rounded corners */\n        max-width: 300px; /* Limit the width */\n        padding: 1px 2px; /* Adjust padding */\n        background: transparent; /* Ensure background is transparent */\n        box-shadow: none; /* Remove any shadow */\n        color: white; /* Set text color to white */\n        height: 30px; /* Set a fixed height (adjust as needed) */\n        overflow: hidden; /* Prevent content overflow */\n        outline: none; /* Remove focus outline */\n    }\n\n    /* Style for the dropdown container */\n    .choices-custom-location .choices__inner {\n        border: none !important; /* Remove the border */\n        box-shadow: none !important; /* Remove any shadow */\n        background: transparent !important; /* Ensure background is transparent */\n        padding: 4px 8px !important; /* Reduce padding */\n        line-height: 1 !important; /* Adjust line height */\n        font-size: 12px !important; /* Reduce font size */\n        color: white !important; /* Set text color to white */\n        height: auto !important; /* Ensure height adjusts to content */\n    }\n\n    /* Style for the placeholder text */\n    .choices-custom-location .choices__placeholder {\n        color: #6c757d !important; /* Muted gray/black */\n        background: transparent !important; /* Transparent background */\n        font-size: 13px !important; /* Font size for placeholder */\n        margin: 2px !important; /* Remove margin */\n        padding: 2px !important; /* Remove padding */\n    }\n\n    /* Override placeholder color */\n    .choices-custom-location .choices__placeholder {\n        color: #1722FF !important; /* Blue color for placeholder */\n        background: transparent !important; /* Transparent background */\n        font-size: 13px !important; /* Font size for placeholder */\n    }\n\n    /* Style for selected item and placeholder */\n    .choices-custom-location .choices__placeholder,\n    .choices-custom-location .choices__item--selectable.is-selected {\n        color: #333333 !important; /* Gray color for selected item and placeholder */\n        background: transparent !important; /* Transparent background */\n    }\n\n        .choices-custom-location .choices__item--selectable {\n            text-align: justify;\n            color: #000 !important;\n            font-weight: normal !important;\n        }\n    /* Style for the dropdown list */\n    .choices-custom-location .choices__list--dropdown,\n    .choices-custom-location .choices__list[aria-expanded] {\n        border-radius: 24px; /* Rounded corners */\n        background-color: #f8f5ef; /* Light beige background */\n        border: 1.5px solid #CBC3B4; /* Light gray border */\n        font-size: 18px; /* Font size for dropdown items */\n        min-width: 260px; /* Minimum width for dropdown */\n        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08); /* Subtle shadow */\n        padding: 8px 0; /* Padding for dropdown */\n        z-index: 1000; /* Ensure dropdown appears above other elements */\n    }\n\n    /* Style for selectable items in the dropdown */\n    .choices-custom-location .choices__item--selectable {\n        padding: 1px 4px; /* Reduce padding */\n        line-height: 1; /* Adjust line height */\n        font-size: 13px; /* Font size for items */\n        color: #000; /* Black text color */\n        border-radius: 16px; /* Rounded corners for items */\n        font-weight: bold; /* Bold text */\n        background: transparent; /* Transparent background */\n        transition: background 0.2s, color 0.2s; /* Smooth transition for hover effects */\n    }\n\n    /* Hover and highlight styles for selectable items */\n    .choices-custom-location .choices__item--selectable.is-highlighted,\n    .choices-custom-location .choices__item--selectable:hover {\n        background-color: #e9e1d3; /* Light beige background on hover */\n        color: #000; /* Black text color */\n    }\n\n    /* Reset styles for the closed select dropdown */\n    .choices-custom-location .choices__inner {\n        background: transparent !important; /* Transparent background */\n        border: none !important; /* Remove border */\n        border-radius: 0 !important; /* Remove border radius */\n        box-shadow: none !important; /* Remove shadow */\n        font-size: inherit !important; /* Inherit font size */\n        color: inherit !important; /* Inherit text color */\n        padding: 0 !important; /* Remove padding */\n    }\n\n    #choices--location-item-choice-1{\n        display: none !important;   \n    }",
+                  "children": []
+                },
+                {
+                  "tag": "style",
+                  "id": null,
+                  "classes": [],
+                  "attributes": {},
+                  "text": "/* Search Bar Container */\n    .search-container {\n        max-width: 1400px;\n        margin: 0 auto;\n        padding: 0 20px;\n        box-sizing: border-box;\n    }\n\n    /* Main Search Bar Styles */\n    .search-bar {\n        background-color: white;\n        border-radius: 50px;\n        padding: 20px 30px;\n        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);\n        display: flex;\n        align-items: center;\n        justify-content: space-between;\n        flex-wrap: wrap;\n        gap: 14px;\n        max-width: 100%;\n        box-sizing: border-box;\n        direction: ltr;\n    }\n\n    html[dir=\"rtl\"] .search-bar {\n        direction: rtl;\n    }\n\n    /* Search Group Elements */\n    .search-group {\n        display: flex;\n        align-items: center;\n        flex: 1 1 160px;\n        min-width: 120px;\n        gap: 10px;\n        position: relative;\n        border-radius: 12px!important;\n    }\n\n    .search-icon {\n        width: 22px;\n        height: 22px;\n        flex-shrink: 0;\n    }\n\n    .search-content {\n        display: flex;\n        flex-direction: column;\n        flex: 1;\n        gap: 5px;\n    }\n\n    /* Labels and Inputs */\n    .search-bar label {\n        font-size: 14px;\n        font-weight: 600;\n        color: var(--primary-blue-color);\n        white-space: nowrap;\n        margin-inline-start: 15px;\n    }\n\n    html[dir=\"rtl\"] .search-bar label {\n        margin-inline-start: 0;\n        margin-inline-end: 15px;\n        text-align: right;\n    }\n\n    .search-bar select,\n    .search-bar input {\n        padding: 8px 1px 9px 11px;\n        border: none;\n        font-size: 13px;\n        background-color: transparent;\n        color: #333;\n        min-width: 110px;\n        outline: none;\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n        cursor: pointer;\n    }\n\n    html[dir=\"rtl\"] .search-bar input,\n    html[dir=\"rtl\"] .search-bar select,\n    html[dir=\"rtl\"] .search-bar h5 {\n        text-align: right;\n        direction: rtl;\n    }\n\n    .search-bar select option,\n    .search-bar input::placeholder {\n        white-space: nowrap;\n        overflow: hidden;\n        text-overflow: ellipsis;\n    }\n\n    /* Date Picker Inputs */\n    .flatpickr-input {\n        background: transparent;\n        border: none;\n        color: #333;\n        font-size: 13px;\n        padding: 9px 1px 10px 12px;\n        width: 100%;\n        cursor: pointer;\n    }\n\n    html[dir=\"rtl\"] .flatpickr-input {\n        text-align: right;\n        direction: rtl;\n    }\n\n    /* Search Button */\n    .search-bar button {\n        background-color: var(--primary-blue-color);\n        color: white;\n        border: none;\n        padding: 0px 20px;\n        border-radius: 10px;\n        font-size: 15px;\n        font-weight: 500;\n        white-space: nowrap;\n        display: flex;\n        align-items: center;\n        justify-content: center;\n        height: 38px;\n        flex-shrink: 0;\n        margin: 0;\n        align-self: center;\n        cursor: pointer;\n        transition: background-color 0.3s ease;\n    }\n\n    .search-bar button:hover {\n        background-color: #004d52;\n    }\n\n\n    /* Separator */\n    .separator {\n        height: 70px;\n        width: 1px;\n        background-color: #8CBED1;\n        flex-shrink: 0;\n    }\n\n    /* Dropdown Styles */\n    .dropdown-content {\n        display: none;\n        position: absolute;\n        top: calc(100% + 5px);\n        left: 0;\n        width: 300px;\n        border-radius: 8px;\n        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);\n        z-index: 100;\n        overflow: hidden;\n        background-color: #F5F2ED;\n        border: 1px solid #CBC3B4;\n    }\n\n    html[dir=\"rtl\"] .dropdown-content {\n        left: auto;\n        right: 0;\n    }\n\n    .dropdown-open .dropdown-content {\n        display: block;\n    }\n\n    /* Dropdown Options */\n    .option-row {\n        display: flex;\n        justify-content: space-between;\n        align-items: center;\n        padding: 12px 16px;\n        border-bottom: 1px solid #eee;\n        direction: inherit;\n    }\n\n    .option-row:last-child {\n        border-bottom: none;\n    }\n\n    .option-label {\n        display: flex;\n        flex-direction: column;\n        flex: 1;\n    }\n\n    html[dir=\"rtl\"] .option-label {\n        text-align: right;\n    }\n\n    .option-name {\n        font-weight: 500;\n        font-size: 14px;\n        margin-bottom: 2px;\n        color: #333;\n    }\n\n    .option-description {\n        font-size: 12px;\n        color: #666;\n    }\n\n    /* Counter Styles */\n    .counter {\n        display: flex;\n        align-items: center;\n        flex-shrink: 0;\n    }\n\n    html[dir=\"rtl\"] .counter {\n\n        /* Calendar Weekend Day: Blueish Color */\n\n        .search-calendar-day.weekend {\n            color: #1976d2; /* Material Blue 700 */\n            background-color: #e3f2fd; /* Light blue background */\n            font-weight: 600;\n        }\n\n        flex-direction: row-reverse;\n    }\n\n    .counter-btn {\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        width: 28px;\n        height: 28px;\n        border-radius: 50%;\n        border: 1px solid #006064;\n        background-color: white;\n        color: #006064;\n        font-size: 16px;\n        cursor: pointer;\n        user-select: none;\n        transition: all 0.2s ease;\n        min-height: 44px;\n        min-width: 44px;\n    }\n\n    .counter-btn:hover {\n        background-color: #006064;\n        color: white;\n    }\n\n    .counter-value {\n        width: 30px;\n        text-align: center;\n        font-size: 14px;\n        color: #000000;\n    }\n\n    /* Toggle Switch */\n    .toggle-switch {\n        position: relative;\n        display: inline-block;\n        width: 48px;\n        height: 24px;\n        flex-shrink: 0;\n        margin-left: auto;\n    }\n\n    html[dir=\"rtl\"] .toggle-switch {\n        margin-left: 0;\n        margin-right: auto;\n    }\n\n    .toggle-switch input {\n        opacity: 0;\n        width: 0;\n        height: 0;\n    }\n\n    .toggle-slider {\n        position: absolute;\n        cursor: pointer;\n        top: 0;\n        left: 0;\n        right: 0;\n        bottom: 0;\n        background-color: #ccc;\n        transition: .4s;\n        border-radius: 24px;\n    }\n\n    .toggle-slider:before {\n        position: absolute;\n        content: \"\";\n        height: 20px;\n        width: 20px;\n        left: 2px;\n        bottom: 2px;\n        background-color: white;\n        transition: .4s;\n        border-radius: 50%;\n    }\n\n    html[dir=\"rtl\"] .toggle-slider:before {\n        left: auto;\n        right: 2px;\n    }\n\n    input:checked + .toggle-slider {\n        background-color: #207d9c;\n    }\n\n    input:checked + .toggle-slider:before {\n        transform: translateX(24px);\n    }\n\n    html[dir=\"rtl\"] input:checked + .toggle-slider:before {\n        transform: translateX(-24px);\n    }\n\n    .date-input-group input {\n        width: 100%;\n        padding: 30px 16px 12px;\n        border: 2px solid #e0e0e0;\n        border-radius: 8px;\n        font-size: 14px;\n        font-weight: bold;\n        color: #000;\n        background: #f8f9fa;\n        line-height: 1.2;\n        box-sizing: border-box;\n        height: 32px;\n    }\n    .date-input-group label {\n        position: absolute;\n        top: 8px;\n        left: 12px;\n        font-size: 11px;\n        font-weight: 600;\n        color: #207d9c;\n        background: white;\n        padding: 0 4px;\n        z-index: 2;\n        line-height: 1;\n        margin-bottom: 4px;\n        margin-inline-start: 0px;\n    }\n\n    .date-input-group {\n        flex: 1;\n        position: relative;\n        padding: 0 !important;\n        margin: 0 !important;\n    }\n\n    /* Options Display */\n    #optionsDisplay {\n        padding: 4px 6px;\n        color: #333;\n        font-size: 11px;\n        cursor: pointer;\n        min-height: 40px;\n        display: flex;\n        align-items: center;\n        text-wrap: auto;\n    }\n    /* Keep desktop behavior unchanged by making wrapper transparent to layout */\n    .date-row { display: contents; }\n    @media (min-width: 1200px) {\n        .search-group\n\n    {\n        flex: 1 1 0;\n        min-width: 160px;\n    }\n\n    .location-group {\n        flex: 1.5 1 0;\n    }\n\n    .guests-group {\n        flex: 1.2 1 0;\n    }\n\n    }\n\n    #searchBarForm h5 {\n        width: 100%;\n        margin-left: 0;\n        margin-right: auto; /* pushes it to the left */\n    }\n\n\n    @media (max-width: 1199px) and (min-width: 992px) {\n        .search-bar\n\n    {\n        padding: 18px 25px;\n    }\n\n    .search-group {\n        min-width: 140px;\n    }\n\n    .separator {\n        height: 60px;\n    }\n\n    }\n\n    /* Tablet Layout (768px - 991px) */\n    @media (max-width: 991px) and (min-width: 768px) {\n        .search-bar\n\n    {\n        flex-wrap: wrap;\n        padding: 15px 20px;\n        gap: 12px;\n    }\n\n    .search-group {\n        flex: 1 1 45%;\n        min-width: 45%;\n        max-width: 45%;\n        margin-bottom: 8px;\n    }\n\n    .location-group,\n    .guests-group {\n        flex: 1 1 100%;\n        max-width: 100%;\n    }\n\n    .separator {\n        display: none;\n    }\n\n    .search-btn {\n        width: 100%;\n        margin-top: 10px;\n    }\n\n    }\n\n    @media (max-width: 910px) {\n        .search-content {\n            border: 1px solid #54A8BD;\n            border-radius: 12px;\n            padding: 8px;\n        }\n    }\n    @media (max-width: 767px) {\n        .search-bar\n\n    {\n        flex-direction: column;\n        border-radius: 20px;\n        padding: 15px;\n        gap: 10px;\n    }\n\n\n    .search-group {\n        width: 100%;\n        min-width: 100%;\n        max-width: 100%;\n        padding: 8px 0;\n    }\n\n    .search-content {\n        width: 100%;\n    }\n\n    .search-bar input,\n    .search-bar select {\n        width: 100%;\n        font-size: 16px;\n        padding: 12px 15px;\n    }\n\n    .search-btn {\n        width: 100%;\n        height: 48px;\n        margin-top: 10px;\n    }\n\n    .dropdown-content {\n        width: calc(100vw - 30px);\n        left: 0;\n        right: 0;\n        transform: translateX(-15px);\n    }\n\n    html[dir=\"rtl\"] .dropdown-content {\n        left: auto;\n        right: 0;\n        transform: translateX(15px);\n    }\n\n    .counter-btn {\n        min-width: 44px;\n        min-height: 44px;\n    }\n\n    .search-icon {\n        width: 24px;\n        height: 24px;\n    }\n\n    }\n    @media (max-width: 910px) {\n        .search-icon\n\n    {\n        display: none !important;\n    }\n    label {\n            color: #595752 !important;\n    }\n    }\n\n    @media (max-width: 480px) {\n        .container\n\n    {\n        padding: 0 10px;\n    }\n\n    .search-bar {\n        padding: 12px;\n        border-radius: 15px;\n    }\n\n    .search-group {\n        padding: 6px 0;\n    }\n\n    .dropdown-content {\n        width: calc(100vw - 24px);\n        transform: translateX(-12px);\n    }\n\n    html[dir=\"rtl\"] .dropdown-content {\n        transform: translateX(12px);\n    }\n\n    }\n    @media (max-width: 767px) {\n        .custom-calendar-container\n\n    {\n        width: 95%;\n        max-width: 95%;\n        border-radius: 16px;\n    }\n\n    .calendar-months {\n        flex-direction: column;\n        gap: 20px;\n    }\n\n    .date-inputs-row {\n        flex-direction: column;\n        gap: 12px;\n    }\n\n    .month-title {\n        font-size: 16px;\n    }\n\n    .flexibility-buttons {\n        justify-content: flex-start;\n        overflow-x: auto;\n        padding-bottom: 8px;\n    }\n\n    .flex-btn {\n        flex-shrink: 0;\n    }\n\n    }\n\n    @media (max-width: 480px) {\n        .custom-calendar-container\n\n    {\n        width: 98%;\n        max-height: 90vh;\n    }\n\n    .custom-calendar-body {\n        padding: 12px;\n    }\n\n    .month-title {\n        font-size: 15px;\n    }\n\n    .search-calendar-day {\n        font-size: 13px;\n    }\n\n    }\n    /* Large Desktops (1400px and up) */\n    @media (min-width: 1400px) {\n        .search-container\n\n    {\n        padding: 0 40px;\n    }\n\n    }\n\n    /* Standard Laptops (1200px - 1399px) */\n    @media (max-width: 1399px) {\n        .search-container\n\n    {\n        padding: 0 30px;\n    }\n\n    }\n\n    /* Small Laptops (992px - 1199px) */\n    @media (max-width: 1199px) {\n        .search-bar\n\n    {\n        padding: 18px 25px;\n    }\n\n    .search-group {\n        flex: 1 1 140px;\n    }\n\n    .separator {\n        height: 60px;\n    }\n\n    }\n\n    /* Surface Pro 7 Landscape (912px - 991px) */\n    @media (max-width: 991px) and (min-height: 600px) {\n        .search-bar\n\n    {\n        flex-direction: row;\n        flex-wrap: wrap;\n    }\n\n    .search-group {\n        flex: 1 1 30%;\n        min-width: 30%;\n        max-width: 30%;\n    }\n\n    .guests-group {\n        flex: 1 1 40% !important;\n    }\n\n    .separator {\n        display: none;\n    }\n\n    .search-bar button {\n        width: auto;\n        flex: 1 1 100%;\n        margin-top: 15px;\n    }\n\n    }\n\n    /* Tablets (768px - 911px) */\n    @media (max-width: 911px) {\n        .search-bar\n\n    {\n        flex-direction: column;\n        border-radius: 20px;\n        padding: 15px;\n        gap: 10px;\n    }\n\n    .search-group {\n        max-width: 100%;\n        min-width: 100%;\n        padding: 8px 0;\n    }\n\n    /* Place check-in and check-out side-by-side for screens less than 911px */\n    .date-row {\n        display: flex;\n        gap: 10px;\n        width: 100%;\n    }\n    .date-row .date-group {\n        width: 50%;\n        min-width: 0;\n        max-width: 50%;\n        padding: 8px 0;\n    }\n\n    .search-bar button {\n        width: 100%;\n        height: 48px;\n        margin-top: 10px;\n    }\n\n    .dropdown-content {\n        width: 100%;\n        max-width: 100vw;\n        left: 0;\n        right: 0;\n    }\n\n    }\n\n    /* Surface Pro 7 Portrait (600px - 767px) */\n    @media (max-width: 767px) and (orientation: portrait) {\n        .search-bar\n\n    {\n        padding: 18px;\n    }\n\n    .search-group {\n        min-width: 100%;\n    }\n\n    .search-bar input,\n    .search-bar select {\n        font-size: 16px;\n    }\n\n    }\n\n    /* Large Phones (576px - 599px) */\n    @media (max-width: 599px) {\n        .search-container\n\n    {\n        padding: 0 15px;\n    }\n\n    .search-bar {\n        padding: 12px;\n        border-radius: 15px;\n    }\n\n    .dropdown-content {\n        width: calc(100vw - 24px);\n        left: -12px;\n    }\n\n    html[dir=\"rtl\"] .dropdown-content {\n        left: auto;\n        right: -12px;\n    }\n\n    }\n\n    /* Small Phones (375px - 575px) */\n    @media (max-width: 575px) {\n        .search-bar label\n\n    {\n        font-size: 13px;\n    }\n\n    .search-bar input,\n    .search-bar select {\n        font-size: 15px;\n    }\n\n    .counter-btn {\n        width: 32px;\n        height: 32px;\n    }\n\n    }\n\n    /* Extra Small Phones (under 374px) */\n    @media (max-width: 374px) {\n        .search-container\n\n    {\n        padding: 0 10px;\n    }\n\n    .search-bar {\n        padding: 10px;\n    }\n\n        .search-bar button {\n            height: 44px;\n            font-size: 14px;\n        }\n\n    }\n\n    /* High DPI/Retina Displays */\n    @media (-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi) {\n        .search-bar\n\n    {\n        border-width: 0.5px;\n    }\n\n    .separator {\n        height: 65px;\n    }\n\n    .search-bar button {\n        padding: 0 18px;\n    }\n\n    .search-icon {\n        width: 24px;\n        height: 24px;\n    }\n\n    }\n\n    /* Touch Device Specific Styles */\n    @media (pointer: coarse) {\n        .counter-btn, .search-group, .search-bar button\n\n    {\n        min-height: 44px;\n    }\n\n    .search-bar input,\n    .search-bar select {\n        padding-top: 0px;\n        padding-bottom: 12px;\n    }\n\n    }",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "tag": "div",
+              "id": null,
+              "classes": [
+                "layer1-wrapper"
+              ],
+              "attributes": {},
+              "text": null,
+              "children": []
+            },
+            {
+              "tag": "section",
+              "id": "popularListingsSection",
+              "classes": [
+                "py-5",
+                "popular-listings-section"
+              ],
+              "attributes": {},
+              "text": null,
+              "children": [
+                {
+                  "tag": "div",
+                  "id": null,
+                  "classes": [
+                    "container",
+                    "mt-5"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "div",
+                      "id": null,
+                      "classes": [
+                        "row",
+                        "mb-4",
+                        "mt-2"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    },
+                    {
+                      "tag": "div",
+                      "id": null,
+                      "classes": [
+                        "row",
+                        "gx-4",
+                        "gy-4"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "id": null,
+              "classes": [
+                "why-iget-section",
+                "py-5"
+              ],
+              "attributes": {},
+              "text": null,
+              "children": [
+                {
+                  "tag": "div",
+                  "id": null,
+                  "classes": [
+                    "container"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "div",
+                      "id": null,
+                      "classes": [
+                        "row",
+                        "align-items-start",
+                        "gy-4"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "id": null,
+              "classes": [
+                "property-section",
+                "py-5"
+              ],
+              "attributes": {},
+              "text": null,
+              "children": [
+                {
+                  "tag": "div",
+                  "id": null,
+                  "classes": [
+                    "container"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "div",
+                      "id": null,
+                      "classes": [
+                        "property-card"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "id": null,
+              "classes": [
+                "reviews-section",
+                "py-5",
+                "position-relative"
+              ],
+              "attributes": {},
+              "text": null,
+              "children": [
+                {
+                  "tag": "div",
+                  "id": null,
+                  "classes": [
+                    "container"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "div",
+                      "id": null,
+                      "classes": [
+                        "d-flex",
+                        "justify-content-between",
+                        "align-items-center",
+                        "mb-5"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    },
+                    {
+                      "tag": "div",
+                      "id": null,
+                      "classes": [
+                        "reviews-container"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "tag": "section",
+              "id": null,
+              "classes": [
+                "faq-section",
+                "py-5"
+              ],
+              "attributes": {},
+              "text": null,
+              "children": [
+                {
+                  "tag": "div",
+                  "id": null,
+                  "classes": [
+                    "container"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "div",
+                      "id": null,
+                      "classes": [
+                        "row",
+                        "align-items-start"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "script",
+          "id": null,
+          "classes": [],
+          "attributes": {},
+          "text": "document.addEventListener('DOMContentLoaded', async function () {\n            //background height\n        const popularListingsSection = document.getElementById('popularListingsSection');\n        const backgroundWrapper = document.getElementById('backgroundWrapper');\n        const backgroundMain = document.querySelector('.background-wrapper-main');\n\n           function updateBackgroundHeight() {\n        const popularListingsTop = popularListingsSection.getBoundingClientRect().top + window.scrollY;\n        const minHeight = window.innerWidth >= 1400 ? window.innerHeight * 1.2 : 0;\n\n        // Apply same height to all background layers\n        // document.querySelectorAll('.background-wrapper').forEach(wrapper => {\n        //     wrapper.style.height = Math.max(popularListingsTop, minHeight) + 'px';\n        // });\n    }\n\n\n        // updateBackgroundHeight();\n        // window.addEventListener('resize', updateBackgroundHeight);\n        // window.addEventListener('scroll', updateBackgroundHeight);\n    // Reviews functionality\n    let allReviews = [];\n    let currentPage = 0;\n    let totalPages = 0;\n    let reviewsPerPage;\n\n    const reviewsContainer = document.getElementById('reviewsContainer');\n    const prevBtn = document.getElementById('prev-review');\n    const nextBtn = document.getElementById('next-review');\n\n    function getReviewsPerPage() {\n        return window.innerWidth < 768 ? 1 : (window.innerWidth < 992 ? 2 : 3);\n    }\n\n        async function fetchReviews() {\n        try {\n            const res = await fetch(\"/api/reviews\");\n            const data = await res.json();\n\n            if (!Array.isArray(data) || data.length === 0 || data.length ===1 || data.length ===2 ) {\n                throw new Error(\"Empty or invalid data\");\n            }\n\n            allReviews = data;\n        } catch (err) {\n            console.warn(\"Using reviews due to error:\", err.message);\n\n            allReviews = [\n                {\n                    name: \"Sarah M.\",\n                    text: \"Absolutely stunning property and the check-in process was so smooth. Highly recommended!\",\n                    rating: 5,\n                    time: \"2 days ago\"\n                },\n                {\n                    name: \"Ahmed T.\",\n                    text: \"The place was clean, well-equipped, and just steps from the beach. Loved it!\",\n                    rating: 4.5,\n                    time: \"1 week ago\"\n                },\n                {\n                    name: \"Noura K.\",\n                    text: \"Great experience overall, especially the hospitality and fast support team response.\",\n                    rating: 4.8,\n                    time: \"3 days ago\"\n                }\n            ];\n        }\n\n        updateReviewsPerPage();\n        renderReviews();\n    }\n\n\n    function updateReviewsPerPage() {\n        reviewsPerPage = getReviewsPerPage();\n        totalPages = Math.ceil(allReviews.length / reviewsPerPage);\n    }\n\n    function createReviewCard(review) {\n        return `\n            <div class=\"col-12 col-md-6 col-lg-4\">\n                <div class=\"custom-review-card p-4 h-100 shadow-sm\">                    <div class=\"d-flex align-items-center mb-2\">\n                        <div class=\"p-2 me-2\">\n                            <img src=\"/Images/Icons/Avatars.svg\" alt=\"User avatar\" />\n                        </div>\n                        <h6 class=\"mb-0 fw-semibold\" style=\"color:#007D9C;\">${review.name}</h6>\n                    </div>\n                    <p class=\"small mt-2 mb-3\">${review.text}</p>\n                    <div class=\"d-flex justify-content-between align-items-center\">\n                        <div><i class=\"fa fa-star text-warning\"></i> ${review.rating}</div>\n                        <small style=\"color:#007D9C;\">${review.time}</small>\n                    </div>\n                </div>\n            </div>\n        `;\n    }\n\n    function renderReviews() {\n        reviewsContainer.innerHTML = '';\n        const startIndex = currentPage * reviewsPerPage;\n        const endIndex = Math.min(startIndex + reviewsPerPage, allReviews.length);\n        const currentReviews = allReviews.slice(startIndex, endIndex);\n\n        let reviewsHTML = '';\n        currentReviews.forEach(review => {\n            reviewsHTML += createReviewCard(review);\n        });\n\n        reviewsContainer.innerHTML = reviewsHTML;\n        updateNavigationState();\n    }\n\n    function updateNavigationState() {\n        const navigationElement = document.querySelector('.reviews-navigation');\n        navigationElement.style.display = allReviews.length > reviewsPerPage ? 'flex' : 'none';\n\n        prevBtn.disabled = currentPage === 0;\n        nextBtn.disabled = currentPage >= totalPages - 1;\n    }\n\n    prevBtn.addEventListener('click', function() {\n        if (currentPage > 0) {\n            currentPage--;\n            renderReviews();\n        }\n    });\n\n    nextBtn.addEventListener('click', function() {\n        if (currentPage < totalPages - 1) {\n            currentPage++;\n            renderReviews();\n        }\n    });\n\n    window.addEventListener('resize', function() {\n        const newReviewsPerPage = getReviewsPerPage();\n        if (newReviewsPerPage !== reviewsPerPage) {\n            const firstVisibleIndex = currentPage * reviewsPerPage;\n            updateReviewsPerPage();\n            currentPage = Math.floor(firstVisibleIndex / reviewsPerPage);\n            renderReviews();\n        }\n    });\n        const layer1Wrapper = document.querySelector('.layer1-wrapper');\n        const popularListingsTitle = document.getElementById('popularListingsTitle');\n\n    function updateLayer1Position() {\n        if (!layer1Wrapper || !popularListingsSection || !popularListingsTitle) return;\n\n        const titleRect = popularListingsTitle.getBoundingClientRect();\n        const sectionRect = popularListingsSection.getBoundingClientRect();\n\n        const titleTop = titleRect.top + window.scrollY;\n        const sectionBottom = sectionRect.bottom + window.scrollY;\n        const height = Math.max(0, sectionBottom - titleTop);\n\n        layer1Wrapper.style.top = titleTop + 'px';\n        layer1Wrapper.style.height = height + 'px';\n    }\n\n    function ensureSectionBelowHero() {\n        if (!backgroundMain || !popularListingsSection) return;\n        popularListingsSection.style.marginTop = '';\n        const bgBottom = backgroundMain.getBoundingClientRect().bottom + window.scrollY;\n        const sectionTop = popularListingsSection.getBoundingClientRect().top + window.scrollY;\n        const overlap = bgBottom - sectionTop;\n        const spacing = 0;\n        if (overlap > 0) {\n            popularListingsSection.style.marginTop = (overlap + spacing) + 'px';\n        }\n        updateLayer1Position();\n    }\n\n    ensureSectionBelowHero();\n    window.addEventListener('resize', ensureSectionBelowHero);\n    window.addEventListener('scroll', updateLayer1Position);\n    window.addEventListener('load', ensureSectionBelowHero);\n\n    fetchReviews();\n\n        //FAQ\n         const accordion = document.getElementById(\"faqAccordion\");\n\n    try {\n        const response = await fetch(\"/api/faqs\");\n        const faqs = await response.json();\n\n        accordion.innerHTML = \"\"; // Clear existing content\n\n        faqs.forEach((faq, index) => {\n            const id = `faq${index + 1}`;\n            const item = `\n                <div class=\"accordion-item border mb-2\">\n                    <h2 class=\"accordion-header\">\n                        <button class=\"accordion-button custom-faq-button collapsed\" type=\"button\"\n                                data-bs-toggle=\"collapse\" data-bs-target=\"#${id}\">\n                            <span class=\"faq-icon\">+</span>\n                            <span class=\"faq-text\" style= \"font-weight:550;\">  ${faq.question}</span>\n                        </button>\n                    </h2>\n                    <div id=\"${id}\" class=\"accordion-collapse collapse\" data-bs-parent=\"#faqAccordion\">\n                        <div class=\"accordion-body small\">\n                            ${faq.answer}\n                        </div>\n                    </div>\n                </div>\n            `;\n            accordion.insertAdjacentHTML(\"beforeend\", item);\n        });\n\n        // Add collapse toggle behavior\n        const accordionItems = document.querySelectorAll(\".accordion-item\");\n        accordionItems.forEach(item => {\n            const button = item.querySelector(\".accordion-button\");\n            const icon = button.querySelector(\".faq-icon\");\n            const collapseId = button.getAttribute(\"data-bs-target\");\n            const collapseEl = document.querySelector(collapseId);\n\n            collapseEl.addEventListener(\"show.bs.collapse\", () => {\n                icon.textContent = \"\u2013\";\n                item.classList.add(\"show-bg\");\n            });\n\n            collapseEl.addEventListener(\"hide.bs.collapse\", () => {\n                icon.textContent = \"+\";\n                item.classList.remove(\"show-bg\");\n            });\n        });\n\n    } catch (error) {\n        console.error(\"Failed to load FAQs:\", error);\n        accordion.innerHTML = `<p class=\"text-danger\">Failed to load FAQs.</p>`;\n    }\n    });\n\n    document.addEventListener('DOMContentLoaded', function () {\n        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle=\"tooltip\"]'))\n        tooltipTriggerList.forEach(el => {\n            new bootstrap.Tooltip(el)\n        })\n    });",
+          "children": []
+        }
+      ]
+    },
+    {
+      "tag": "footer",
+      "id": null,
+      "classes": [
+        "footer",
+        "mt-4",
+        "py-4"
+      ],
+      "attributes": {},
+      "text": null,
+      "children": [
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "container",
+            "rounded-4",
+            "shadow-sm",
+            "px-5",
+            "py-4"
+          ],
+          "attributes": {},
+          "text": null,
+          "children": [
+            {
+              "tag": "div",
+              "id": null,
+              "classes": [
+                "row",
+                "gy-4"
+              ],
+              "attributes": {},
+              "text": null,
+              "children": [
+                {
+                  "tag": "div",
+                  "id": null,
+                  "classes": [
+                    "col-12",
+                    "col-md-6"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "div",
+                      "id": null,
+                      "classes": [
+                        "mb-3"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    },
+                    {
+                      "tag": "small",
+                      "id": null,
+                      "classes": [],
+                      "attributes": {},
+                      "text": "Your Hassle-Free Coastal Escape. Discover premium villas, chalets, and studios in the finest compounds where every detail is taken care of",
+                      "children": []
+                    },
+                    {
+                      "tag": "p",
+                      "id": null,
+                      "classes": [
+                        "mt-2"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                },
+                {
+                  "tag": "div",
+                  "id": null,
+                  "classes": [
+                    "col-12",
+                    "col-md-3"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": []
+                },
+                {
+                  "tag": "div",
+                  "id": null,
+                  "classes": [
+                    "col-12",
+                    "col-md-3"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "div",
+                      "id": null,
+                      "classes": [
+                        "mb-3"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    },
+                    {
+                      "tag": "div",
+                      "id": null,
+                      "classes": [
+                        "mt-3"
+                      ],
+                      "attributes": {},
+                      "text": null,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "id": null,
+          "classes": [
+            "row",
+            "mt-4"
+          ],
+          "attributes": {},
+          "text": null,
+          "children": [
+            {
+              "tag": "div",
+              "id": null,
+              "classes": [
+                "col-12",
+                "text-center"
+              ],
+              "attributes": {},
+              "text": null,
+              "children": [
+                {
+                  "tag": "p",
+                  "id": null,
+                  "classes": [
+                    "mb-0",
+                    "fw-bold"
+                  ],
+                  "attributes": {},
+                  "text": null,
+                  "children": [
+                    {
+                      "tag": "strong",
+                      "id": null,
+                      "classes": [],
+                      "attributes": {},
+                      "text": "Powered By",
+                      "children": []
+                    },
+                    {
+                      "tag": "img",
+                      "id": null,
+                      "classes": [],
+                      "attributes": {
+                        "src": "/Images/sk.svg"
+                      },
+                      "text": null,
+                      "children": []
+                    },
+                    {
+                      "tag": "a",
+                      "id": null,
+                      "classes": [],
+                      "attributes": {
+                        "href": "https://silverkeytech.com/"
+                      },
+                      "text": "SilverKey Technologies 2025",
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "img",
+          "id": null,
+          "classes": [
+            "footer-decoration",
+            "right"
+          ],
+          "attributes": {
+            "src": "/Images/_Group_.svg"
+          },
+          "text": null,
+          "children": []
+        }
+      ]
+    },
+    {
+      "tag": "script",
+      "id": null,
+      "classes": [],
+      "attributes": {
+        "src": "https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      },
+      "text": null,
+      "children": []
+    },
+    {
+      "tag": "script",
+      "id": null,
+      "classes": [],
+      "attributes": {
+        "src": "https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"
+      },
+      "text": null,
+      "children": []
+    },
+    {
+      "tag": "script",
+      "id": null,
+      "classes": [],
+      "attributes": {
+        "src": "https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"
+      },
+      "text": null,
+      "children": []
+    },
+    {
+      "tag": "script",
+      "id": null,
+      "classes": [],
+      "attributes": {
+        "src": "https://unpkg.com/just-validate@4.2.0/dist/just-validate.production.min.js"
+      },
+      "text": null,
+      "children": []
+    },
+    {
+      "tag": "script",
+      "id": null,
+      "classes": [],
+      "attributes": {
+        "src": "/js/site.js?v=z3alkqUTFOE7JZm3M4J1cHoN9Y8ASjSBtQhSCnlqCKQ"
+      },
+      "text": null,
+      "children": []
+    }
+  ]
+}
