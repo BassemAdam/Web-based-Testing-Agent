@@ -4,6 +4,7 @@ from llm.config import LLMConfig
 from tools.registry import ToolRegistry
 from loguru import logger
 import sys
+import os
 
 # Import all exploration tools
 from exploration import dom_tools, visual_tools, interactive_tools
@@ -48,10 +49,13 @@ def main():
     Phase 1 Example: Explore a web page and produce structured knowledge.
     """
     
-
-    url = "https://igethospitality.com"  
+    url = "http://www.example.com"  
     session_id = "phase1_exploration"
-    output_file = "exploration_output.json"
+    
+    # Create output directory
+    output_dir = "phase1"
+    os.makedirs(output_dir, exist_ok=True)
+    output_file = os.path.join(output_dir, "exploration_output.json")
     
     # Setup LLM
     logger.info("🤖 Initializing LLM client...")

@@ -1,0 +1,465 @@
+{
+  "url": "https://igethospitality.com",
+  "page_title": "Explored Page",
+  "exploration_timestamp": "2025-11-29T14:28:47.087673",
+  "elements": [
+    {
+      "element_id": "navbar-brand",
+      "element_type": "link",
+      "locators": {
+        "css": "#navbar-brand",
+        "xpath": "//a[@class='navbar-brand']",
+        "text": "Navbar Brand"
+      },
+      "description": "Link to the main page",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "navbar-toggler",
+      "element_type": "button",
+      "locators": {
+        "css": "#navbar-toggler",
+        "xpath": "//button[@class='navbar-toggler']",
+        "text": "Toggle Navigation"
+      },
+      "description": "Toggle navigation button",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "link",
+      "element_type": "link",
+      "locators": {
+        "css": "main > link",
+        "xpath": "//main/link",
+        "text": "Link to CSS file"
+      },
+      "description": "Link to external CSS file",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "link",
+      "element_type": "link",
+      "locators": {
+        "css": "link",
+        "xpath": "//link",
+        "text": "https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css"
+      },
+      "description": "Stylesheet link to Choices.js library",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "script",
+      "element_type": "script",
+      "locators": {
+        "css": "script",
+        "xpath": "//script",
+        "text": "https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"
+      },
+      "description": "Script tag loading Choices.js library",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "searchBarForm",
+      "element_type": "form",
+      "locators": {
+        "css": "#searchBarForm",
+        "xpath": "//form[@id='searchBarForm']",
+        "text": "Search bar form"
+      },
+      "description": "Search bar form",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "location",
+      "element_type": "select",
+      "locators": {
+        "css": "#location",
+        "xpath": "//select[@id='location']",
+        "text": ""
+      },
+      "description": "Dropdown populated with areas fetched from /api/areas; managed by Choices.js",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "petsToggle",
+      "element_type": "checkbox",
+      "locators": {
+        "css": "#petsToggle",
+        "xpath": "//input[@id='petsToggle']",
+        "text": ""
+      },
+      "description": "Toggle switch that sets hiddenPetsAllowed value to true/false",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "optionsDisplay",
+      "element_type": "button",
+      "locators": {
+        "css": "#optionsDisplay",
+        "xpath": "//*[@id='optionsDisplay']",
+        "text": "dynamic guest/room summary"
+      },
+      "description": "Opens/closes the guest-&-rooms dropdown",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "searchBarForm",
+      "element_type": "form",
+      "locators": {
+        "css": "#searchBarForm",
+        "xpath": "//form[@id='searchBarForm']",
+        "text": ""
+      },
+      "description": "Main search-bar form; submits via handleUnifiedSubmit",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "hiddenAdults",
+      "element_type": "hidden",
+      "locators": {
+        "css": "#hiddenAdults",
+        "xpath": "//input[@id='hiddenAdults']",
+        "text": ""
+      },
+      "description": "Stores selected adults count for form submission",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "hiddenChildren",
+      "element_type": "hidden",
+      "locators": {
+        "css": "#hiddenChildren",
+        "xpath": "//input[@id='hiddenChildren']",
+        "text": ""
+      },
+      "description": "Stores selected children count for form submission",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "hiddenRooms",
+      "element_type": "hidden",
+      "locators": {
+        "css": "#hiddenRooms",
+        "xpath": "//input[@id='hiddenRooms']",
+        "text": ""
+      },
+      "description": "Stores selected room count for form submission",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "hiddenPetsAllowed",
+      "element_type": "hidden",
+      "locators": {
+        "css": "#hiddenPetsAllowed",
+        "xpath": "//input[@id='hiddenPetsAllowed']",
+        "text": ""
+      },
+      "description": "Stores pets-allowed flag for form submission",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "prev-review",
+      "element_type": "button",
+      "locators": {
+        "css": "#prev-review",
+        "xpath": "//button[@id='prev-review']",
+        "text": null
+      },
+      "description": "Previous-page button for the reviews carousel",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "next-review",
+      "element_type": "button",
+      "locators": {
+        "css": "#next-review",
+        "xpath": "//button[@id='next-review']",
+        "text": null
+      },
+      "description": "Next-page button for the reviews carousel",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "elem_16",
+      "element_type": "button",
+      "locators": {
+        "css": ".accordion-button",
+        "xpath": "//button[contains(@class,'accordion-button')]",
+        "text": null
+      },
+      "description": "FAQ accordion toggle buttons (multiple)",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    },
+    {
+      "element_id": "elem_17",
+      "element_type": "link",
+      "locators": {
+        "css": "a[href='https://silverkeytech.com/']",
+        "xpath": "//a[@href='https://silverkeytech.com/']",
+        "text": "SilverKey Technologies 2025"
+      },
+      "description": "Footer link to SilverKey Technologies homepage",
+      "semantic_role": null,
+      "parent_context": null,
+      "nearby_elements": [],
+      "visual_signature": null,
+      "is_interactive": true,
+      "expected_actions": [],
+      "initial_state": null
+    }
+  ],
+  "sections": [
+    {
+      "section_id": "sec_0",
+      "section_type": "header",
+      "description": "Page header section",
+      "elements": []
+    },
+    {
+      "section_id": "header",
+      "section_type": "header",
+      "description": "Header section",
+      "elements": []
+    },
+    {
+      "section_id": "mobileMenu",
+      "section_type": "page section",
+      "description": "Mobile menu section",
+      "elements": []
+    },
+    {
+      "section_id": "sec_3",
+      "section_type": "page section",
+      "description": "Navbar section",
+      "elements": []
+    },
+    {
+      "section_id": "sec_4",
+      "section_type": "page section",
+      "description": "Navbar section",
+      "elements": []
+    },
+    {
+      "section_id": "main",
+      "section_type": "main",
+      "description": "Main content section",
+      "elements": []
+    },
+    {
+      "section_id": "background-wrapper",
+      "section_type": "background",
+      "description": "Background wrapper section",
+      "elements": []
+    },
+    {
+      "section_id": "background-wrapper-layer",
+      "section_type": "background",
+      "description": "Background wrapper layer section",
+      "elements": []
+    },
+    {
+      "section_id": "layer1-wrapper",
+      "section_type": "layer",
+      "description": "Layer 1 wrapper section",
+      "elements": []
+    },
+    {
+      "section_id": "content-wrapper",
+      "section_type": "content",
+      "description": "Content wrapper section",
+      "elements": []
+    },
+    {
+      "section_id": "container",
+      "section_type": "container",
+      "description": "Container section",
+      "elements": []
+    },
+    {
+      "section_id": "hero-content",
+      "section_type": "hero",
+      "description": "Hero content section",
+      "elements": []
+    },
+    {
+      "section_id": "hero-text",
+      "section_type": "main",
+      "description": "Hero section with title and subtitle",
+      "elements": []
+    },
+    {
+      "section_id": "popularListingsSection",
+      "section_type": "section",
+      "description": "Container for popular listings cards",
+      "elements": []
+    },
+    {
+      "section_id": ".why-iget-section",
+      "section_type": "section",
+      "description": "A section with vertical padding (py-5) and custom class 'why-iget-section'",
+      "elements": []
+    },
+    {
+      "section_id": "sec_15",
+      "section_type": "section",
+      "description": "Property section with vertical padding (py-5) containing a property card",
+      "elements": []
+    },
+    {
+      "section_id": ".reviews-section",
+      "section_type": "section",
+      "description": "Customer reviews section with container and placeholder for review cards",
+      "elements": []
+    },
+    {
+      "section_id": "sec_17",
+      "section_type": "section",
+      "description": "FAQ section container with class 'faq-section py-5'",
+      "elements": []
+    },
+    {
+      "section_id": "sec_18",
+      "section_type": "footer",
+      "description": "Footer element (tag present but content truncated)",
+      "elements": []
+    },
+    {
+      "section_id": "footer",
+      "section_type": "footer",
+      "description": "Page footer with container, rounded corners, shadow, and responsive padding",
+      "elements": []
+    },
+    {
+      "section_id": "row-mt-4",
+      "section_type": "main",
+      "description": "A centered column section containing a bold paragraph",
+      "elements": []
+    },
+    {
+      "section_id": "sec_21",
+      "section_type": "footer",
+      "description": "Footer section containing branding and attribution",
+      "elements": []
+    }
+  ],
+  "flows": [],
+  "dom_structure_summary": null,
+  "full_page_screenshot": null,
+  "accessibility_tree": null,
+  "exploration_strategy": "batch-accumulation",
+  "total_elements_found": 18,
+  "exploration_depth": 0,
+  "technologies_detected": [
+    "Just Validate 4.2.0",
+    "CustomCalendar",
+    "Bootstrap 5.3.0",
+    "Bootstrap",
+    "jQuery Validation 1.19.5",
+    "Flatpickr",
+    "Choices.js",
+    "Feather Icons"
+  ],
+  "dynamic_content_areas": []
+}

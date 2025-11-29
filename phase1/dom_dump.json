@@ -1,0 +1,53 @@
+{
+  "tag": "body",
+  "id": null,
+  "classes": [],
+  "attributes": {},
+  "text": null,
+  "children": [
+    {
+      "tag": "div",
+      "id": null,
+      "classes": [],
+      "attributes": {},
+      "text": null,
+      "children": [
+        {
+          "tag": "h1",
+          "id": null,
+          "classes": [],
+          "attributes": {},
+          "text": "Example Domain",
+          "children": []
+        },
+        {
+          "tag": "p",
+          "id": null,
+          "classes": [],
+          "attributes": {},
+          "text": "This domain is for use in documentation examples without needing permission. Avoid use in operations.",
+          "children": []
+        },
+        {
+          "tag": "p",
+          "id": null,
+          "classes": [],
+          "attributes": {},
+          "text": null,
+          "children": [
+            {
+              "tag": "a",
+              "id": null,
+              "classes": [],
+              "attributes": {
+                "href": "https://iana.org/domains/example"
+              },
+              "text": "Learn more",
+              "children": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

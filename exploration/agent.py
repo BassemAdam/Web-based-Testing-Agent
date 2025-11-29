@@ -80,6 +80,11 @@ Be concise but thorough. Focus on actionable information for test automation."""
         
         # 3. Save DOM to file
         dom_file = "dom_dump.json"
+        if output_file:
+            output_dir = os.path.dirname(output_file)
+            if output_dir:
+                dom_file = os.path.join(output_dir, "dom_dump.json")
+
         with open(dom_file, "w", encoding="utf-8") as f:
             f.write(dom_json_str)
         logger.info(f"💾 Saved DOM dump to: {dom_file}")
