@@ -66,7 +66,7 @@ Be concise but thorough. Focus on actionable information for test automation."""
     def explore(self, url: str, session_id: str = "default", output_file: str = None) -> PageStructure:
         """
         Main entry point: Explore a URL and return PageStructure.
-        Optimized for weak LLMs using batch processing and scratchpad.
+        Optimized for weak LLMs using batch processing and accumulation.
         """
         logger.info(f"🚀 Starting exploration of: {url}")
         
@@ -84,11 +84,16 @@ Be concise but thorough. Focus on actionable information for test automation."""
             f.write(dom_json_str)
         logger.info(f"💾 Saved DOM dump to: {dom_file}")
         
-        # 4. Process DOM in batches
+        # 4. Process DOM in batches and accumulate findings
         logger.info("🔄 Processing DOM in batches...")
-        scratchpad = "Initial Scratchpad: No knowledge yet."
         
-        # Parse JSON to get lines or structure - treating it as text lines for now as requested
+        # Accumulators for findings
+        all_elements = []
+        all_sections = []
+        all_flows = []
+        all_technologies = set()
+        
+        # Parse JSON to get lines or structure
         dom_lines = dom_json_str.split('\n')
         total_lines = len(dom_lines)
         batch_size = 50  # Adjustable batch size
@@ -100,132 +105,132 @@ Be concise but thorough. Focus on actionable information for test automation."""
             logger.info(f"Processing batch {i//batch_size + 1}/{(total_lines//batch_size) + 1} (Lines {i}-{i+len(batch_lines)})")
             
             prompt = f"""
-Current Scratchpad:
-{scratchpad}
-
----
-New DOM Chunk (Lines {i} to {i+len(batch_lines)}):
+DOM Chunk (Lines {i} to {i+len(batch_lines)}):
 {batch_content}
+
 ---
-
 Task:
-Update the scratchpad with information from the new DOM chunk.
-- Identify new interactive elements (buttons, inputs, links).
-- Identify page sections.
-- Refine existing knowledge.
-- Keep the scratchpad organized.
+Analyze this DOM chunk and extract:
+1. Interactive elements (buttons, inputs, links, forms).
+2. Page sections (header, footer, main, etc.).
+3. Detected technologies (libraries, frameworks).
 
-Return ONLY the updated scratchpad content.
+Return a JSON object with the following structure:
+{{
+  "elements": [
+    {{
+      "id": "unique_id_or_selector",
+      "type": "button/input/link/etc",
+      "locators": {{ "css": "...", "xpath": "...", "text": "..." }},
+      "description": "What this element does"
+    }}
+  ],
+  "sections": [
+    {{
+      "id": "section_id",
+      "type": "header/footer/etc",
+      "description": "Section description"
+    }}
+  ],
+  "technologies": ["React", "Bootstrap", etc]
+}}
+
+If no items are found in this chunk, return empty lists.
+Output valid JSON only.
 """
             # Create a temporary state for this interaction
             temp_state = PageExplorerState(session_id=session_id, url=url)
-            temp_state.add_message(role="system", content=self.system_prompt)
+            temp_state.add_message(role="system", content="You are a data extraction assistant. Output valid JSON only.")
             temp_state.add_message(role="user", content=prompt)
             
             # Pass tools=[] to prevent LLM from trying to use tools
             response = self.llm_generate(temp_state, tools=[])
-            new_scratchpad = response.get("content", "")
-            if new_scratchpad:
-                new_scratchpad = new_scratchpad.strip()
+            content = response.get("content", "")
             
-            if new_scratchpad:
-                scratchpad = new_scratchpad
-                logger.debug("Updated scratchpad")
+            # Clean up code blocks if present
+            if content and "```json" in content:
+                content = content.split("```json")[1].split("```")[0].strip()
+            elif content and "```" in content:
+                content = content.split("```")[1].split("```")[0].strip()
+                
+            try:
+                if content.strip():
+                    data = json.loads(content)
+                    
+                    # Accumulate findings
+                    if "elements" in data and isinstance(data["elements"], list):
+                        all_elements.extend(data["elements"])
+                        logger.debug(f"Found {len(data['elements'])} elements in batch")
+                        
+                    if "sections" in data and isinstance(data["sections"], list):
+                        all_sections.extend(data["sections"])
+                        
+                    if "technologies" in data and isinstance(data["technologies"], list):
+                        all_technologies.update(data["technologies"])
+            except json.JSONDecodeError:
+                logger.warning("Failed to parse JSON from batch response")
+            except Exception as e:
+                logger.error(f"Error processing batch: {e}")
         
         # 5. Final Synthesis
         logger.info("🔧 Synthesizing final page structure...")
-        final_structure = self._synthesize_from_scratchpad(url, scratchpad)
+        
+        # Convert accumulated data to PageStructure objects
+        final_elements = []
+        for idx, elem in enumerate(all_elements):
+            # Ensure locators is a dict
+            locators = elem.get("locators", {})
+            if not isinstance(locators, dict):
+                locators = {"raw": str(locators)}
+            
+            # Handle missing or None ID
+            elem_id = elem.get("id")
+            if not elem_id:
+                elem_id = f"elem_{idx}"
+
+            final_elements.append(ElementCandidate(
+                element_id=elem_id,
+                element_type=elem.get("type", "unknown"),
+                locators=locators,
+                description=elem.get("description", "No description"),
+                is_interactive=True
+            ))
+            
+        final_sections = []
+        for idx, sec in enumerate(all_sections):
+            # Handle missing or None ID
+            sec_id = sec.get("id")
+            if not sec_id:
+                sec_id = f"sec_{idx}"
+
+            final_sections.append(PageSection(
+                section_id=sec_id,
+                section_type=sec.get("type", "unknown"),
+                description=sec.get("description", "No description")
+            ))
+            
+        final_structure = PageStructure(
+            url=url,
+            page_title="Explored Page",
+            exploration_timestamp=datetime.now().isoformat(),
+            elements=final_elements,
+            sections=final_sections,
+            flows=[], # Flows are harder to detect in chunks
+            technologies_detected=list(all_technologies),
+            total_elements_found=len(final_elements),
+            exploration_strategy="batch-accumulation"
+        )
         
         # Save to file if requested
         if output_file:
             final_structure.to_json_file(output_file)
             logger.info(f"💾 Saved exploration results to: {output_file}")
-            
-            # Also save the final scratchpad for debugging
-            with open("scratchpad_final.txt", "w", encoding="utf-8") as f:
-                f.write(scratchpad)
         
         logger.info("🎉 Exploration complete!")
         return final_structure
 
     def _synthesize_from_scratchpad(self, url: str, scratchpad: str) -> PageStructure:
         """
-        Ask the LLM to convert the final scratchpad into a JSON structure matching PageStructure.
+        Deprecated: Use batch accumulation instead.
         """
-        prompt = f"""
-Final Scratchpad:
-{scratchpad}
-
----
-Task:
-Convert the information in the scratchpad into a structured JSON format.
-The JSON should have the following keys:
-- elements: List of interactive elements (id, type, locators, description).
-- sections: List of page sections.
-- flows: List of potential interaction flows.
-- technologies: List of detected technologies.
-
-Return ONLY the JSON object.
-"""
-        state = PageExplorerState(url=url)
-        state.add_message(role="system", content="You are a data extraction assistant. Output valid JSON only.")
-        state.add_message(role="user", content=prompt)
-        
-        # Pass tools=[] to prevent LLM from trying to use tools
-        response = self.llm_generate(state, tools=[])
-        content = response.get("content", "")
-        
-        # Clean up code blocks if present
-        if content and "```json" in content:
-            content = content.split("```json")[1].split("```")[0].strip()
-        elif content and "```" in content:
-            content = content.split("```")[1].split("```")[0].strip()
-            
-        try:
-            data = json.loads(content)
-            
-            # Convert to PageStructure objects
-            elements = []
-            for elem in data.get("elements", []):
-                elements.append(ElementCandidate(
-                    element_id=elem.get("id", "unknown"),
-                    element_type=elem.get("type", "unknown"),
-                    locators=elem.get("locators", {}),
-                    description=elem.get("description", ""),
-                    is_interactive=True
-                ))
-                
-            sections = []
-            for sec in data.get("sections", []):
-                sections.append(PageSection(
-                    section_id=sec.get("id", "unknown"),
-                    section_type=sec.get("type", "unknown"),
-                    description=sec.get("description", "")
-                ))
-                
-            return PageStructure(
-                url=url,
-                page_title="Explored Page",
-                exploration_timestamp=datetime.now().isoformat(),
-                elements=elements,
-                sections=sections,
-                flows=[], # TODO: Parse flows if needed
-                technologies_detected=data.get("technologies", []),
-                total_elements_found=len(elements),
-                exploration_strategy="scratchpad-batch"
-            )
-            
-        except Exception as e:
-            logger.error(f"Failed to parse final JSON: {e}")
-            # Return empty structure with error note
-            return PageStructure(
-                url=url,
-                page_title="Error Parsing Results",
-                exploration_timestamp=datetime.now().isoformat(),
-                elements=[],
-                sections=[],
-                flows=[],
-                technologies_detected=[],
-                total_elements_found=0,
-                exploration_strategy="scratchpad-batch-failed"
-            )
+        pass
