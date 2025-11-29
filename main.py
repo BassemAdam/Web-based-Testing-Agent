@@ -6,10 +6,8 @@ from loguru import logger
 import sys
 import os
 
-# Import all exploration tools
 from exploration import dom_tools, visual_tools, interactive_tools
 from tools.toolkit import web_explorer
-
 
 def setup_exploration_tools(session_id: str = "default") -> ToolRegistry:
     """Register all tools needed for page exploration."""
@@ -42,7 +40,6 @@ def setup_exploration_tools(session_id: str = "default") -> ToolRegistry:
     
     logger.info(f"✅ Registered {len(registry._tools)} exploration tools")
     return registry
-
 
 def main():
     """
@@ -97,7 +94,6 @@ def main():
         import traceback
         traceback.print_exc()
         sys.exit(1)
-
 
 if __name__ == "__main__":
     main()
