@@ -1,0 +1,159 @@
+{
+  "start_url": "https://news.ycombinator.com/",
+  "snapshot_file": "artifacts\\snapshots\\site_snapshot.json",
+  "test_cases": [
+    {
+      "id": "TC_HAPPY_PATH_01",
+      "name": "Navigate from Hacker News to New Links",
+      "description": "Verify navigation from the main page to the 'new' section.",
+      "tags": [
+        "functional",
+        "happy_path"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "page_id": "page_0",
+          "target": "a|Hacker News| | tag=a, text='Hacker News', id=''",
+          "details": "Click on 'Hacker News' link to navigate to the main page."
+        },
+        {
+          "action": "click",
+          "page_id": "page_1",
+          "target": "a|new| | tag=a, text='new', id='' ",
+          "details": "Click on 'new' link to navigate to the new links page."
+        }
+      ],
+      "covered_element_keys": [
+        "page_0::a|Hacker News|",
+        "page_1::a|new|"
+      ],
+      "selectors": [
+        {
+          "element_key": "a|Hacker News|",
+          "page_id": "page_0",
+          "css_selector": "a",
+          "xpath": null,
+          "description": "Navigates to the main Hacker News page."
+        },
+        {
+          "element_key": "a|new|",
+          "page_id": "page_1",
+          "css_selector": "a",
+          "xpath": null,
+          "description": "Displays new links on the Hacker News page."
+        }
+      ],
+      "meta": {}
+    },
+    {
+      "id": "TC_VALIDATE_MAIN_PAGES_01",
+      "name": "Validate Main Page Elements",
+      "description": "Check if main elements are present and functional on both pages.",
+      "tags": [
+        "functional",
+        "validation"
+      ],
+      "steps": [
+        {
+          "action": "assert",
+          "page_id": "page_0",
+          "target": null,
+          "details": "Ensure 'Hacker News', 'new', 'past', 'comments', 'ask', 'show', and 'jobs' links are present."
+        },
+        {
+          "action": "assert",
+          "page_id": "page_1",
+          "target": null,
+          "details": "Ensure 'Hacker News', 'new', 'past', 'comments', 'ask', 'show', and 'jobs' links are present."
+        }
+      ],
+      "covered_element_keys": [
+        "page_0::a|Hacker News|",
+        "page_1::a|Hacker News|"
+      ],
+      "selectors": [
+        {
+          "element_key": "a|Hacker News|",
+          "page_id": "page_0",
+          "css_selector": "a",
+          "xpath": null,
+          "description": "Main navigation link to the main page."
+        },
+        {
+          "element_key": "a|Hacker News|",
+          "page_id": "page_1",
+          "css_selector": "a",
+          "xpath": null,
+          "description": "Main navigation link to the main page."
+        }
+      ],
+      "meta": {}
+    },
+    {
+      "id": "TC_BROKEN_LINK_01",
+      "name": "Check for Broken Links",
+      "description": "Verify that no broken links are present on the pages.",
+      "tags": [
+        "functional",
+        "validation"
+      ],
+      "steps": [
+        {
+          "action": "navigate",
+          "page_id": "page_0",
+          "target": null,
+          "details": "Navigate to each link on the page and check for 404 or similar errors."
+        },
+        {
+          "action": "navigate",
+          "page_id": "page_1",
+          "target": null,
+          "details": "Navigate to each link on the page and check for 404 or similar errors."
+        }
+      ],
+      "covered_element_keys": [
+        "page_0::a|Hacker News|",
+        "page_1::a|Hacker News|"
+      ],
+      "selectors": [
+        {
+          "element_key": "a|Hacker News|",
+          "page_id": "page_0",
+          "css_selector": "a",
+          "xpath": null,
+          "description": "Main navigation link to the main page."
+        },
+        {
+          "element_key": "a|Hacker News|",
+          "page_id": "page_1",
+          "css_selector": "a",
+          "xpath": null,
+          "description": "Main navigation link to the main page."
+        }
+      ],
+      "meta": {}
+    }
+  ],
+  "element_coverage": {
+    "page_0::a|Hacker News|": [
+      "TC_HAPPY_PATH_01",
+      "TC_VALIDATE_MAIN_PAGES_01",
+      "TC_BROKEN_LINK_01"
+    ],
+    "page_1::a|new|": [
+      "TC_HAPPY_PATH_01"
+    ],
+    "page_1::a|Hacker News|": [
+      "TC_VALIDATE_MAIN_PAGES_01",
+      "TC_BROKEN_LINK_01"
+    ]
+  },
+  "coverage_summary": "This set of test cases covers the basic functionality of navigating between pages on Hacker News and validating that key elements are present. It does not cover form submissions, deep links, or extensive content validation but ensures a user can navigate through the site's main sections.",
+  "meta": {
+    "elapsed_seconds": "103.655",
+    "max_depth": 1,
+    "max_pages": 3,
+    "max_links_per_page": 3
+  }
+}
