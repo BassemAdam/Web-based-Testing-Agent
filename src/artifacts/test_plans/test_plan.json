@@ -1,11 +1,11 @@
 {
-  "start_url": "https://news.ycombinator.com/",
+  "start_url": "https://www.youtube.com",
   "snapshot_file": "artifacts\\snapshots\\site_snapshot.json",
   "test_cases": [
     {
-      "id": "TC_HAPPY_PATH_01",
-      "name": "Navigate from Hacker News to New Links",
-      "description": "Verify navigation from the main page to the 'new' section.",
+      "id": "TC_SIGNIN_VALID_01",
+      "name": "Sign in with valid credentials",
+      "description": "User successfully signs into YouTube using a valid account.",
       "tags": [
         "functional",
         "happy_path"
@@ -14,144 +14,121 @@
         {
           "action": "click",
           "page_id": "page_0",
-          "target": "a|Hacker News| | tag=a, text='Hacker News', id=''",
-          "details": "Click on 'Hacker News' link to navigate to the main page."
+          "target": "a|Sign in|",
+          "details": "Click the 'Sign in' button to navigate to the sign-in page."
+        },
+        {
+          "action": "type",
+          "page_id": "page_1",
+          "target": null,
+          "details": "Enter valid email and password on the sign-in form."
         },
         {
           "action": "click",
           "page_id": "page_1",
-          "target": "a|new| | tag=a, text='new', id='' ",
-          "details": "Click on 'new' link to navigate to the new links page."
+          "target": "button|Next|",
+          "details": "Click 'Next' to proceed with authentication."
         }
       ],
       "covered_element_keys": [
-        "page_0::a|Hacker News|",
-        "page_1::a|new|"
+        "page_0::a|Sign in|"
       ],
       "selectors": [
         {
-          "element_key": "a|Hacker News|",
+          "element_key": "a|Sign in|",
           "page_id": "page_0",
-          "css_selector": "a",
+          "css_selector": "a.yt-spec-button-shape-next.yt-spec-button-shape-next--outline.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-leading.yt-spec-button-shape-next--enable-backdrop-filter-experiment",
           "xpath": null,
-          "description": "Navigates to the main Hacker News page."
-        },
-        {
-          "element_key": "a|new|",
-          "page_id": "page_1",
-          "css_selector": "a",
-          "xpath": null,
-          "description": "Displays new links on the Hacker News page."
+          "description": "Navigates to the sign-in page when clicked."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_VALIDATE_MAIN_PAGES_01",
-      "name": "Validate Main Page Elements",
-      "description": "Check if main elements are present and functional on both pages.",
+      "id": "TC_SIGNIN_INVALID_02",
+      "name": "Attempt to sign in with invalid credentials",
+      "description": "User attempts to sign into YouTube using an invalid account, expecting a failure.",
       "tags": [
         "functional",
-        "validation"
+        "negative"
       ],
       "steps": [
         {
-          "action": "assert",
+          "action": "click",
           "page_id": "page_0",
-          "target": null,
-          "details": "Ensure 'Hacker News', 'new', 'past', 'comments', 'ask', 'show', and 'jobs' links are present."
+          "target": "a|Sign in|",
+          "details": "Click the 'Sign in' button to navigate to the sign-in page."
         },
         {
-          "action": "assert",
+          "action": "type",
           "page_id": "page_1",
           "target": null,
-          "details": "Ensure 'Hacker News', 'new', 'past', 'comments', 'ask', 'show', and 'jobs' links are present."
+          "details": "Enter invalid email and password on the sign-in form."
+        },
+        {
+          "action": "click",
+          "page_id": "page_1",
+          "target": "button|Next|",
+          "details": "Click 'Next' to attempt authentication."
         }
       ],
       "covered_element_keys": [
-        "page_0::a|Hacker News|",
-        "page_1::a|Hacker News|"
+        "page_0::a|Sign in|"
       ],
       "selectors": [
         {
-          "element_key": "a|Hacker News|",
+          "element_key": "a|Sign in|",
           "page_id": "page_0",
-          "css_selector": "a",
+          "css_selector": "a.yt-spec-button-shape-next.yt-spec-button-shape-next--outline.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-leading.yt-spec-button-shape-next--enable-backdrop-filter-experiment",
           "xpath": null,
-          "description": "Main navigation link to the main page."
-        },
-        {
-          "element_key": "a|Hacker News|",
-          "page_id": "page_1",
-          "css_selector": "a",
-          "xpath": null,
-          "description": "Main navigation link to the main page."
+          "description": "Navigates to the sign-in page when clicked."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_BROKEN_LINK_01",
-      "name": "Check for Broken Links",
-      "description": "Verify that no broken links are present on the pages.",
+      "id": "TC_NAVIGATE_HOME_03",
+      "name": "Navigate to Home from main menu",
+      "description": "User navigates to the home page by clicking on 'Home' in the main navigation.",
       "tags": [
         "functional",
-        "validation"
+        "happy_path"
       ],
       "steps": [
         {
-          "action": "navigate",
+          "action": "click",
           "page_id": "page_0",
-          "target": null,
-          "details": "Navigate to each link on the page and check for 404 or similar errors."
-        },
-        {
-          "action": "navigate",
-          "page_id": "page_1",
-          "target": null,
-          "details": "Navigate to each link on the page and check for 404 or similar errors."
+          "target": "a|Home|endpoint",
+          "details": "Click 'Home' to navigate to the main YouTube home page."
         }
       ],
       "covered_element_keys": [
-        "page_0::a|Hacker News|",
-        "page_1::a|Hacker News|"
+        "page_0::a|Home|endpoint"
       ],
       "selectors": [
         {
-          "element_key": "a|Hacker News|",
+          "element_key": "a|Home|endpoint",
           "page_id": "page_0",
-          "css_selector": "a",
+          "css_selector": "a#endpoint.yt-simple-endpoint.style-scope.ytd-mini-guide-entry-renderer",
           "xpath": null,
-          "description": "Main navigation link to the main page."
-        },
-        {
-          "element_key": "a|Hacker News|",
-          "page_id": "page_1",
-          "css_selector": "a",
-          "xpath": null,
-          "description": "Main navigation link to the main page."
+          "description": "Navigates to the YouTube home page when clicked."
         }
       ],
       "meta": {}
     }
   ],
   "element_coverage": {
-    "page_0::a|Hacker News|": [
-      "TC_HAPPY_PATH_01",
-      "TC_VALIDATE_MAIN_PAGES_01",
-      "TC_BROKEN_LINK_01"
+    "page_0::a|Sign in|": [
+      "TC_SIGNIN_VALID_01",
+      "TC_SIGNIN_INVALID_02"
     ],
-    "page_1::a|new|": [
-      "TC_HAPPY_PATH_01"
-    ],
-    "page_1::a|Hacker News|": [
-      "TC_VALIDATE_MAIN_PAGES_01",
-      "TC_BROKEN_LINK_01"
+    "page_0::a|Home|endpoint": [
+      "TC_NAVIGATE_HOME_03"
     ]
   },
-  "coverage_summary": "This set of test cases covers the basic functionality of navigating between pages on Hacker News and validating that key elements are present. It does not cover form submissions, deep links, or extensive content validation but ensures a user can navigate through the site's main sections.",
+  "coverage_summary": "This set of test cases covers basic navigation through the main pages and a happy path for signing into YouTube. It does not cover full account creation, advanced search functionalities, or user-generated content interactions.",
   "meta": {
-    "elapsed_seconds": "103.655",
+    "elapsed_seconds": "81.436",
     "max_depth": 1,
     "max_pages": 3,
     "max_links_per_page": 3
