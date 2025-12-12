@@ -19,10 +19,10 @@ class TestRunner:
         self.root_path = root_path
         self.output_dir = root_path / "artifacts" / "generated_tests"
     
-    def generate_tests(self, plan_path: str) -> bool:
+    def generate_tests(self, plan_path: str, feedback: str = None) -> bool:
         """Generate tests from plan."""
         try:
-            generator = CodeGenerator(plan_path, str(self.output_dir))
+            generator = CodeGenerator(plan_path, str(self.output_dir), feedback=feedback)
             generator.generate()
             return True
         except Exception as e:

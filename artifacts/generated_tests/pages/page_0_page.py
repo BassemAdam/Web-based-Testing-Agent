@@ -6,8 +6,13 @@ class Page_0Page(BasePage):
     
     def __init__(self, page: Page):
         super().__init__(page)
-        self._sign_in_button = page.get_by_role('link', name='Sign in')
+        self._home_button = page.locator('a#endpoint.yt-simple-endpoint.style-scope.ytd-mini-guide-entry-renderer')
+        self._signin_button = page.get_by_role('link', name='Sign in')
     
-    def click_sign_in(self):
-        """Clicks the 'Sign in' button."""
-        self._sign_in_button.click()
+    def navigate_to_home(self) -> None:
+        """Navigate back to the main YouTube home page."""
+        self._home_button.click()
+    
+    def navigate_to_signin(self) -> None:
+        """Navigate to the sign-in page by clicking the 'Sign in' button."""
+        self._signin_button.click()

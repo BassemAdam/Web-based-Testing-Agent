@@ -3,23 +3,21 @@ from playwright.sync_api import Page, expect
 from pages.page_0_page import Page_0Page
 from pages.page_1_page import Page_1Page
 
+@pytest.mark.functional
+@pytest.mark.negative
 def test_TC_SIGNIN_INVALID_02(page):
+    # Instantiate the page objects using the provided methods
     home_page = Page_0Page(page)
-    home_page.navigate()
+    login_page = Page_1Page(page)
     
-    signin_button = "a|Sign in|"
-    invalid_email = "invalid@example.com"
-    invalid_password = "invalidpassword"
+    # Navigate to the start URL and click on the sign-in button
+    home_page.navigate_to_home()
+    home_page.navigate_to_signin()
     
-    # Click the 'Sign in' button
-    home_page.click_sign_in()
+    # Enter invalid credentials and attempt authentication
+    login_page.enter_invalid_credentials("dodooooo@gmail.com", "lolo@gmail.com")
+    login_page.click_next_with_invalid_credentials()
     
-    # Enter an invalid email address and password
-    page_1_page = Page_1Page(page)
-    page_1_page.type_credentials(invalid_email, invalid_password)
-    
-    # Click the 'Next' button to attempt sign-in
-    page_1_page.click_next_for_invalid_credentials(invalid_email, invalid_password)
-    
-    # Add assertions here if necessary to verify the outcome
-    # Example: expect(page.locator('some_selector')).to_be_visible()
+    # Add assertions to verify the expected outcome (e.g., error message)
+    # Note: The exact content of the assertion would depend on what YouTube shows upon invalid sign-in attempt
+    expect(page).to_have_title("YouTube")  # Example assertion, adjust based on actual behavior

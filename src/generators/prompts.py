@@ -46,6 +46,9 @@ Test Case:
 Page Objects Available (with their methods):
 {page_objects_info}
 
+User Feedback (CRITICAL - You MUST follow this):
+{feedback}
+
 Requirements:
 0.  **Do Not Invent Page Objects**: You MUST ONLY use the exact Page Object class names provided in `Page Objects Available`.
     - Do NOT guess names like `LoginPage` / `HomePage`.

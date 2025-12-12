@@ -18,16 +18,18 @@ class CodeGenerator:
     Generates Playwright test code (Page Objects and Test Files) from a Test Plan.
     """
     
-    def __init__(self, test_plan_path: str, output_dir: str):
+    def __init__(self, test_plan_path: str, output_dir: str, feedback: str = None):
         """
         Initialize the generator.
         
         Args:
             test_plan_path: Path to the JSON file containing the test plan.
             output_dir: Directory where the generated code will be saved.
+            feedback: Optional user feedback to guide code generation.
         """
         self.test_plan_path = test_plan_path
         self.output_dir = output_dir
+        self.feedback = feedback or "No specific feedback provided."
         
         # Initialize the AI client (using DeepSeek Coder for code generation)
         # Use generator-specific settings so other phases using LLMClient aren't affected.
@@ -423,7 +425,8 @@ class BasePage:
         prompt = SINGLE_TEST_FILE_PROMPT.format(
             start_url=start_url,
             test_case_info=json.dumps(test_case, indent=2),
-            page_objects_info=json.dumps(page_objects_info, indent=2)
+            page_objects_info=json.dumps(page_objects_info, indent=2),
+            feedback=self.feedback
         )
         
         # Ask AI to generate the code

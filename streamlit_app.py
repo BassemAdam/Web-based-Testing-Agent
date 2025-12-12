@@ -111,6 +111,15 @@ def main():
         
         st.markdown("---")
         st.subheader("Test Execution")
+        
+        test_gen_feedback = st.text_area(
+            "Test Generation Feedback (optional)",
+            value="",
+            placeholder="E.g., Use specific assertions for login, handle dynamic popups...",
+            height=100,
+            help="Provide instructions to the code generator to refine the test code."
+        )
+        
         col_gen, col_run = st.columns(2)
         generate_tests_btn = col_gen.button("🔧 Generate Tests", use_container_width=True)
         run_tests_btn = col_run.button("▶️ Run Tests", use_container_width=True, type="primary")
@@ -137,6 +146,9 @@ def main():
             graph = run_exploration(start_url, max_depth, max_pages, max_links)
             designer = get_designer(model_name or None)
             plan_dict = designer.build_plan(graph, human_feedback=None)
+            
+            # Add start_url to plan for code generation
+            plan_dict["start_url"] = start_url
 
             # Save in session
             st.session_state.graph = graph
@@ -164,6 +176,9 @@ def main():
                     designer = get_designer(model_name or None)
                     # Rebuild plan with feedback (you can change build_plan to use prior plan if you want)
                     plan_dict = designer.build_plan(graph, human_feedback=fb)
+                    
+                    # Preserve start_url in refined plan
+                    plan_dict["start_url"] = st.session_state.start_url
                     st.session_state.plan = plan_dict
 
                     # Regenerate overlays based on new coverage
@@ -174,12 +189,22 @@ def main():
     
     # --- Generate Tests ---------------------------------------------------
     if generate_tests_btn:
-        if not st.session_state.plan:
-            st.warning("Please generate a test plan first.")
+        plan_path = None
+        
+        # Priority: Check disk first, then session
+        possible_plan = ROOT / "src" / "artifacts" / "test_plans" / "test_plan.json"
+        if possible_plan.exists():
+            plan_path = str(possible_plan)
+            st.info("Using existing test plan from disk.")
+        elif st.session_state.plan:
+            plan_path = test_runner.save_plan(st.session_state.plan)
         else:
+            st.warning("Please generate a test plan first.")
+        
+        if plan_path:
             with st.spinner("Generating test code..."):
-                plan_path = test_runner.save_plan(st.session_state.plan)
-                success = test_runner.generate_tests(plan_path)
+                # Pass the feedback from the sidebar
+                success = test_runner.generate_tests(plan_path, feedback=test_gen_feedback)
                 
                 if success:
                     st.session_state.tests_generated = True
