@@ -24,7 +24,19 @@ class CodeGenerator:
         self.output_dir = output_dir
         
         # Initialize the AI client (using DeepSeek Coder for code generation)
-        self.llm = LLMClient(model="deepseek-coder-v2:16b")
+        # Use generator-specific settings so other phases using LLMClient aren't affected.
+        self.llm = LLMClient(
+            model="deepseek-coder-v2:16b",
+            config={
+                "temperature": 0.2,
+                # Allow larger outputs for full files.
+                "max_tokens": 4096,
+                # Increase context window so the model can see more prompt/test-plan details.
+                "num_ctx": 8192,
+                # Encourage longer completions on Ollama (maps to generation length).
+                "num_predict": 4096,
+            },
+        )
         
         # Load the test plan data
         self.test_plan = self._load_test_plan()
@@ -75,24 +87,26 @@ class CodeGenerator:
         This class holds common methods used by all pages (like navigation).
         """
         content = """from playwright.sync_api import Page
-        class BasePage:
-            \"\"\"Base class for all Page Objects.\"\"\"
-            
-            # Override this in subclasses if the page has a specific URL
-            URL = None
-            
-            def __init__(self, page: Page):
-                self.page = page
 
-            def navigate(self, url: str = None):
-                \"\"\"Navigate to a URL. Uses self.URL if no url is provided.\"\"\"
-                target_url = url or self.URL
-                if target_url:
-                    self.page.goto(target_url)
-                
-            def get_title(self) -> str:
-                return self.page.title()
-        """
+
+class BasePage:
+    \"\"\"Base class for all Page Objects.\"\"\"
+
+    # Override this in subclasses if the page has a specific URL
+    URL = None
+
+    def __init__(self, page: Page):
+        self.page = page
+
+    def navigate(self, url: str | None = None):
+        \"\"\"Navigate to a URL. Uses self.URL if no url is provided.\"\"\"
+        target_url = url or self.URL
+        if target_url:
+            self.page.goto(target_url)
+
+    def get_title(self) -> str:
+        return self.page.title()
+"""
         self._save_file(self.pages_dir, "base_page.py", content)
 
     def _group_data_by_page(self) -> Dict[str, Dict]:
@@ -256,6 +270,9 @@ class CodeGenerator:
             imports += f"from pages.{module_name} import {class_name}\n"
             
         final_code = imports + "\n" + code
+
+        # Validate and attempt to fix syntax issues in the generated test file.
+        final_code = self._validate_and_fix_code(final_code)
         
         self._save_file(self.tests_dir, "test_generated.py", final_code)
 
@@ -279,7 +296,7 @@ def browser_context_args(browser_context_args):
 """
         self._save_file(self.tests_dir, "conftest.py", content)
 
-    def _validate_and_fix_code(self, code: str, max_retries: int = 2) -> str:
+    def _validate_and_fix_code(self, code: str, max_retries: int = 6) -> str:
         """
         Self-Correction Mechanism.
         Checks if the generated code has syntax errors. If so, asks AI to fix it.
