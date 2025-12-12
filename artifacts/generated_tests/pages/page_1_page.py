@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, Locator
+from playwright.sync_api import Page
 from .base_page import BasePage
 
 class Page_1Page(BasePage):
@@ -6,24 +6,17 @@ class Page_1Page(BasePage):
     
     def __init__(self, page: Page):
         super().__init__(page)
-        self._username_input = page.locator("best_locator_for_username")
-        self._password_input = page.locator("best_locator_for_password")
-        self._next_button = page.locator("best_locator_for_next_button")
+        self._username_input = page.locator("input[name='username']")  # Replace with actual locator
+        self._password_input = page.locator("input[name='password']")  # Replace with actual locator
+        self._next_button = page.get_by_role("button", name="Next")  # Replace with actual locator
+    
+    def enter_invalid_credentials(self):
+        self._username_input.fill("invalid@example.com")
+        self._password_input.fill("invalidpassword")
+    
+    def enter_valid_credentials(self, username: str, password: str):
+        self._username_input.fill(username)
+        self._password_input.fill(password)
     
     def click_next(self):
-        """Click the 'Next' button to proceed with authentication."""
-        self._next_button.click()
-    
-    def enter_invalid_credentials(self, email: str, password: str):
-        """Enter invalid email and password on the sign-in form."""
-        self._username_input.fill(email)
-        self._password_input.fill(password)
-    
-    def enter_valid_credentials(self, email: str, password: str):
-        """Enter valid email and password on the sign-in form."""
-        self._username_input.fill(email)
-        self._password_input.fill(password)
-    
-    def attempt_authentication(self):
-        """Click 'Next' to attempt authentication."""
         self._next_button.click()
