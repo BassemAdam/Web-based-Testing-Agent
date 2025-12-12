@@ -2,7 +2,7 @@ from playwright.sync_api import Page
 from .base_page import BasePage
 
 class Page_0Page(BasePage):
-    URL = "Not specified"
+    URL = "https://www.youtube.com/"
     
     def __init__(self, page: Page):
         super().__init__(page)

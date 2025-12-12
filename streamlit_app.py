@@ -244,25 +244,48 @@ def main():
                 status_icon = "✅" if result["status"] == "PASSED" else "❌"
                 status_color = "green" if result["status"] == "PASSED" else "red"
                 
-                # Create a container for each test
-                with st.container():
-                    col_left, col_right = st.columns([3, 1])
+                # Create expander for each test
+                with st.expander(f"{status_icon} **{result['test_id']}** - {result['status']}", expanded=(result["status"] == "FAILED")):
+                    col_left, col_right = st.columns([2, 1])
                     
                     with col_left:
-                        st.markdown(f"### {status_icon} Test Case: `{result['test_id']}`")
-                        st.markdown(f"**File:** {result['file']}")
+                        st.markdown(f"**File:** `{result['file']}`")
                         st.markdown(f"**Function:** `{result['test_name']}`")
+                        st.markdown(f"**Status:** :{status_color}[**{result['status']}**]")
+                        
+                        # Show failure details if failed
+                        if result["status"] == "FAILED" and result["reason"]:
+                            st.markdown("**❗ Failure Reason:**")
+                            st.error(result["reason"])
                     
                     with col_right:
-                        st.markdown(f"**Status**")
-                        st.markdown(f":{status_color}[**{result['status']}**]")
+                        screenshot_count = result.get("screenshot_count", 0)
+                        st.metric("📸 Screenshots", screenshot_count)
                     
-                    # Show failure details if failed
-                    if result["status"] == "FAILED" and result["reason"]:
-                        st.markdown("**❗ Failure Reason:**")
-                        st.error(result["reason"])
-                    
-                    st.markdown("---")
+                    # Display screenshots if available
+                    screenshots = result.get("screenshots", [])
+                    if screenshots:
+                        st.markdown("---")
+                        st.markdown("### 📸 Test Execution Screenshots")
+                        st.caption("Screenshots captured during test execution, showing each step:")
+                        
+                        # Create columns for screenshots (3 per row)
+                        for i in range(0, len(screenshots), 3):
+                            cols = st.columns(3)
+                            for j, col in enumerate(cols):
+                                if i + j < len(screenshots):
+                                    screenshot_path = Path(screenshots[i + j])
+                                    if screenshot_path.exists():
+                                        with col:
+                                            # Extract step info from filename
+                                            step_name = screenshot_path.stem[3:]  # Remove number prefix
+                                            st.image(
+                                                str(screenshot_path),
+                                                caption=f"Step {i + j + 1}: {step_name}",
+                                                use_container_width=True
+                                            )
+                    else:
+                        st.info("No screenshots captured for this test.")
             
             # Full output in expander
             with st.expander("📋 View Full Test Output"):

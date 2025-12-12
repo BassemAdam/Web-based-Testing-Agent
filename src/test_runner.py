@@ -67,6 +67,9 @@ class TestRunner:
             test_results = self._parse_pytest_output(result.stdout, result.stderr)
             print(f"[DEBUG] Parsed {len(test_results)} test results")
             
+            # Collect screenshots for each test
+            self._collect_screenshots(test_results)
+            
             return {
                 "success": result.returncode == 0,
                 "results": test_results,
@@ -94,6 +97,34 @@ class TestRunner:
             }
         finally:
             os.chdir(str(original_dir))
+    
+    def _collect_screenshots(self, test_results: List[Dict]):
+        """Collect screenshots for each test case."""
+        screenshot_base = self.output_dir / "screenshots"
+        
+        if not screenshot_base.exists():
+            print("[DEBUG] No screenshots directory found")
+            return
+        
+        for result in test_results:
+            test_name = result["test_name"]
+            screenshot_dir = screenshot_base / test_name
+            
+            # If exact match doesn't exist, try to find a directory that starts with the test name
+            # This handles cases where the directory might have a suffix like 'chromium'
+            if not screenshot_dir.exists():
+                candidates = list(screenshot_base.glob(f"{test_name}*"))
+                if candidates:
+                    screenshot_dir = candidates[0]
+            
+            if screenshot_dir.exists():
+                screenshots = sorted(screenshot_dir.glob("*.png"))
+                result["screenshots"] = [str(s) for s in screenshots]
+                result["screenshot_count"] = len(screenshots)
+                print(f"[DEBUG] Found {len(screenshots)} screenshots for {test_name}")
+            else:
+                result["screenshots"] = []
+                result["screenshot_count"] = 0
     
     def _parse_pytest_output(self, stdout: str, stderr: str) -> List[Dict]:
         """Parse pytest output to extract test results."""
@@ -126,6 +157,8 @@ class TestRunner:
                 "status": status,
                 "reason": None,
                 "duration": None,
+                "screenshots": [],
+                "screenshot_count": 0,
             }
             
             # Try to extract failure reason if failed
