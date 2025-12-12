@@ -247,7 +247,13 @@ class CodeGenerator:
         """
         Creates 'base_page.py'.
         This class holds common methods used by all pages (like navigation).
+        Only creates if file doesn't exist to preserve custom modifications.
         """
+        # Skip if file already exists
+        if os.path.exists(os.path.join(self.pages_dir, "base_page.py")):
+            logger.info("⏭️  Skipping base_page.py (already exists)")
+            return
+            
         content = """from playwright.sync_api import Page
 
 
@@ -497,7 +503,13 @@ class BasePage:
         """
         Generates 'conftest.py' for pytest configuration.
         Sets up the browser viewport.
+        Only creates if file doesn't exist to preserve custom modifications like monkey patching.
         """
+        # Skip if file already exists
+        if os.path.exists(os.path.join(self.tests_dir, "conftest.py")):
+            logger.info("⏭️  Skipping conftest.py (already exists)")
+            return
+            
         content = """import pytest
 from playwright.sync_api import sync_playwright
 
