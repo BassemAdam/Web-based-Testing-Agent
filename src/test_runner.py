@@ -102,9 +102,9 @@ class TestRunner:
         print(f"[DEBUG] Parsing pytest output...")
         print(f"[DEBUG] First 500 chars of stdout:\n{stdout[:500]}")
         
-        # Pattern to match test results: test_file.py::test_name PASSED/FAILED
-        # Also handle patterns with or without color codes
-        pattern = r'(test_\w+\.py)::(test_\w+)\s+(?:\x1b\[\d+m)?(PASSED|FAILED)'
+        # Pattern to match test results with ANSI color codes and browser markers
+        # Format: tests/test_file.py::test_name[chromium] [31mFAILED[0m
+        pattern = r'(test_\w+\.py)::(test_\w+)(?:\[[\w-]+\])?\s+(?:\x1b\[\d+m)?(PASSED|FAILED)(?:\x1b\[\d+m)?'
         
         matches = list(re.finditer(pattern, stdout))
         print(f"[DEBUG] Found {len(matches)} test result matches")
