@@ -20,6 +20,7 @@ if SRC.exists() and str(SRC) not in sys.path:
 from agent.pipelines.site_explorer import SiteExplorer
 from agent.pipelines.multi_page_test_design_pipeline import MultiPageTestDesignPipeline
 from agent.visualization.coverage_overlay import create_page_coverage_overlay
+from test_runner import TestRunner
 
 
 # ---------------------------------------------------------------------
@@ -55,6 +56,10 @@ def generate_overlays(graph, coverage: dict) -> dict[str, str | None]:
         )
         page_overlays[page_id] = path
     return page_overlays
+
+
+# Initialize test runner
+test_runner = TestRunner(ROOT)
 
 
 # ---------------------------------------------------------------------
@@ -103,6 +108,12 @@ def main():
         col_run, col_refine = st.columns(2)
         run_btn = col_run.button("🚀 Explore + Generate", use_container_width=True)
         refine_btn = col_refine.button("🔁 Refine with feedback", use_container_width=True)
+        
+        st.markdown("---")
+        st.subheader("Test Execution")
+        col_gen, col_run = st.columns(2)
+        generate_tests_btn = col_gen.button("🔧 Generate Tests", use_container_width=True)
+        run_tests_btn = col_run.button("▶️ Run Tests", use_container_width=True, type="primary")
 
     # Use Streamlit session_state to persist data across reruns
     if "graph" not in st.session_state:
@@ -113,6 +124,12 @@ def main():
         st.session_state.overlays = {}
     if "start_url" not in st.session_state:
         st.session_state.start_url = None
+    if "test_results" not in st.session_state:
+        st.session_state.test_results = None
+    if "tests_generated" not in st.session_state:
+        st.session_state.tests_generated = False
+    if "show_exploration" not in st.session_state:
+        st.session_state.show_exploration = True
 
     # --- Run full pipeline ------------------------------------------------
     if run_btn:
@@ -125,6 +142,7 @@ def main():
             st.session_state.graph = graph
             st.session_state.plan = plan_dict
             st.session_state.start_url = start_url
+            st.session_state.show_exploration = True
 
             # Generate overlays
             overlays = generate_overlays(graph, plan_dict["coverage"])
@@ -153,14 +171,126 @@ def main():
                     st.session_state.overlays = overlays
 
                 st.success("Plan refined using your feedback!")
+    
+    # --- Generate Tests ---------------------------------------------------
+    if generate_tests_btn:
+        if not st.session_state.plan:
+            st.warning("Please generate a test plan first.")
+        else:
+            with st.spinner("Generating test code..."):
+                plan_path = test_runner.save_plan(st.session_state.plan)
+                success = test_runner.generate_tests(plan_path)
+                
+                if success:
+                    st.session_state.tests_generated = True
+                    st.success("✅ Test code generated successfully!")
+                else:
+                    st.error("❌ Failed to generate test code.")
+    
+    # --- Run Tests --------------------------------------------------------
+    if run_tests_btn:
+        tests_dir = ROOT / "artifacts" / "generated_tests" / "tests"
+        if not tests_dir.exists() or not list(tests_dir.glob("test_*.py")):
+            st.warning("Please generate tests first using the '🔧 Generate Tests' button.")
+        else:
+            with st.spinner("Running tests..."):
+                test_execution_result = test_runner.run_tests()
+                st.session_state.test_results = test_execution_result
+                
+                # Clear exploration state to show only test results
+                st.session_state.show_exploration = False
+            
+            # Show success or failure based on return code and results
+            if test_execution_result["return_code"] == -1:
+                st.error(f"❌ Error running tests: {test_execution_result['stderr']}")
+            elif test_execution_result["success"]:
+                st.success(f"✅ All tests passed! ({len(test_execution_result['results'])} tests)")
+            else:
+                st.error(f"❌ Some tests failed. See results below. ({len(test_execution_result['results'])} tests run)")
 
     # --- Show results if we have a plan ----------------------------------
     graph = st.session_state.graph
     plan = st.session_state.plan
     overlays = st.session_state.overlays
     start_url_state = st.session_state.start_url
+    test_results = st.session_state.test_results
+    show_exploration = st.session_state.show_exploration
 
-    if graph and plan:
+    # Show test results if available
+    if test_results:
+        st.markdown("---")
+        st.header("🧪 Test Execution Results")
+        
+        if test_results["results"]:
+            # Create summary metrics
+            total_tests = len(test_results["results"])
+            passed_tests = sum(1 for r in test_results["results"] if r["status"] == "PASSED")
+            failed_tests = total_tests - passed_tests
+            pass_rate = (passed_tests / total_tests * 100) if total_tests > 0 else 0
+            
+            # Summary row
+            col1, col2, col3, col4 = st.columns(4)
+            col1.metric("Total Tests", total_tests)
+            col2.metric("✅ Passed", passed_tests)
+            col3.metric("❌ Failed", failed_tests)
+            col4.metric("Pass Rate", f"{pass_rate:.1f}%")
+            
+            st.markdown("---")
+            
+            # Display each test case in a column
+            st.subheader("Test Case Results")
+            
+            for idx, result in enumerate(test_results["results"], 1):
+                status_icon = "✅" if result["status"] == "PASSED" else "❌"
+                status_color = "green" if result["status"] == "PASSED" else "red"
+                
+                # Create a container for each test
+                with st.container():
+                    col_left, col_right = st.columns([3, 1])
+                    
+                    with col_left:
+                        st.markdown(f"### {status_icon} Test Case: `{result['test_id']}`")
+                        st.markdown(f"**File:** {result['file']}")
+                        st.markdown(f"**Function:** `{result['test_name']}`")
+                    
+                    with col_right:
+                        st.markdown(f"**Status**")
+                        st.markdown(f":{status_color}[**{result['status']}**]")
+                    
+                    # Show failure details if failed
+                    if result["status"] == "FAILED" and result["reason"]:
+                        st.markdown("**❗ Failure Reason:**")
+                        st.error(result["reason"])
+                    
+                    st.markdown("---")
+            
+            # Full output in expander
+            with st.expander("📋 View Full Test Output"):
+                st.text(test_results["stdout"])
+                if test_results["stderr"]:
+                    st.markdown("**Standard Error:**")
+                    st.text(test_results["stderr"])
+        else:
+            st.warning("⚠️ No test results were parsed from the output.")
+            
+            # Show raw output for debugging
+            st.markdown("#### Debug Information")
+            st.info(f"**Return Code:** {test_results.get('return_code', 'N/A')}")
+            
+            if test_results["stdout"]:
+                with st.expander("📋 View Raw stdout (for debugging)", expanded=True):
+                    st.text(test_results["stdout"])
+            else:
+                st.warning("No stdout captured")
+            
+            if test_results["stderr"]:
+                with st.expander("❌ View stderr", expanded=True):
+                    st.error(test_results["stderr"])
+            else:
+                st.info("No stderr captured")
+    
+    # Show exploration results only if flag is True
+    if graph and plan and show_exploration:
         st.subheader("1️⃣ Exploration Overview")
 
         st.write(f"**Start URL:** `{start_url_state}`")
