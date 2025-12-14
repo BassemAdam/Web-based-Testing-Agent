@@ -1,18 +1,15 @@
-from playwright.sync_api import Page
+from playwright.sync_api import Page, Locator
 from .base_page import BasePage
 
 class Page_0Page(BasePage):
-    URL = "https://www.youtube.com/"
-    
+    URL = "https://example.com/"  # Updated URL as per feedback
+
     def __init__(self, page: Page):
         super().__init__(page)
-        self._home_button = page.locator('a#endpoint.yt-simple-endpoint.style-scope.ytd-mini-guide-entry-renderer')
-        self._signin_button = page.get_by_role('link', name='Sign in')
-    
-    def navigate_to_home(self) -> None:
-        """Navigate back to the main YouTube home page."""
-        self._home_button.click()
-    
-    def navigate_to_signin(self) -> None:
-        """Navigate to the sign-in page by clicking the 'Sign in' button."""
-        self._signin_button.click()
+        self._learn_more_link = page.get_by_role('link', name='Learn more')
+
+    def navigate_to_domains(self) -> None:
+        """
+        Clicks the 'Learn more' link to navigate to the domains section of IANA.
+        """
+        self._learn_more_link.click()

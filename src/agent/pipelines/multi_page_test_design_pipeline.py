@@ -263,9 +263,14 @@ Constraints:
                 selectors=selectors,
             )
             test_cases.append(tc)
+        pages: Dict[str, Dict[str, str]] = {}    
+        for page_id, node in graph.pages.items():
+             snap = node.snapshot
+             pages[page_id] = {"url": snap.url, "title": snap.title}
 
         return {
             "test_cases": test_cases,
             "coverage": coverage,
+            "pages": pages,
             "coverage_summary": json_plan.get("coverage_summary"),
         }

@@ -191,13 +191,14 @@ def main():
     if generate_tests_btn:
         plan_path = None
         
-        # Priority: Check disk first, then session
+        # Priority: Check session first, then disk
         possible_plan = ROOT / "src" / "artifacts" / "test_plans" / "test_plan.json"
-        if possible_plan.exists():
+        if st.session_state.plan:
+            plan_path = test_runner.save_plan(st.session_state.plan)
+        elif possible_plan.exists():
             plan_path = str(possible_plan)
             st.info("Using existing test plan from disk.")
-        elif st.session_state.plan:
-            plan_path = test_runner.save_plan(st.session_state.plan)
+
         else:
             st.warning("Please generate a test plan first.")
         

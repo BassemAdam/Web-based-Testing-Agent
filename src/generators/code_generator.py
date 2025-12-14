@@ -48,7 +48,7 @@ class CodeGenerator:
         
         # Load the test plan data
         self.test_plan = self._load_test_plan()
-        
+        self.pages = self.test_plan.get("pages", {})
         # Setup output directories
         self.pages_dir = os.path.join(output_dir, "pages")
         self.tests_dir = os.path.join(output_dir, "tests")
@@ -135,7 +135,8 @@ class CodeGenerator:
                     page_object_code=code,
                     expected_selectors=selectors_info
                 )
-                
+                if self.feedback and not self.feedback.startswith("No specific feedback"):
+                    prompt = prompt + "\n\nUser Feedback (apply when fixing page object):\n" + self.feedback
                 fixed_code = self.llm.chat([{"role": "user", "content": prompt}])
                 fixed_code = self._clean_code_markdown(fixed_code)
                 fixed_code = self._validate_and_fix_code(fixed_code)
@@ -384,7 +385,10 @@ class BasePage:
         class_name = f"{page_id.capitalize()}Page"
         
         # Get URL if this is the home page (page_0)
-        page_url = self.test_plan.get("start_url") if page_id == "page_0" else None
+        # page_url = self.test_plan.get("start_url") if page_id == "page_0" else None
+        page_url = self.pages.get(page_id, {}).get("url")
+        if not page_url and page_id == "page_0":
+            page_url = self.test_plan.get("start_url")
         
         # Fill the prompt template
         prompt = PAGE_OBJECT_PROMPT.format(
@@ -395,6 +399,9 @@ class BasePage:
             actions_info=actions_list,
             class_name=class_name
         )
+        
+        if self.feedback and not self.feedback.startswith("No specific feedback"):
+            prompt += f"\n\nUser Feedback (apply to Page Object generation):\n{self.feedback}"
         
         # Ask AI to generate the code
         code = self.llm.chat([{"role": "user", "content": prompt}])

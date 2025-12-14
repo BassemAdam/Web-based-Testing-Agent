@@ -1,9 +1,9 @@
 {
   "test_cases": [
     {
-      "id": "TC_SIGNIN_VALID_01",
-      "name": "Sign in with valid credentials",
-      "description": "User successfully signs into YouTube using a valid Google account.",
+      "id": "TC_NAVIGATE_01",
+      "name": "Navigate from Example Domain to Domains Page",
+      "description": "User navigates from the home page to the domains section of IANA",
       "tags": [
         "functional",
         "happy_path"
@@ -12,118 +12,167 @@
         {
           "action": "click",
           "page_id": "page_0",
-          "target": "a|Sign in|",
-          "details": "Click the 'Sign in' button to navigate to the sign-in page."
+          "target": "a|Learn more| | tag=a, text='Learn more', id='', css='a'",
+          "details": "Click the 'Learn more' link on the home page to navigate to the domains section of IANA."
         },
         {
-          "action": "type",
+          "action": "assert",
           "page_id": "page_1",
           "target": null,
-          "details": "Enter valid email/username and password on the sign-in form."
-        },
-        {
-          "action": "click",
-          "page_id": "page_1",
-          "target": "button|Next|",
-          "details": "Click 'Next' to proceed with authentication."
+          "details": "Ensure that the user is on the 'Example Domains' page and not on the home page."
         }
       ],
       "covered_element_keys": [
-        "page_0::a|Sign in|"
+        "page_0::a|Learn more|"
       ],
       "selectors": [
         {
-          "element_key": "a|Sign in|",
+          "element_key": "a|Learn more|",
           "page_id": "page_0",
-          "css_selector": "a.yt-spec-button-shape-next.yt-spec-button-shape-next--outline.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-leading.yt-spec-button-shape-next--enable-backdrop-filter-experiment",
+          "css_selector": "a",
           "xpath": null,
-          "description": "Navigates to the sign-in page from the main YouTube page."
+          "description": "Navigates to the next page by clicking 'Learn more' link."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_SIGNIN_INVALID_02",
-      "name": "Attempt to sign in with invalid credentials",
-      "description": "User attempts to sign into YouTube using an invalid Google account.",
+      "id": "TC_CHECK_NAVIGATION_02",
+      "name": "Check Navigation Links on Domains Page",
+      "description": "User checks available navigation links on the domains page",
       "tags": [
         "functional",
-        "negative"
+        "exploratory"
       ],
       "steps": [
         {
-          "action": "click",
-          "page_id": "page_0",
-          "target": "a|Sign in|",
-          "details": "Click the 'Sign in' button to navigate to the sign-in page."
-        },
-        {
-          "action": "type",
+          "action": "assert",
           "page_id": "page_1",
           "target": null,
-          "details": "Enter invalid email/username and password on the sign-in form."
-        },
-        {
-          "action": "click",
-          "page_id": "page_1",
-          "target": "button|Next|",
-          "details": "Click 'Next' to attempt authentication with invalid credentials."
+          "details": "Verify that the 'Domains', 'Protocols', 'Numbers', 'About', and 'RFC 2606' links are present on the page."
         }
       ],
-      "covered_element_keys": [
-        "page_0::a|Sign in|"
-      ],
-      "selectors": [
-        {
-          "element_key": "a|Sign in|",
-          "page_id": "page_0",
-          "css_selector": "a.yt-spec-button-shape-next.yt-spec-button-shape-next--outline.yt-spec-button-shape-next--call-to-action.yt-spec-button-shape-next--size-m.yt-spec-button-shape-next--icon-leading.yt-spec-button-shape-next--enable-backdrop-filter-experiment",
-          "xpath": null,
-          "description": "Navigates to the sign-in page from the main YouTube page."
-        }
-      ],
+      "covered_element_keys": [],
+      "selectors": [],
       "meta": {}
     },
     {
-      "id": "TC_NAVIGATION_HOME_03",
-      "name": "Navigate to Home from main page",
-      "description": "User navigates back to the home page of YouTube.",
+      "id": "TC_CHECK_LINKS_03",
+      "name": "Check Link Functionality on Domains Page",
+      "description": "User checks the functionality of each link on the domains page",
       "tags": [
         "functional",
-        "happy_path"
+        "exploratory"
       ],
       "steps": [
         {
           "action": "click",
-          "page_id": "page_0",
-          "target": "a|Home|endpoint",
-          "details": "Click the 'Home' button to navigate back to the main YouTube page."
+          "page_id": "page_1",
+          "target": "a|Domains| | tag=a, text='Domains', id='', css='a'",
+          "details": "Click the 'Domains' link and ensure it navigates to a relevant sub-page or page."
+        },
+        {
+          "action": "click",
+          "page_id": "page_1",
+          "target": "a|Protocols| | tag=a, text='Protocols', id='', css='a'",
+          "details": "Click the 'Protocols' link and ensure it navigates to a relevant sub-page or page."
+        },
+        {
+          "action": "click",
+          "page_id": "page_1",
+          "target": "a|Numbers| | tag=a, text='Numbers', id='', css='a'",
+          "details": "Click the 'Numbers' link and ensure it navigates to a relevant sub-page or page."
+        },
+        {
+          "action": "click",
+          "page_id": "page_1",
+          "target": "a|About| | tag=a, text='About', id='', css='a'",
+          "details": "Click the 'About' link and ensure it navigates to a relevant sub-page or page."
+        },
+        {
+          "action": "click",
+          "page_id": "page_1",
+          "target": "a|RFC 2606| | tag=a, text='RFC 2606', id='', css='a'",
+          "details": "Click the 'RFC 2606' link and ensure it navigates to a relevant sub-page or page."
         }
       ],
       "covered_element_keys": [
-        "page_0::a|Home|endpoint"
+        "page_1::a|Domains|",
+        "page_1::a|Protocols|",
+        "page_1::a|Numbers|",
+        "page_1::a|About|",
+        "page_1::a|RFC 2606|"
       ],
       "selectors": [
         {
-          "element_key": "a|Home|endpoint",
-          "page_id": "page_0",
-          "css_selector": "a#endpoint.yt-simple-endpoint.style-scope.ytd-mini-guide-entry-renderer",
+          "element_key": "a|Domains|",
+          "page_id": "page_1",
+          "css_selector": "a",
           "xpath": null,
-          "description": "Navigates to the home page from any other page on YouTube."
+          "description": "Navigates to the Domains sub-page."
+        },
+        {
+          "element_key": "a|Protocols|",
+          "page_id": "page_1",
+          "css_selector": "a",
+          "xpath": null,
+          "description": "Navigates to the Protocols sub-page."
+        },
+        {
+          "element_key": "a|Numbers|",
+          "page_id": "page_1",
+          "css_selector": "a",
+          "xpath": null,
+          "description": "Navigates to the Numbers sub-page."
+        },
+        {
+          "element_key": "a|About|",
+          "page_id": "page_1",
+          "css_selector": "a",
+          "xpath": null,
+          "description": "Navigates to the About sub-page."
+        },
+        {
+          "element_key": "a|RFC 2606|",
+          "page_id": "page_1",
+          "css_selector": "a",
+          "xpath": null,
+          "description": "Navigates to the RFC 2606 sub-page."
         }
       ],
       "meta": {}
     }
   ],
   "coverage": {
-    "page_0::a|Sign in|": [
-      "TC_SIGNIN_VALID_01",
-      "TC_SIGNIN_INVALID_02"
+    "page_0::a|Learn more|": [
+      "TC_NAVIGATE_01"
     ],
-    "page_0::a|Home|endpoint": [
-      "TC_NAVIGATION_HOME_03"
+    "page_1::a|Domains|": [
+      "TC_CHECK_LINKS_03"
+    ],
+    "page_1::a|Protocols|": [
+      "TC_CHECK_LINKS_03"
+    ],
+    "page_1::a|Numbers|": [
+      "TC_CHECK_LINKS_03"
+    ],
+    "page_1::a|About|": [
+      "TC_CHECK_LINKS_03"
+    ],
+    "page_1::a|RFC 2606|": [
+      "TC_CHECK_LINKS_03"
     ]
   },
-  "coverage_summary": "This set of test cases covers basic navigation and sign-in functionality. It includes a valid sign-in scenario, an invalid sign-in attempt for negative testing, and a navigation back to the home page from any other page. Additional tests could explore more complex user flows and error handling.",
-  "start_url": "https://www.youtube.com/"
+  "pages": {
+    "page_0": {
+      "url": "https://example.com/",
+      "title": "Example Domain"
+    },
+    "page_1": {
+      "url": "https://www.iana.org/help/example-domains",
+      "title": "Example Domains"
+    }
+  },
+  "coverage_summary": "The test cases cover navigation from home to domains section, checking presence of main navigation links on the domains page, and verifying functionality of each link. Additional tests could explore deeper pages or functional interactions.",
+  "start_url": "https://example.com"
 }

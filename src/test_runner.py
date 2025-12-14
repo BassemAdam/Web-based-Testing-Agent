@@ -53,7 +53,8 @@ class TestRunner:
             
             # Run pytest with verbose output and color
             result = subprocess.run(
-                [sys.executable, "-m", "pytest", "tests", "-v", "--tb=short", "--color=yes"],
+                [sys.executable, "-m", "pytest", "tests", "-v", "--tb=short", "--color=yes", 
+                 "--headed", "--slowmo", "1000"],
                 capture_output=True,
                 text=True,
                 timeout=300,  # 5 minute timeout

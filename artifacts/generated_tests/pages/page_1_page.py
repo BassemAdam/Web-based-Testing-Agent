@@ -1,30 +1,37 @@
-from playwright.sync_api import Page, Locator
+from playwright.sync_api import Page, expect
 from .base_page import BasePage
 
 class Page_1Page(BasePage):
-    URL = "Not specified"
+    URL = "https://www.iana.org/help/example-domains"
     
     def __init__(self, page: Page):
         super().__init__(page)
-        self._next_button: Locator = page.get_by_role("button", name="Next")
-        self._username_input: Locator = page.locator("#usernameInput")
+        self._Domains_link = page.get_by_role('link', name='Domains').nth(0)
+        self._Protocols_link = page.get_by_role('link', name='Protocols').nth(0)
+        self._Numbers_link = page.get_by_role('link', name='Numbers').nth(0)
+        self._About_link = page.get_by_role('link', name='About').nth(0)
+        self._RFC2606_link = page.get_by_role('link', name='RFC 2606').nth(0)
     
-    def click_next(self):
-        """Click the 'Next' button to proceed with authentication."""
-        self._next_button.click()
+    def navigate_to_domains(self):
+        self._Domains_link.click()
+        expect(self.page).to_have_url("https://www.iana.org/domains")
     
-    def enter_invalid_credentials(self, username: str = "invalid@example.com", password: str = "invalidpassword"):
-        """Enter invalid email/username and password on the sign-in form."""
-        self._username_input.fill(username)
-        # Assuming there's a locator for password input as well
-        page.locator("#passwordInput").fill(password)
+    def navigate_to_protocols(self):
+        self._Protocols_link.click()
+        expect(self.page).to_have_url("https://www.iana.org/protocols")
     
-    def enter_valid_credentials(self, username: str = "valid@example.com", password: str = "validpassword"):
-        """Enter valid email/username and password on the sign-in form."""
-        self._username_input.fill(username)
-        # Assuming there's a locator for password input as well
-        page.locator("#passwordInput").fill(password)
+    def navigate_to_numbers(self):
+        self._Numbers_link.click()
+        expect(self.page).to_have_url("https://www.iana.org/numbers")
     
-    def click_next_with_invalid_credentials(self):
-        """Click 'Next' to attempt authentication with invalid credentials."""
-        self._next_button.click()
+    def navigate_to_about(self):
+        self._About_link.click()
+        expect(self.page).to_have_url("https://www.iana.org/about")
+    
+    def verify_links_present(self):
+        expect(self._Domains_link).to_be_visible()
+        expect(self._Protocols_link).to_be_visible()
+        expect(self._Numbers_link).to_be_visible()
+        expect(self._About_link).to_be_visible()
+        expect(self._RFC2606_link).to_be_visible()
+        
