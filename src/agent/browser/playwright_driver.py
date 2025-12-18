@@ -48,13 +48,10 @@ class BrowserDriver:
     def extract_elements(self, max_elements: int = 200) -> List[ElementDescriptor]:
         """
         Extract candidate elements (buttons, inputs, links) with their locators.
-        Keep it small for Phase 1; we can refine heuristics later.
         """
         assert self.page is not None
 
         elements: List[ElementDescriptor] = []
-
-        # Simple heuristic: query some interactive elements
         selector_groups = [
             "a",
             "button",
@@ -81,14 +78,12 @@ class BrowserDriver:
                     aria_label = handle.get_attribute("aria-label")
                     name_attr = handle.get_attribute("name")
                     type_attr = handle.get_attribute("type")
-
-                    # create simple CSS locator
-                    css_locator_parts = [tag]
-                    if element_id:
-                        css_locator_parts.append(f"#{element_id}")
-                    if classes:
-                        css_locator_parts.extend(f".{c}" for c in classes)
-                    css_selector = "".join(css_locator_parts)
+                    href = handle.get_attribute("href") if tag == "a" else None
+                    
+                    # Build a more specific CSS selector
+                    css_selector = self._build_specific_selector(
+                        handle, tag, element_id, classes, text, aria_label, href
+                    )
 
                     key = (tag, element_id, text, tuple(classes))
                     if key in seen:
@@ -99,22 +94,117 @@ class BrowserDriver:
                         id=element_id,
                         tag=tag,
                         text=text,
-                        role=None,  # can be enriched later via LLM
+                        role=None,
                         aria_label=aria_label,
                         name=name_attr,
                         type=type_attr,
                         css_selector=css_selector,
-                        xpath=None,  # optional future
-                        attributes={},  # could add filtered attributes here
+                        xpath=self._build_xpath(handle, tag, text, element_id),
+                        attributes={"href": href} if href else {},
                         classes=classes,
                         bounding_box=box,
                     )
                     elements.append(desc)
+
                 except Exception:
-                    # For now, ignore elements that explode on us
                     continue
 
         return elements
+
+    def _build_specific_selector(
+        self, 
+        handle, 
+        tag: str, 
+        element_id: str, 
+        classes: List[str], 
+        text: str,
+        aria_label: str,
+        href: str
+    ) -> str:
+        """
+        Build a specific, unique CSS selector for an element.
+        Priority: ID > data-testid > aria-label > href > text-based > nth-child
+        """
+        # 1. ID is most reliable
+        if element_id:
+            return f"{tag}#{element_id}"
+        
+        # 2. Check for data-testid
+        data_testid = handle.get_attribute("data-testid")
+        if data_testid:
+            return f'{tag}[data-testid="{data_testid}"]'
+        
+        # 3. Check for data-test or data-cy (common testing attributes)
+        for attr in ["data-test", "data-cy", "data-automation"]:
+            value = handle.get_attribute(attr)
+            if value:
+                return f'{tag}[{attr}="{value}"]'
+        
+        # 4. Aria-label for accessibility
+        if aria_label:
+            return f'{tag}[aria-label="{aria_label}"]'
+        
+        # 5. For links, use href if it's specific enough
+        if tag == "a" and href and not href.startswith("#") and href != "/":
+            # Use partial href match for cleaner selectors
+            if len(href) < 100:
+                return f'{tag}[href="{href}"]'
+        
+        # 6. Specific classes (filter out generic utility classes)
+        specific_classes = [c for c in classes if not self._is_generic_class(c)]
+        if specific_classes:
+            class_selector = "".join(f".{c}" for c in specific_classes[:3])
+            return f"{tag}{class_selector}"
+        
+        # 7. For buttons/links with text, use :has-text or combine with parent
+        if text and len(text) < 50:
+            clean_text = text.replace('"', '\\"').replace('\n', ' ').strip()
+            if clean_text:
+                # Try to get a unique selector using text
+                return f'{tag}:has-text("{clean_text[:30]}")'
+        
+        # 8. Fallback: try to get nth-child position
+        try:
+            nth = handle.evaluate("""e => {
+                const siblings = Array.from(e.parentElement.children).filter(
+                    c => c.tagName === e.tagName
+                );
+                return siblings.indexOf(e) + 1;
+            }""")
+            parent_tag = handle.evaluate("e => e.parentElement?.tagName?.toLowerCase() || ''")
+            if parent_tag and nth:
+                return f"{parent_tag} > {tag}:nth-child({nth})"
+        except Exception:
+            pass
+        
+        # 9. Last resort with all classes
+        if classes:
+            return f"{tag}.{'.'.join(classes[:2])}"
+        
+        return tag
+
+    def _is_generic_class(self, class_name: str) -> bool:
+        """Check if a class name is too generic to be useful for selection."""
+        generic_patterns = [
+            "btn", "button", "link", "nav", "menu", "item", "list",
+            "container", "wrapper", "row", "col", "flex", "grid",
+            "text", "icon", "img", "active", "disabled", "hidden",
+            "show", "fade", "in", "out", "left", "right", "center"
+        ]
+        lower = class_name.lower()
+        # Keep class if it has specific naming (e.g., "products-link", "cart-button")
+        if "-" in class_name or "_" in class_name:
+            return False
+        return lower in generic_patterns or len(lower) < 3
+
+    def _build_xpath(self, handle, tag: str, text: str, element_id: str) -> str:
+        """Build an XPath selector as fallback."""
+        if element_id:
+            return f'//{tag}[@id="{element_id}"]'
+        if text and len(text) < 50:
+            clean_text = text.replace("'", "\\'").replace('\n', ' ').strip()[:30]
+            return f'//{tag}[contains(text(), "{clean_text}")]'
+        return f"//{tag}"
 
     def get_html(self) -> str:
         assert self.page is not None

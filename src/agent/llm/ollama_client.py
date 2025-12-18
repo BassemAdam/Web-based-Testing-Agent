@@ -1,7 +1,8 @@
+import os
 from openai import OpenAI
 from typing import List, Dict, Any, Optional
 from ..config import llm_config
-
+from dotenv import load_dotenv
 class LLMClient:
     def __init__(self, model: str | None = None, config: Optional[Dict[str, Any]] = None):
         self.client = OpenAI(
@@ -64,3 +65,30 @@ class LLMClient:
 
         resp = self.client.chat.completions.create(**create_kwargs)
         return resp.choices[0].message.content.strip()
+
+class CopilotClient:
+    """
+    LLM Client using GitHub Copilot API (OpenAI-compatible).
+    """
+    
+    def __init__(self, model: str = "gpt-4o", config: Dict[str, Any] = None):
+        self.model = model
+        self.config = config or {}
+        load_dotenv()
+        print("===========================================================")
+        print(os.getenv("GITHUB_TOKEN"))
+        # GitHub Copilot uses OpenAI-compatible API
+        self.client = OpenAI(
+            api_key=os.getenv("GITHUB_TOKEN"),
+            base_url="https://api.githubcopilot.com"
+        )
+    
+    def chat(self, messages: List[Dict[str, str]]) -> str:
+        """Send a chat completion request."""
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=messages,
+            temperature=self.config.get("temperature", 0.2),
+            max_tokens=self.config.get("max_tokens", 4096)
+        )
+        return response.choices[0].message.content

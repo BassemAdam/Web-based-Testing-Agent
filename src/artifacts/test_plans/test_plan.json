@@ -1,178 +1,295 @@
 {
+  "start_url": "https://automationexercise.com/",
+  "snapshot_file": "artifacts\\snapshots\\site_snapshot.json",
   "test_cases": [
     {
-      "id": "TC_NAVIGATE_01",
-      "name": "Navigate from Example Domain to Domains Page",
-      "description": "User navigates from the home page to the domains section of IANA",
+      "id": "TC_NAVIGATE_HOME_01",
+      "name": "Navigate to Home Page",
+      "description": "Verify that the Home link navigates back to the home page.",
       "tags": [
         "functional",
-        "happy_path"
+        "happy_path",
+        "navigation"
       ],
       "steps": [
         {
           "action": "click",
           "page_id": "page_0",
-          "target": "a|Learn more| | tag=a, text='Learn more', id='', css='a'",
-          "details": "Click the 'Learn more' link on the home page to navigate to the domains section of IANA."
+          "target": "a|Home| |",
+          "details": "Click on the 'Home' link."
         },
         {
           "action": "assert",
-          "page_id": "page_1",
-          "target": null,
-          "details": "Ensure that the user is on the 'Example Domains' page and not on the home page."
-        }
-      ],
-      "covered_element_keys": [
-        "page_0::a|Learn more|"
-      ],
-      "selectors": [
-        {
-          "element_key": "a|Learn more|",
           "page_id": "page_0",
-          "css_selector": "a",
-          "xpath": null,
-          "description": "Navigates to the next page by clicking 'Learn more' link."
-        }
-      ],
-      "meta": {}
-    },
-    {
-      "id": "TC_CHECK_NAVIGATION_02",
-      "name": "Check Navigation Links on Domains Page",
-      "description": "User checks available navigation links on the domains page",
-      "tags": [
-        "functional",
-        "exploratory"
-      ],
-      "steps": [
-        {
-          "action": "assert",
-          "page_id": "page_1",
           "target": null,
-          "details": "Verify that the 'Domains', 'Protocols', 'Numbers', 'About', and 'RFC 2606' links are present on the page."
-        }
-      ],
-      "covered_element_keys": [],
-      "selectors": [],
-      "meta": {}
-    },
-    {
-      "id": "TC_CHECK_LINKS_03",
-      "name": "Check Link Functionality on Domains Page",
-      "description": "User checks the functionality of each link on the domains page",
-      "tags": [
-        "functional",
-        "exploratory"
-      ],
-      "steps": [
-        {
-          "action": "click",
-          "page_id": "page_1",
-          "target": "a|Domains| | tag=a, text='Domains', id='', css='a'",
-          "details": "Click the 'Domains' link and ensure it navigates to a relevant sub-page or page."
-        },
-        {
-          "action": "click",
-          "page_id": "page_1",
-          "target": "a|Protocols| | tag=a, text='Protocols', id='', css='a'",
-          "details": "Click the 'Protocols' link and ensure it navigates to a relevant sub-page or page."
-        },
-        {
-          "action": "click",
-          "page_id": "page_1",
-          "target": "a|Numbers| | tag=a, text='Numbers', id='', css='a'",
-          "details": "Click the 'Numbers' link and ensure it navigates to a relevant sub-page or page."
-        },
-        {
-          "action": "click",
-          "page_id": "page_1",
-          "target": "a|About| | tag=a, text='About', id='', css='a'",
-          "details": "Click the 'About' link and ensure it navigates to a relevant sub-page or page."
-        },
-        {
-          "action": "click",
-          "page_id": "page_1",
-          "target": "a|RFC 2606| | tag=a, text='RFC 2606', id='', css='a'",
-          "details": "Click the 'RFC 2606' link and ensure it navigates to a relevant sub-page or page."
+          "details": "Verify that the user is redirected to the home page (https://automationexercise.com/)."
         }
       ],
       "covered_element_keys": [
-        "page_1::a|Domains|",
-        "page_1::a|Protocols|",
-        "page_1::a|Numbers|",
-        "page_1::a|About|",
-        "page_1::a|RFC 2606|"
+        "page_0::a|Home| "
       ],
       "selectors": [
         {
-          "element_key": "a|Domains|",
-          "page_id": "page_1",
-          "css_selector": "a",
-          "xpath": null,
-          "description": "Navigates to the Domains sub-page."
+          "element_key": "a|Home|",
+          "page_id": "page_0",
+          "css_selector": "a:has-text(\"Home\")",
+          "xpath": "//a[contains(text(), \"Home\")]",
+          "description": "The 'Home' link navigates to the home page."
+        }
+      ],
+      "meta": {}
+    },
+    {
+      "id": "TC_NAVIGATE_PRODUCTS_01",
+      "name": "Navigate to Products Page",
+      "description": "Verify that the Products link navigates to the products page.",
+      "tags": [
+        "functional",
+        "happy_path",
+        "navigation"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "page_id": "page_0",
+          "target": "a|\ue8f8 Products| |",
+          "details": "Click on the 'Products' link."
         },
         {
-          "element_key": "a|Protocols|",
-          "page_id": "page_1",
-          "css_selector": "a",
-          "xpath": null,
-          "description": "Navigates to the Protocols sub-page."
+          "action": "assert",
+          "page_id": "page_0",
+          "target": null,
+          "details": "Verify that the user is redirected to the products page."
+        }
+      ],
+      "covered_element_keys": [
+        "page_0::a|\ue8f8 Products| "
+      ],
+      "selectors": [
+        {
+          "element_key": "a|\ue8f8 Products|",
+          "page_id": "page_0",
+          "css_selector": "a[href=\"/products\"]",
+          "xpath": "//a[contains(text(), \"\ue8f8 Products\")]",
+          "description": "The 'Products' link navigates to the products page."
+        }
+      ],
+      "meta": {}
+    },
+    {
+      "id": "TC_NAVIGATE_CART_01",
+      "name": "Navigate to Cart Page",
+      "description": "Verify that the Cart link navigates to the cart page.",
+      "tags": [
+        "functional",
+        "happy_path",
+        "navigation"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "page_id": "page_0",
+          "target": "a|Cart| |",
+          "details": "Click on the 'Cart' link."
         },
         {
-          "element_key": "a|Numbers|",
-          "page_id": "page_1",
-          "css_selector": "a",
-          "xpath": null,
-          "description": "Navigates to the Numbers sub-page."
+          "action": "assert",
+          "page_id": "page_0",
+          "target": null,
+          "details": "Verify that the user is redirected to the cart page."
+        }
+      ],
+      "covered_element_keys": [
+        "page_0::a|Cart| "
+      ],
+      "selectors": [
+        {
+          "element_key": "a|Cart|",
+          "page_id": "page_0",
+          "css_selector": "a[href=\"/view_cart\"]",
+          "xpath": "//a[contains(text(), \"Cart\")]",
+          "description": "The 'Cart' link navigates to the cart page."
+        }
+      ],
+      "meta": {}
+    },
+    {
+      "id": "TC_NAVIGATE_SIGNUP_LOGIN_01",
+      "name": "Navigate to Signup/Login Page",
+      "description": "Verify that the Signup/Login link navigates to the login page.",
+      "tags": [
+        "functional",
+        "happy_path",
+        "navigation"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "page_id": "page_0",
+          "target": "a|Signup / Login| |",
+          "details": "Click on the 'Signup / Login' link."
         },
         {
-          "element_key": "a|About|",
-          "page_id": "page_1",
-          "css_selector": "a",
-          "xpath": null,
-          "description": "Navigates to the About sub-page."
+          "action": "assert",
+          "page_id": "page_0",
+          "target": null,
+          "details": "Verify that the user is redirected to the signup/login page."
+        }
+      ],
+      "covered_element_keys": [
+        "page_0::a|Signup / Login| "
+      ],
+      "selectors": [
+        {
+          "element_key": "a|Signup / Login|",
+          "page_id": "page_0",
+          "css_selector": "a[href=\"/login\"]",
+          "xpath": "//a[contains(text(), \"Signup / Login\")]",
+          "description": "The 'Signup / Login' link navigates to the signup/login page."
+        }
+      ],
+      "meta": {}
+    },
+    {
+      "id": "TC_NAVIGATE_TEST_CASES_01",
+      "name": "Navigate to Test Cases Page",
+      "description": "Verify that the Test Cases link navigates to the test cases page.",
+      "tags": [
+        "functional",
+        "happy_path",
+        "navigation"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "page_id": "page_0",
+          "target": "a|Test Cases| |",
+          "details": "Click on the 'Test Cases' link."
         },
         {
-          "element_key": "a|RFC 2606|",
-          "page_id": "page_1",
-          "css_selector": "a",
-          "xpath": null,
-          "description": "Navigates to the RFC 2606 sub-page."
+          "action": "assert",
+          "page_id": "page_0",
+          "target": null,
+          "details": "Verify that the user is redirected to the test cases page."
+        }
+      ],
+      "covered_element_keys": [
+        "page_0::a|Test Cases| "
+      ],
+      "selectors": [
+        {
+          "element_key": "a|Test Cases|",
+          "page_id": "page_0",
+          "css_selector": "a[href=\"/test_cases\"]",
+          "xpath": "//a[contains(text(), \"Test Cases\")]",
+          "description": "The 'Test Cases' link navigates to the test cases page."
+        }
+      ],
+      "meta": {}
+    },
+    {
+      "id": "TC_NAVIGATE_API_TESTING_01",
+      "name": "Navigate to API Testing Page",
+      "description": "Verify that the API Testing link navigates to the API testing page.",
+      "tags": [
+        "functional",
+        "happy_path",
+        "navigation"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "page_id": "page_0",
+          "target": "a|API Testing| |",
+          "details": "Click on the 'API Testing' link."
+        },
+        {
+          "action": "assert",
+          "page_id": "page_0",
+          "target": null,
+          "details": "Verify that the user is redirected to the API testing page."
+        }
+      ],
+      "covered_element_keys": [
+        "page_0::a|API Testing| "
+      ],
+      "selectors": [
+        {
+          "element_key": "a|API Testing|",
+          "page_id": "page_0",
+          "css_selector": "a[href=\"/api_list\"]",
+          "xpath": "//a[contains(text(), \"API Testing\")]",
+          "description": "The 'API Testing' link navigates to the API testing page."
+        }
+      ],
+      "meta": {}
+    },
+    {
+      "id": "TC_NAVIGATE_VIDEO_TUTORIALS_01",
+      "name": "Navigate to Video Tutorials Page",
+      "description": "Verify that the Video Tutorials link navigates to the video tutorials page.",
+      "tags": [
+        "functional",
+        "happy_path",
+        "navigation"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "page_id": "page_0",
+          "target": "a|Video Tutorials| |",
+          "details": "Click on the 'Video Tutorials' link."
+        },
+        {
+          "action": "assert",
+          "page_id": "page_0",
+          "target": null,
+          "details": "Verify that the user is redirected to the video tutorials page on YouTube."
+        }
+      ],
+      "covered_element_keys": [
+        "page_0::a|Video Tutorials| "
+      ],
+      "selectors": [
+        {
+          "element_key": "a|Video Tutorials|",
+          "page_id": "page_0",
+          "css_selector": "a[href=\"https://www.youtube.com/c/AutomationExercise\"]",
+          "xpath": "//a[contains(text(), \"Video Tutorials\")]",
+          "description": "The 'Video Tutorials' link navigates to the video tutorials page on YouTube."
         }
       ],
       "meta": {}
     }
   ],
-  "coverage": {
-    "page_0::a|Learn more|": [
-      "TC_NAVIGATE_01"
+  "element_coverage": {
+    "page_0::a|Home| ": [
+      "TC_NAVIGATE_HOME_01"
     ],
-    "page_1::a|Domains|": [
-      "TC_CHECK_LINKS_03"
+    "page_0::a|\ue8f8 Products| ": [
+      "TC_NAVIGATE_PRODUCTS_01"
     ],
-    "page_1::a|Protocols|": [
-      "TC_CHECK_LINKS_03"
+    "page_0::a|Cart| ": [
+      "TC_NAVIGATE_CART_01"
     ],
-    "page_1::a|Numbers|": [
-      "TC_CHECK_LINKS_03"
+    "page_0::a|Signup / Login| ": [
+      "TC_NAVIGATE_SIGNUP_LOGIN_01"
     ],
-    "page_1::a|About|": [
-      "TC_CHECK_LINKS_03"
+    "page_0::a|Test Cases| ": [
+      "TC_NAVIGATE_TEST_CASES_01"
     ],
-    "page_1::a|RFC 2606|": [
-      "TC_CHECK_LINKS_03"
+    "page_0::a|API Testing| ": [
+      "TC_NAVIGATE_API_TESTING_01"
+    ],
+    "page_0::a|Video Tutorials| ": [
+      "TC_NAVIGATE_VIDEO_TUTORIALS_01"
     ]
   },
-  "pages": {
-    "page_0": {
-      "url": "https://example.com/",
-      "title": "Example Domain"
-    },
-    "page_1": {
-      "url": "https://www.iana.org/help/example-domains",
-      "title": "Example Domains"
-    }
-  },
-  "coverage_summary": "The test cases cover navigation from home to domains section, checking presence of main navigation links on the domains page, and verifying functionality of each link. Additional tests could explore deeper pages or functional interactions.",
-  "start_url": "https://example.com"
+  "coverage_summary": "The test cases cover navigation to all major links on the home page, including Home, Products, Cart, Signup/Login, Test Cases, API Testing, and Video Tutorials. Each link is tested for proper redirection to its respective page. No tests currently cover form submissions, dynamic content, or error handling scenarios.",
+  "meta": {
+    "elapsed_seconds": "46.035",
+    "max_depth": 2,
+    "max_pages": 3,
+    "max_links_per_page": 3
+  }
 }

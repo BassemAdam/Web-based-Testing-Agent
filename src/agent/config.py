@@ -1,11 +1,14 @@
 from dataclasses import dataclass
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 @dataclass
 class LLMConfig:
-    base_url: str = os.getenv("LLM_BASE_URL", "http://localhost:11434/v1") #api url of the local model
-    api_key: str = os.getenv("LLM_API_KEY", "ollama") #just a dummy
-    model: str = os.getenv("LLM_MODEL", "deepseek-coder-v2:16b") #this model kinda sucks I'll add a model rotation later
+    base_url: str = os.getenv("LLM_BASE_URL", "https://api.githubcopilot.com") #api url of the local model
+    api_key: str = os.getenv("GITHUB_TOKEN", "") #just a dummy
+    model: str = os.getenv("LLM_MODEL", "gpt-4o") #this model kinda sucks I'll add a model rotation later
 
 @dataclass
 class BrowserConfig:

@@ -7,7 +7,7 @@ Page Name: {page_name}
 Page ID: {page_id}
 Page URL: {page_url}
 
-The following elements are interacted with on this page. I have selected the best locator for you:
+The following elements are interacted with on this page. Use the `best_locator` field directly:
 {elements_info}
 
 The following actions are performed on this page in the test scenarios:
@@ -16,10 +16,11 @@ The following actions are performed on this page in the test scenarios:
 Requirements:
 1.  **Class Structure**: Create a Python class named `{class_name}` inheriting from `BasePage`.
 2.  **URL Property**: If a page_url is provided, add a class variable `URL = "{page_url}"` at the top of the class.
-3.  **Locators**: Define locators as private attributes (e.g., `self._username_input = "..."`) in `__init__`. Use the `best_locator` provided in the JSON.
+3.  **Locators**: Define locators as private attributes in `__init__`. 
+    **CRITICAL**: Use the EXACT `best_locator` value from the elements_info JSON above.
+    Example: If best_locator is `page.locator("a[href='/products']")`, use exactly:
+    `self._products_link = page.locator("a[href='/products']")`
 4.  **Methods**: Create methods for each logical action (e.g., `login(username, password)`).
-    *   **Separation of Concerns**: The test should NOT call Playwright methods directly. The Page Object methods should handle `fill`, `click`, etc.
-    *   **Default Inputs**: If an input requires text (like "type" action) and no specific value is clear, provide a sensible default value in the method signature (e.g., `def search(self, query="default search"):`).
 5.  **Type Hinting**: Use proper type hints.
 6.  **Imports**: Import `BasePage` from `.base_page`.
 7.  **Output**: Output ONLY the Python code for the class.

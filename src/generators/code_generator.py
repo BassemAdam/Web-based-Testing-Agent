@@ -4,7 +4,7 @@ import ast
 import re
 from typing import Dict, List, Any
 from loguru import logger
-from src.agent.llm.ollama_client import LLMClient
+from src.agent.llm.ollama_client import CopilotClient  # Changed import
 from src.generators.prompts import (
     PAGE_OBJECT_PROMPT,
     FIX_SYNTAX_PROMPT,
@@ -33,8 +33,8 @@ class CodeGenerator:
         
         # Initialize the AI client (using DeepSeek Coder for code generation)
         # Use generator-specific settings so other phases using LLMClient aren't affected.
-        self.llm = LLMClient(
-            model="deepseek-coder-v2:16b",
+        self.llm = CopilotClient(
+            model="gpt-4o",  # or "claude-3.5-sonnet"
             config={
                 "temperature": 0.2,
                 # Allow larger outputs for full files.
@@ -313,56 +313,84 @@ class BasePage:
                 
         return pages
 
-    def _select_best_locator(self, selector_info: Dict) -> str:
+    def _build_elements_info(self, test_cases: List[Dict], page_id: str) -> str:
         """
-        Decides the best way to find an element (Locator Strategy).
-        
-        Strategy Priority:
-        1. ID (Most reliable)
-        2. Data-TestID (Best practice for testing)
-        3. Semantic Role/Text (User-centric, e.g., "Button named Submit")
-        4. CSS Selector (Standard)
-        5. XPath (Least reliable, breaks easily)
+        Build element info string for a page, using selectors from test_plan.
         """
-        css = selector_info.get("css_selector", "")
-        xpath = selector_info.get("xpath", "")
-        element_key = selector_info.get("element_key", "")
+        elements = {}
         
-        # 1. ID is King (e.g., #submit-button)
-        if css and "#" in css and " " not in css: 
-            return f"page.locator('{css}')"
-        
-        # 2. Test IDs (e.g., [data-testid="submit"])
-        if css and "[data-testid=" in css:
-            return f"page.locator('{css}')"
-            
-        # 3. Semantic / Text Content (e.g., Button "Sign In")
-        # element_key format is usually "tag|text|..."
-        if element_key:
-            parts = element_key.split('|')
-            if len(parts) >= 2:
-                tag = parts[0].lower()
-                text = parts[1].strip()
+        for tc in test_cases:
+            # Get selectors from the test case
+            for selector_info in tc.get("selectors", []):
+                if selector_info.get("page_id") != page_id:
+                    continue
                 
-                # Only use text if it's short and readable
-                if text and len(text) < 50:
-                    # Use 'get_by_role' for interactive elements
-                    if tag in ['button', 'a', 'link']:
-                        role = 'link' if tag == 'a' else tag
-                        return f"page.get_by_role('{role}', name='{text}')"
+                element_key = selector_info.get("element_key", "")
+                css_selector = selector_info.get("css_selector")
+                xpath = selector_info.get("xpath")
+                description = selector_info.get("description", "")
+                
+                if element_key and element_key not in elements:
+                    # Choose the best locator strategy
+                    best_locator = self._select_best_locator(
+                        css_selector=css_selector,
+                        xpath=xpath,
+                        element_key=element_key
+                    )
                     
-                    # Use 'get_by_text' for others
-                    return f"page.get_by_text('{text}', exact=True)"
+                    elements[element_key] = {
+                        "element_key": element_key,
+                        "css_selector": css_selector,
+                        "xpath": xpath,
+                        "best_locator": best_locator,
+                        "description": description,
+                    }
+        
+        # Format as JSON-like string for the prompt
+        import json
+        return json.dumps(list(elements.values()), indent=2)
 
-        # 4. CSS (Standard fallback)
-        if css:
-            return f"page.locator('{css}')"
-            
-        # 5. XPath (Last resort)
+    def _select_best_locator(
+        self, 
+        css_selector: str | None, 
+        xpath: str | None, 
+        element_key: str
+    ) -> str:
+        """
+        Select the best Playwright locator from available options.
+        Priority: CSS with attributes > XPath with text > fallback to get_by_role
+        """
+        # 1. Prefer specific CSS selectors (not just tag name)
+        if css_selector and css_selector not in ["a", "button", "input", "select"]:
+            # Check if it's a useful selector
+            if "[" in css_selector or "#" in css_selector or "." in css_selector:
+                return f'page.locator("{css_selector}")'
+            if ":has-text(" in css_selector:
+                return f'page.locator("{css_selector}")'
+        
+        # 2. Use XPath if it has text content
+        if xpath and "contains(text()" in xpath:
+            return f'page.locator("{xpath}")'
+        
+        # 3. Parse element_key to build get_by_role (format: "tag|text|id|...")
+        parts = element_key.split("|")
+        tag = parts[0].strip() if parts else ""
+        text = parts[1].strip() if len(parts) > 1 else ""
+        
+        if tag == "a" and text:
+            return f"page.get_by_role('link', name='{text}')"
+        if tag == "button" and text:
+            return f"page.get_by_role('button', name='{text}')"
+        if tag == "input":
+            return f'page.locator("{css_selector or "input"}")'
+        
+        # 4. Fallback to CSS selector or XPath
+        if css_selector:
+            return f'page.locator("{css_selector}")'
         if xpath:
-            return f"page.locator('xpath={xpath}')"
-            
-        return "page.locator('UNKNOWN')"
+            return f'page.locator("{xpath}")'
+        
+        return f'page.locator("{tag}")'
 
     def _generate_page_object(self, page_id: str, data: Dict) -> str:
         """
@@ -375,7 +403,7 @@ class BasePage:
         elements_with_locators = []
         for el in data["elements"]:
             el_copy = el.copy()
-            el_copy["best_locator"] = self._select_best_locator(el)
+            el_copy["best_locator"] = self._select_best_locator(el.get("css_selector"), el.get("xpath"), el.get("element_key"))
             elements_with_locators.append(el_copy)
 
         elements_json = json.dumps(elements_with_locators, indent=2)

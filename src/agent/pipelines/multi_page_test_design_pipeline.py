@@ -18,24 +18,55 @@ class MultiPageTestDesignPipeline:
 
     def _build_element_lookup(self, graph: SiteGraph) -> Dict[str, Dict]:
         """
-        Build a lookup: "page_id::element_key" -> element info (css, xpath, description)
-        Also builds a secondary lookup by partial key for fuzzy matching.
+        Build a lookup with enhanced selector information.
         """
         lookup = {}
         for page_id, node in graph.pages.items():
             for e in node.snapshot.elements:
                 key = build_element_key(e.tag, e.text, e.id)
                 full_key = f"{page_id}::{key}"
+                
+                # Build a playwright-style locator recommendation
+                playwright_locator = self._recommend_playwright_locator(e)
+                
                 lookup[full_key] = {
                     "element_key": key,
                     "page_id": page_id,
                     "css_selector": e.css_selector,
                     "xpath": e.xpath,
+                    "playwright_locator": playwright_locator,
                     "description": e.short_description(),
-                    "element": e,  # Keep reference for fuzzy matching
+                    "element": e,
                 }
         return lookup
-
+    def _recommend_playwright_locator(self, element) -> str:
+        """
+        Recommend the best Playwright locator strategy for an element.
+        """
+        # 1. get_by_role for semantic elements
+        if element.tag in ["button", "a"] and element.text:
+            role = "link" if element.tag == "a" else "button"
+            text = element.text.strip()[:50]
+            if text:
+                return f"page.get_by_role('{role}', name='{text}')"
+        
+        # 2. get_by_label for form inputs
+        if element.tag == "input" and element.aria_label:
+            return f"page.get_by_label('{element.aria_label}')"
+        
+        # 3. get_by_placeholder for inputs
+        if element.tag == "input" and element.attributes.get("placeholder"):
+            return f"page.get_by_placeholder('{element.attributes['placeholder']}')"
+        
+        # 4. get_by_text for elements with unique text
+        if element.text and len(element.text.strip()) < 50:
+            return f"page.get_by_text('{element.text.strip()}')"
+        
+        # 5. Fallback to locator with CSS
+        if element.css_selector and element.css_selector != element.tag:
+            return f"page.locator('{element.css_selector}')"
+        
+        return f"page.locator('{element.tag}')"
     def _fuzzy_find_element(
         self, 
         lookup: Dict[str, Dict], 
@@ -48,33 +79,69 @@ class MultiPageTestDesignPipeline:
         canon_key = canonicalize_key(raw_key)
         full_key = f"{page_id}::{canon_key}"
         
-        # Exact match
+        # Exact match first
         if full_key in lookup:
             return lookup[full_key]
         
-        # Fuzzy match: find elements where the key starts with or contains the search text
+        # Try without trailing spaces/pipes
+        clean_key = canon_key.rstrip("| ")
+        for key, info in lookup.items():
+            if not key.startswith(f"{page_id}::"):
+                continue
+            stored_clean = info["element_key"].rstrip("| ")
+            if stored_clean == clean_key:
+                return info
+        
+        # Fuzzy match: find elements by tag and text content
         search_parts = canon_key.split("|")
-        search_tag = search_parts[0] if search_parts else ""
-        search_text = search_parts[1] if len(search_parts) > 1 else ""
+        search_tag = search_parts[0].strip() if search_parts else ""
+        search_text = search_parts[1].strip() if len(search_parts) > 1 else ""
+        
+        best_match = None
+        best_score = 0
         
         for key, info in lookup.items():
             if not key.startswith(f"{page_id}::"):
                 continue
-            elem_key = info["element_key"]
-            elem_parts = elem_key.split("|")
-            elem_tag = elem_parts[0] if elem_parts else ""
-            elem_text = elem_parts[1] if len(elem_parts) > 1 else ""
             
-            # Match if same tag and text starts with or contains search text
-            if elem_tag == search_tag:
-                if search_text and (
-                    elem_text.startswith(search_text) or 
-                    search_text in elem_text or
-                    elem_text in search_text
-                ):
-                    return info
+            elem = info.get("element")
+            if not elem:
+                continue
+                
+            elem_tag = elem.tag
+            elem_text = (elem.text or "").strip()
+            
+            # Must match tag
+            if elem_tag != search_tag:
+                continue
+            
+            # Skip elements with empty text if we're searching for text
+            if search_text and not elem_text:
+                continue
+            
+            # Calculate match score
+            score = 0
+            
+            # Exact text match (highest priority)
+            if search_text and elem_text == search_text:
+                score = 100
+            # Text contains search (or vice versa)
+            elif search_text and search_text in elem_text:
+                score = 80
+            elif search_text and elem_text in search_text:
+                score = 70
+            # Text starts with search
+            elif search_text and elem_text.lower().startswith(search_text.lower()):
+                score = 60
+            # No text search, just tag match
+            elif not search_text:
+                score = 10
+            
+            if score > best_score:
+                best_score = score
+                best_match = info
         
-        return None
+        return best_match
 
     def _build_graph_preview(self, graph: SiteGraph) -> str:
        
@@ -232,15 +299,28 @@ Constraints:
                     # Look up element info with fuzzy matching
                     elem_info = self._fuzzy_find_element(element_lookup, pid, raw_key)
                     if elem_info:
-                        selectors.append(
-                            SelectorInfo(
-                                element_key=elem_info["element_key"],
-                                page_id=pid,
-                                css_selector=elem_info.get("css_selector"),
-                                xpath=elem_info.get("xpath"),
-                                description=llm_description or elem_info.get("description", ""),
+                        # Get the actual element to extract correct selectors
+                        elem = elem_info.get("element")
+                        if elem:
+                            selectors.append(
+                                SelectorInfo(
+                                    element_key=elem_info["element_key"],
+                                    page_id=pid,
+                                    css_selector=elem.css_selector,
+                                    xpath=elem.xpath,
+                                    description=llm_description or elem_info.get("description", ""),
+                                )
                             )
-                        )
+                        else:
+                            selectors.append(
+                                SelectorInfo(
+                                    element_key=elem_info["element_key"],
+                                    page_id=pid,
+                                    css_selector=elem_info.get("css_selector"),
+                                    xpath=elem_info.get("xpath"),
+                                    description=llm_description or elem_info.get("description", ""),
+                                )
+                            )
                     else:
                         # Element not found - still add with nulls
                         selectors.append(
