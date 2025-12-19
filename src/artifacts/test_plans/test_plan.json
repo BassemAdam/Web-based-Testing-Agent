@@ -1,264 +1,388 @@
 {
-  "start_url": "https://www.webdriveruniversity.com/",
-  "snapshot_file": "artifacts\\snapshots\\site_snapshot.json",
-  "pages": {
-    "page_0": {
-      "url": "https://www.webdriveruniversity.com/",
-      "title": "Automation & AI Testing Courses by Gianni Bruno | WebDriver University",
-      "summary": "- Main purpose: a hub/catalog for Automation & AI testing courses and interactive demo pages (practice modules) hosted by WebDriver University.\n- Main user flows: browse/select course or demo tiles via navigation/toggle, open interactive modules (e.g., BUTTON CLICKS, TO DO LIST, IFRAME, FILE UPLOAD, DATEPICKER), use CONTACT US form, and use LOGIN PORTAL.\n- Key interactive targets: demo pages with IDs (#button-clicks, #to-do-list, #iframe, #file-upload, #ajax-loader, #datepicker, #hidden-elements, #popup-alerts, #dropdown-checkboxes-radiobuttons, etc.).\n- Typical actions: click/toggle nav items, submit login/contact forms, upload files, pick dates, interact with alerts/iframes, wait for AJAX, scroll and perform action sequences.\n- Important edge cases: asynchronous loads and timing (AJAX loader, delayed elements), iframe cross-origin and focus/selector scope, hidden/disabled elements and reveal behaviors, file upload size/type errors, datepicker bounds/formatting, modal/alert interrupting flows, stale element references after DOM updates.\n- Other considerations: navigation toggle responsiveness, stateful flows (session/login persistence), accessibility and keyboard interactions for interactive widgets.",
-      "screenshot_path": "artifacts\\screenshots\\www.webdriveruniversity.com.png",
-      "element_count": 30
-    }
-  },
-  "edges": [],
+  "start_url": "https://automationplayground.com/back-office/pages/login.html",
+  "snapshot_file": "C:\\Users\\Ali\\Desktop\\Web-based-Testing-Agent\\src\\artifacts\\snapshots\\site_snapshot.json",
   "test_cases": [
     {
-      "id": "TC_NAVIGATE_COURSE_01",
-      "name": "Navigate to Master Generative AI for Software Testing",
-      "description": "Validates navigation to the 'Master Generative AI for Software Testing' course page.",
+      "id": "TC_SIGNIN_VALID_01",
+      "name": "Valid sign-in navigates to dashboard",
+      "description": "Covers the happy path of entering valid credentials on the login page and navigating to the index/dashboard page.",
       "tags": [
         "functional",
         "happy_path",
+        "login",
         "navigation"
       ],
       "steps": [
         {
+          "action": "navigate",
+          "page_id": "page_0",
+          "target": null,
+          "details": "Open the login page URL"
+        },
+        {
+          "action": "assert",
+          "page_id": "page_0",
+          "target": "input|||email|email name='email' type='email' | css='input[name=\"email\"]'",
+          "details": "Email input is present and enabled"
+        },
+        {
+          "action": "type",
+          "page_id": "page_0",
+          "target": "input|||email|email name='email' type='email' | css='input[name=\"email\"]'",
+          "details": "user@example.com"
+        },
+        {
+          "action": "type",
+          "page_id": "page_0",
+          "target": "input|||password|password name='password' type='password' | css='input[name=\"password\"]'",
+          "details": "CorrectHorseBatteryStaple!"
+        },
+        {
           "action": "click",
           "page_id": "page_0",
-          "target": "a|Master Generative AI for Software Testing|",
-          "details": "Click on the 'Master Generative AI for Software Testing' link."
+          "target": "a|Login| | css='a[href=\"index.html\"]'",
+          "details": "Click the Login anchor to submit and navigate"
+        },
+        {
+          "action": "assert",
+          "page_id": "page_1",
+          "target": "a|RobotFrameworkTutorial.com Demo Admin Site| | css='a[href=\"index.html\"]'",
+          "details": "Dashboard header/link is visible indicating successful navigation"
         }
       ],
       "covered_element_keys": [
-        "page_0::a|Master Generative AI for Software Testing|"
+        "page_0::input||",
+        "page_0::input||",
+        "page_0::a|Login| ",
+        "page_1::a|RobotFrameworkTutorial.com Demo Admin Site| "
       ],
       "selectors": [
         {
-          "element_key": "a|Master Generative AI for Software Testing|",
+          "element_key": "input|||email|email",
           "page_id": "page_0",
-          "css_selector": "a.btn-promo.btn-block",
-          "xpath": "//a[contains(text(), \"Master Generative AI for Softw\")]",
-          "description": "Link to navigate to the 'Master Generative AI for Software Testing' course page."
+          "css_selector": "input[name=\"email\"]",
+          "xpath": "//input[@name=\"email\"]",
+          "description": "Email input used to enter the user's email"
+        },
+        {
+          "element_key": "input|||email|email",
+          "page_id": "page_0",
+          "css_selector": "input[name=\"email\"]",
+          "xpath": "//input[@name=\"email\"]",
+          "description": "Password input used to enter the user's password"
+        },
+        {
+          "element_key": "a|Login|",
+          "page_id": "page_0",
+          "css_selector": "a[href=\"index.html\"]",
+          "xpath": "//a[contains(text(), 'Login')]",
+          "description": "Login link used to submit credentials and navigate to the dashboard"
+        },
+        {
+          "element_key": "a|RobotFrameworkTutorial.com Demo Admin Site|",
+          "page_id": "page_1",
+          "css_selector": "a[href=\"index.html\"]",
+          "xpath": "//a[contains(text(), 'RobotFrameworkTutorial.com Dem')]",
+          "description": "Dashboard header checked to confirm arrival on index page"
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_NAVIGATE_COURSE_02",
-      "name": "Navigate to API Testing with Postman",
-      "description": "Validates navigation to the 'API Testing with Postman' course page.",
+      "id": "TC_SIGNIN_INVALID_EMAIL_02",
+      "name": "Invalid email format prevents navigation",
+      "description": "Negative test: entering an invalid email format and attempting to log in should not navigate to the dashboard (client-side validation or failure to proceed).",
       "tags": [
         "functional",
-        "happy_path",
-        "navigation"
+        "negative",
+        "validation",
+        "login"
       ],
       "steps": [
         {
+          "action": "navigate",
+          "page_id": "page_0",
+          "target": null,
+          "details": "Open the login page URL"
+        },
+        {
+          "action": "type",
+          "page_id": "page_0",
+          "target": "input|||email|email name='email' type='email' | css='input[name=\"email\"]'",
+          "details": "not-an-email"
+        },
+        {
+          "action": "type",
+          "page_id": "page_0",
+          "target": "input|||password|password name='password' type='password' | css='input[name=\"password\"]'",
+          "details": "anyPassword"
+        },
+        {
           "action": "click",
           "page_id": "page_0",
-          "target": "a|API Testing with Postman|",
-          "details": "Click on the 'API Testing with Postman' link."
+          "target": "a|Login| | css='a[href=\"index.html\"]'",
+          "details": "Attempt to submit with invalid email"
+        },
+        {
+          "action": "assert",
+          "page_id": "page_0",
+          "target": "input|||email|email name='email' type='email' | css='input[name=\"email\"]'",
+          "details": "Email input remains present (login should not have navigated away); client-side validation expected"
         }
       ],
       "covered_element_keys": [
-        "page_0::a|API Testing with Postman|"
+        "page_0::input||",
+        "page_0::input||",
+        "page_0::a|Login| "
       ],
       "selectors": [
         {
-          "element_key": "a|API Testing with Postman|",
+          "element_key": "input|||email|email",
           "page_id": "page_0",
-          "css_selector": "a.btn-promo.btn-block",
-          "xpath": "//a[contains(text(), \"API Testing with Postman\")]",
-          "description": "Link to navigate to the 'API Testing with Postman' course page."
+          "css_selector": "input[name=\"email\"]",
+          "xpath": "//input[@name=\"email\"]",
+          "description": "Email input used to supply an invalid email"
+        },
+        {
+          "element_key": "input|||email|email",
+          "page_id": "page_0",
+          "css_selector": "input[name=\"email\"]",
+          "xpath": "//input[@name=\"email\"]",
+          "description": "Password input used along with invalid email"
+        },
+        {
+          "element_key": "a|Login|",
+          "page_id": "page_0",
+          "css_selector": "a[href=\"index.html\"]",
+          "xpath": "//a[contains(text(), 'Login')]",
+          "description": "Login link clicked to attempt submission with invalid data"
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_NAVIGATE_COURSE_03",
-      "name": "Navigate to Complete Cypress v13 Course",
-      "description": "Validates navigation to the 'Complete Cypress v13 Course' page.",
+      "id": "TC_REMEMBER_CHECKBOX_03",
+      "name": "Remember checkbox toggles and is clickable before login",
+      "description": "Verify the 'remember' checkbox can be checked and unchecked on the login page and remains interactive when attempting to login.",
       "tags": [
         "functional",
-        "happy_path",
-        "navigation"
+        "ui",
+        "login",
+        "edge_case"
       ],
       "steps": [
         {
+          "action": "navigate",
+          "page_id": "page_0",
+          "target": null,
+          "details": "Open the login page URL"
+        },
+        {
+          "action": "assert",
+          "page_id": "page_0",
+          "target": "input|||remember|checkbox name='remember' type='checkbox' | css='input[name=\"remember\"]'",
+          "details": "Remember checkbox is present"
+        },
+        {
           "action": "click",
           "page_id": "page_0",
-          "target": "a|Complete Cypress v13 Course|",
-          "details": "Click on the 'Complete Cypress v13 Course' link."
+          "target": "input|||remember|checkbox name='remember' type='checkbox' | css='input[name=\"remember\"]'",
+          "details": "Check the remember checkbox"
+        },
+        {
+          "action": "assert",
+          "page_id": "page_0",
+          "target": "input|||remember|checkbox name='remember' type='checkbox' | css='input[name=\"remember\"]'",
+          "details": "Checkbox should be checked"
+        },
+        {
+          "action": "click",
+          "page_id": "page_0",
+          "target": "input|||remember|checkbox name='remember' type='checkbox' | css='input[name=\"remember\"]'",
+          "details": "Uncheck the remember checkbox"
+        },
+        {
+          "action": "assert",
+          "page_id": "page_0",
+          "target": "input|||remember|checkbox name='remember' type='checkbox' | css='input[name=\"remember\"]'",
+          "details": "Checkbox should be unchecked"
+        },
+        {
+          "action": "click",
+          "page_id": "page_0",
+          "target": "a|Login| | css='a[href=\"index.html\"]'",
+          "details": "Click Login to ensure control remains functional when navigating"
         }
       ],
       "covered_element_keys": [
-        "page_0::a|Complete Cypress v13 Course|"
+        "page_0::input||",
+        "page_0::a|Login| "
       ],
       "selectors": [
         {
-          "element_key": "a|Complete Cypress v13 Course|",
+          "element_key": "input|||email|email",
           "page_id": "page_0",
-          "css_selector": "a[href=\"https://www.udemy.com/course/cypress-io-master-class/?couponCode=4841C490538E26385B2D8\"]",
-          "xpath": "//a[contains(text(), \"Complete Cypress v13 Course\")]",
-          "description": "Link to navigate to the 'Complete Cypress v13 Course' page."
+          "css_selector": "input[name=\"email\"]",
+          "xpath": "//input[@name=\"email\"]",
+          "description": "Remember checkbox toggled and asserted for state"
+        },
+        {
+          "element_key": "a|Login|",
+          "page_id": "page_0",
+          "css_selector": "a[href=\"index.html\"]",
+          "xpath": "//a[contains(text(), 'Login')]",
+          "description": "Login link used to confirm toggling does not block navigation"
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_NAVIGATE_COURSE_04",
-      "name": "Navigate to Playwright with TypeScript",
-      "description": "Validates navigation to the 'Playwright with TypeScript' course page.",
+      "id": "TC_NAV_DROPDOWN_MESSAGES_04",
+      "name": "Open user dropdown and access messages",
+      "description": "From the dashboard, open the user/dropdown toggle and verify the 'Read All Messages' action is available and clickable.",
       "tags": [
         "functional",
-        "happy_path",
-        "navigation"
+        "navigation",
+        "dashboard"
       ],
       "steps": [
         {
+          "action": "navigate",
+          "page_id": "page_1",
+          "target": null,
+          "details": "Assume user is on the dashboard/index page"
+        },
+        {
+          "action": "assert",
+          "page_id": "page_1",
+          "target": "a|| | css='a.dropdown-toggle'",
+          "details": "Dropdown toggle is present"
+        },
+        {
           "action": "click",
-          "page_id": "page_0",
-          "target": "a|Playwright with TypeScript|",
-          "details": "Click on the 'Playwright with TypeScript' link."
+          "page_id": "page_1",
+          "target": "a|| | css='a.dropdown-toggle'",
+          "details": "Open the dropdown"
+        },
+        {
+          "action": "assert",
+          "page_id": "page_1",
+          "target": "a|Read All Messages| | css='a:has-text(\"Read All Messages\")'",
+          "details": "'Read All Messages' option is visible in the dropdown"
+        },
+        {
+          "action": "click",
+          "page_id": "page_1",
+          "target": "a|Read All Messages| | css='a:has-text(\"Read All Messages\")'",
+          "details": "Click to view/read all messages"
         }
       ],
       "covered_element_keys": [
-        "page_0::a|Playwright with TypeScript|"
+        "page_1::a|| ",
+        "page_1::a|Read All Messages| "
       ],
       "selectors": [
         {
-          "element_key": "a|Playwright with TypeScript|",
-          "page_id": "page_0",
-          "css_selector": "a.btn-promo.btn-block",
-          "xpath": "//a[contains(text(), \"Playwright with TypeScript\")]",
-          "description": "Link to navigate to the 'Playwright with TypeScript' course page."
+          "element_key": "a||",
+          "page_id": "page_1",
+          "css_selector": "a.dropdown-toggle",
+          "xpath": "//a",
+          "description": "Dropdown toggle used to reveal message-related actions"
+        },
+        {
+          "element_key": "a|Read All Messages|",
+          "page_id": "page_1",
+          "css_selector": "a:has-text(\"Read All Messages\")",
+          "xpath": "//a[contains(text(), 'Read All Messages')]",
+          "description": "Message list entry used to navigate to the messages area"
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_NAVIGATE_COURSE_05",
-      "name": "Navigate to Playwright with Java",
-      "description": "Validates navigation to the 'Playwright with Java' course page.",
+      "id": "TC_TASKS_OVERVIEW_05",
+      "name": "Access tasks area from dashboard",
+      "description": "Verify the 'See All Tasks' link is present on the dashboard and can be clicked to view the tasks overview.",
       "tags": [
         "functional",
-        "happy_path",
-        "navigation"
+        "navigation",
+        "dashboard"
       ],
       "steps": [
         {
+          "action": "navigate",
+          "page_id": "page_1",
+          "target": null,
+          "details": "Start on the dashboard/index page"
+        },
+        {
+          "action": "assert",
+          "page_id": "page_1",
+          "target": "a|See All Tasks| | css='a:has-text(\"See All Tasks\")'",
+          "details": "'See All Tasks' link is present in the tasks summary area"
+        },
+        {
           "action": "click",
-          "page_id": "page_0",
-          "target": "a|Playwright with Java|",
-          "details": "Click on the 'Playwright with Java' link."
+          "page_id": "page_1",
+          "target": "a|See All Tasks| | css='a:has-text(\"See All Tasks\")'",
+          "details": "Click the link to view all tasks"
+        },
+        {
+          "action": "assert",
+          "page_id": "page_1",
+          "target": "a|RobotFrameworkTutorial.com Demo Admin Site| | css='a[href=\"index.html\"]'",
+          "details": "Assert still on dashboard or navigated within admin area by checking dashboard header presence"
         }
       ],
       "covered_element_keys": [
-        "page_0::a|Playwright with Java|"
+        "page_1::a|See All Tasks| ",
+        "page_1::a|RobotFrameworkTutorial.com Demo Admin Site| "
       ],
       "selectors": [
         {
-          "element_key": "a|Playwright with Java|",
-          "page_id": "page_0",
-          "css_selector": "a.btn-promo.btn-block",
-          "xpath": "//a[contains(text(), \"Playwright with Java\")]",
-          "description": "Link to navigate to the 'Playwright with Java' course page."
-        }
-      ],
-      "meta": {}
-    },
-    {
-      "id": "TC_NAVIGATE_COURSE_06",
-      "name": "Navigate to Complete WebdriverIO Course",
-      "description": "Validates navigation to the 'Complete WebdriverIO Course' page.",
-      "tags": [
-        "functional",
-        "happy_path",
-        "navigation"
-      ],
-      "steps": [
+          "element_key": "a|See All Tasks|",
+          "page_id": "page_1",
+          "css_selector": "a:has-text(\"See All Tasks\")",
+          "xpath": "//a[contains(text(), 'See All Tasks')]",
+          "description": "Link to access the full tasks view"
+        },
         {
-          "action": "click",
-          "page_id": "page_0",
-          "target": "a|Complete WebdriverIO Course|",
-          "details": "Click on the 'Complete WebdriverIO Course' link."
-        }
-      ],
-      "covered_element_keys": [
-        "page_0::a|Complete WebdriverIO Course|"
-      ],
-      "selectors": [
-        {
-          "element_key": "a|Complete WebdriverIO Course|",
-          "page_id": "page_0",
-          "css_selector": "a.btn-promo.btn-block",
-          "xpath": "//a[contains(text(), \"Complete WebdriverIO Course\")]",
-          "description": "Link to navigate to the 'Complete WebdriverIO Course' page."
-        }
-      ],
-      "meta": {}
-    },
-    {
-      "id": "TC_NAVIGATE_COURSE_07",
-      "name": "Navigate to Cypress with Cucumber BDD",
-      "description": "Validates navigation to the 'Cypress with Cucumber BDD' course page.",
-      "tags": [
-        "functional",
-        "happy_path",
-        "navigation"
-      ],
-      "steps": [
-        {
-          "action": "click",
-          "page_id": "page_0",
-          "target": "a|Cypress with Cucumber BDD|",
-          "details": "Click on the 'Cypress with Cucumber BDD' link."
-        }
-      ],
-      "covered_element_keys": [
-        "page_0::a|Cypress with Cucumber BDD|"
-      ],
-      "selectors": [
-        {
-          "element_key": "a|Cypress with Cucumber BDD|",
-          "page_id": "page_0",
-          "css_selector": "a.btn-promo.btn-block",
-          "xpath": "//a[contains(text(), \"Cypress with Cucumber BDD\")]",
-          "description": "Link to navigate to the 'Cypress with Cucumber BDD' course page."
+          "element_key": "a|RobotFrameworkTutorial.com Demo Admin Site|",
+          "page_id": "page_1",
+          "css_selector": "a[href=\"index.html\"]",
+          "xpath": "//a[contains(text(), 'RobotFrameworkTutorial.com Dem')]",
+          "description": "Used to assert the presence of the dashboard identity after navigation"
         }
       ],
       "meta": {}
     }
   ],
   "element_coverage": {
-    "page_0::a|Master Generative AI for Software Testing|": [
-      "TC_NAVIGATE_COURSE_01"
+    "page_0::input||": [
+      "TC_SIGNIN_VALID_01",
+      "TC_SIGNIN_VALID_01",
+      "TC_SIGNIN_INVALID_EMAIL_02",
+      "TC_SIGNIN_INVALID_EMAIL_02",
+      "TC_REMEMBER_CHECKBOX_03"
     ],
-    "page_0::a|API Testing with Postman|": [
-      "TC_NAVIGATE_COURSE_02"
+    "page_0::a|Login| ": [
+      "TC_SIGNIN_VALID_01",
+      "TC_SIGNIN_INVALID_EMAIL_02",
+      "TC_REMEMBER_CHECKBOX_03"
     ],
-    "page_0::a|Complete Cypress v13 Course|": [
-      "TC_NAVIGATE_COURSE_03"
+    "page_1::a|RobotFrameworkTutorial.com Demo Admin Site| ": [
+      "TC_SIGNIN_VALID_01",
+      "TC_TASKS_OVERVIEW_05"
     ],
-    "page_0::a|Playwright with TypeScript|": [
-      "TC_NAVIGATE_COURSE_04"
+    "page_1::a|| ": [
+      "TC_NAV_DROPDOWN_MESSAGES_04"
     ],
-    "page_0::a|Playwright with Java|": [
-      "TC_NAVIGATE_COURSE_05"
+    "page_1::a|Read All Messages| ": [
+      "TC_NAV_DROPDOWN_MESSAGES_04"
     ],
-    "page_0::a|Complete WebdriverIO Course|": [
-      "TC_NAVIGATE_COURSE_06"
-    ],
-    "page_0::a|Cypress with Cucumber BDD|": [
-      "TC_NAVIGATE_COURSE_07"
+    "page_1::a|See All Tasks| ": [
+      "TC_TASKS_OVERVIEW_05"
     ]
   },
-  "coverage_summary": "The test cases cover navigation to all course links available on page_0. Each test validates that clicking on a course link leads to the respective course page. Notable gaps include the absence of tests for verifying the content of the destination pages or handling invalid scenarios, such as broken links or missing pages.",
-  "meta": {
-    "elapsed_seconds": "36.637",
-    "max_depth": 2,
-    "max_pages": 10,
-    "max_links_per_page": 5,
-    "exploration_mode": "Agent-based"
-  }
+  "coverage_summary": "The suite covers login flows (valid, invalid, and remember checkbox interactions) starting on the login page (page_0) and primary dashboard/navigation actions on the index page (page_1). It verifies navigation to the dashboard, interactions with the user dropdown and message link, and access to the tasks overview. Notable gaps: there are no explicit tests for each individual task or message item with multiline keys (Task 1..4, New Comment entries, or user-specific links that include complex formatting), no backend/error message content checks, and persistence of the 'remember' state across sessions is not covered because session persistence was not represented in the explored pages."
 }

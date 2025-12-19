@@ -1,22 +1,127 @@
 {
-  "start_url": "https://www.webdriveruniversity.com/",
+  "start_url": "https://automationplayground.com/back-office/pages/login.html",
   "pages": {
     "page_0": {
       "snapshot": {
-        "url": "https://www.webdriveruniversity.com/",
-        "title": "Automation & AI Testing Courses by Gianni Bruno | WebDriver University",
-        "raw_html": "<!DOCTYPE html><html lang=\"en\"><head>\n<meta charset=\"utf-8\">\n<meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\n<meta name=\"description\" content=\"Master automation testing with free interactive challenges and top-rated Udemy courses by Gianni Bruno \u2014 including Generative AI Testing, Selenium, Cypress, Playwright, Postman, WebdriverIO, and more. Trusted by over 90,000 learners.\">\n<meta name=\"author\" content=\"Gianni Bruno\">\n<meta name=\"keywords\" content=\"Generative AI Testing, ChatGPT Testing, Automation Testing, Selenium, Cypress, Playwright, Postman, WebDriverIO, BDD, Java, TypeScript, Python, XPath, CSS Selectors, API Testing, Jenkins CI, Software Testing Courses, Allure Reporting, Gianni Bruno, WebDriver University\">\n\n<title>Automation &amp; AI Testing Courses by Gianni Bruno | WebDriver University</title>\n\n\n  <!-- Bootstrap & Custom CSS -->\n  <link href=\"css/bootstrap.min.css\" rel=\"stylesheet\">\n  <link href=\"css/style.css\" rel=\"stylesheet\">\n  <link href=\"https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap\" rel=\"stylesheet\">\n\n  <!-- HTML5 Shim for IE8 -->\n  <!--[if lt IE 9]>\n    <script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>\n    <script src=\"https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js\"></script>\n  <![endif]-->\n\n  <!-- Google Analytics -->\n  <script type=\"text/javascript\" async=\"\" src=\"https://www.google-analytics.com/analytics.js\"></script><script type=\"text/javascript\" async=\"\" src=\"https://www.googletagmanager.com/gtag/js?id=G-PHE0KZ9WM9&amp;cx=c&amp;gtm=4e5ca1\"></script><script async=\"\" src=\"https://www.googletagmanager.com/gtag/js?id=UA-228047513-1\"></script>\n  <script>\n    window.dataLayer = window.dataLayer || [];\n    function gtag(){ dataLayer.push(arguments); }\n    gtag('js', new Date());\n    gtag('config', 'UA-228047513-1');\n  </script>\n\n<style>\n  body {\n    font-family: 'Roboto', sans-serif;\n  }\n  h1, h4 {\n    font-weight: bold;\n  }\n\n.btn-promo {\n  background-color: #f45950;\n  color: white;\n  border: none;\n  border-radius: 6px;\n  padding: 12px 16px;\n  max-width: 95%;\n  margin: 8px auto;\n  display: block;\n  font-weight: 600;\n  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* Adds depth */\n  transition: all 0.2s ease-in-out;\n}\n\n.btn-promo:hover {\n  background-color: #ff6a5e;\n  color: white;\n  transform: scale(1.03); /* Grows slightly on hover */\n  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25); /* Bigger shadow */\n}\n\n  #udemy-promo-thumbnail {\n    padding: 20px;                     /* Space inside the box */\n    border-radius: 8px;\n  }\n\n  #udemy-promo-thumbnail .row {\n    margin-top: 30px;\n  }\n\n  .section-title h1 {\n    text-transform: uppercase;\n    font-size: 20px;\n  }\n</style>\n\n</head>\n\n<body>\n  <!-- Navigation -->\n  <nav class=\"navbar navbar-inverse navbar-fixed-top\" role=\"navigation\">\n    <div class=\"container\">\n      <div class=\"navbar-header\">\n        <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\"#bs-example-navbar-collapse-1\">\n          <span class=\"sr-only\">Toggle navigation</span>\n          <span class=\"icon-bar\"></span>\n          <span class=\"icon-bar\"></span>\n          <span class=\"icon-bar\"></span>\n        </button>\n        <a class=\"navbar-brand\" id=\"nav-title\" href=\"index.html\">WebdriverUniversity.com (New Approach To Learning)</a>\n      </div>\n    </div>\n  </nav>\n\n<!-- Page Content -->\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-md-12 text-center\">\n      <div class=\"thumbnail\" id=\"udemy-promo-thumbnail\">\n        <h1 style=\"color:#f45950;\">\n          \ud83d\ude80 Unlock Your Potential: <span style=\"color:#FF7276;\">Mega Sale</span> \u2013 Up to <span style=\"color:#FF7276;\">89%</span> Off \ud83d\ude80\n        </h1>\n        <p style=\"color:#FF7276; font-weight:bold;\">\u23f0 Limited-time offer \u2014 Grab your course before it expires!</p>\n        <p style=\"color:#fff; font-weight:bold; margin-top:10px;\">\n          \ud83d\udc68\u200d\ud83c\udfeb 90,000+ students \u2022 10,000+ reviews \u2022 Learn from a Senior SDET\n        </p>\n\n        <div class=\"row\">\n          <div class=\"col-sm-6 col-md-4\">\n            <a class=\"btn btn-promo btn-block\" href=\"https://www.udemy.com/course/master-generative-ai-for-software-testing-manual-to-auto/?couponCode=10DFB3C1A5359AFC8F50\">Master Generative AI for Software Testing</a>\n          </div>\n          <div class=\"col-sm-6 col-md-4\">\n            <a class=\"btn btn-promo btn-block\" href=\"https://www.udemy.com/course/the-api-master-class-testing-in-detail-using-postman/?couponCode=E2ECCE8CD157D53911D8\">API Testing with Postman</a>\n          </div>\n          <div class=\"col-sm-6 col-md-4\">\n            <a class=\"btn btn-promo btn-block\" href=\"https://www.udemy.com/course/playwright-with-cucumber-bdd-typescript-beginner-to-pro/?couponCode=7C0EA5E6D404090D2E79\">Playwright with TypeScript</a>\n          </div>\n          <div class=\"col-sm-6 col-md-4\">\n            <a class=\"btn btn-promo btn-block\" href=\"https://www.udemy.com/course/playwright-cucumber-bdd-with-java-novice-to-pro/?couponCode=3AA7167D29A107CCCACC\">Playwright with Java</a>\n          </div>\n          <div class=\"col-sm-6 col-md-4\">\n            <a class=\"btn btn-promo btn-block\" href=\"https://www.udemy.com/course/cypress-with-cucumber-bdd-beginner-to-expert-in-9-hours/?couponCode=7FC7B7FACC3F0FB4019B\">Cypress with Cucumber BDD</a>\n          </div>\n          <div class=\"col-sm-6 col-md-4\">\n            <a class=\"btn btn-promo btn-block\" href=\"https://www.udemy.com/course/cypress-io-master-class/?couponCode=4841C490538E26385B2D8\">Complete Cypress v13 Course</a>\n          </div>\n          <div class=\"col-sm-6 col-md-4\">\n            <a class=\"btn btn-promo btn-block\" href=\"https://www.udemy.com/course/automation-testing-javascript-webdriverio-selenium-more/?couponCode=F57756FB51C2D50854D8\">Complete WebdriverIO Course</a>\n          </div>\n          <div class=\"col-sm-6 col-md-4\">\n            <a class=\"btn btn-promo btn-block\" href=\"https://www.udemy.com/course/selenium-webdriver-4-new-features-in-detail/?couponCode=F566DA3753B2B80E3605\">Selenium WebDriver 4</a>\n          </div>\n          <div class=\"col-sm-6 col-md-4\">\n            <a class=\"btn btn-promo btn-block\" href=\"https://www.udemy.com/course/cucumber-bdd-selenium-java-complete-automation-course/?couponCode=5A3412B01DDD09DA39F4\">Selenium + Cucumber + Java</a>\n          </div>\n          <div class=\"col-sm-6 col-md-4\">\n            <a class=\"btn btn-promo btn-block\" href=\"https://www.udemy.com/course/mastering-locators/?couponCode=7AF1F72CF44990E1F48B\">Mastering Locators</a>\n          </div>\n        </div>\n\n      </div>\n    </div>\n  </div>\n\n\n    <div class=\"row\">\n      <div class=\"col-sm-12 col-lg-12 col-md-12\">\n        <a href=\"Contact-Us/contactus.html\" target=\"_blank\" id=\"contact-us\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>CONTACT US</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Contact Us Form</h4>\n              <p>Need to perfect your Webdriver Cucumber skills? BDD also referred to as \u2018Behaviour Driven Development\u2019 is a great way to test and simulate different user scenarios, for example what happens if you try to use the following contact us form (Click the button to access the challenge) to simulate user(s) inputting different types of data or how about attempting to simulate a user submitting information to the form using an email address in the incorrect \u2018Mandatory\u2019 format?</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-sm-12 col-lg-12 col-md-12\">\n        <a href=\"Login-Portal/index.html\" target=\"_blank\" id=\"login-portal\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>LOGIN PORTAL</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Login Portal</h4>\n              <p>Are you really an actually user of webdriveruniversity.com? Do you really have a valid username and password? Cucumber enables us to validate multiple sets of username(s) and password(s) with ease by using scenarios outlines and examples! Give the challenge a try!</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Click-Buttons/index.html\" target=\"_blank\" id=\"button-clicks\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>BUTTON CLICKS</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>WebElement Click, JavaScript Click, Actions Move &amp; Click!</h4>\n              <p>Simulating various types of user click(s) can be a very tricky task within Selenium Webdriver, there are many types of clicks available and it\u2019s also important to learn and test for yourselves the importance of each type of click. Why not attempt the challenge that awaits, can you perform all the required webdriver clicks?</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n            <div class=\"col-md-12\">\n        <a href=\"To-Do-List/index.html\" target=\"_blank\" id=\"to-do-list\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>TO DO LIST</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Task1 [ ] - Task2 [ ] - Task3 [ ] - Task4 [ ] - Task5 [ ]</h4>\n              <p>Have you perfected the craft of combining multiple user actions in one? The following \u2018To Do List\u2019 can be a tricky one! Luckily Selenium webdriver comes packed within many types of features and libraries which can be very useful! Ready to attempt this challenge? Can you use Selenium Webdrivers bespoke send keys method to add to the existing list? Or even delete an existing item from the list?</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Page-Object-Model/index.html\" target=\"_blank\" id=\"page-object-model\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>PAGE OBJECT MODEL</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Design a robust framework which is maintainable and reusable!</h4>\n              <p>Page object model (POM) is a fantastic design pattern which can be used to construct the architecture of your framework(s); enabling the developer to replicate specific pages of a given website. Pages can be modelled into unique classes (Java classes\u2026) in the process enabling test framework(s) to become more maintainable, flexible and reusable. Can you use the concepts of Page Object Modelling to model the pages of the website in this challenge?</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Accordion/index.html\" target=\"_blank\" id=\"page-object-model\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>ACCORDION &amp; TEXT AFFECTS (APPEAR &amp; DISAPPEAR)</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Click on one of the accordion panels! Do you see any text?</h4>\n              <p>Accordions are great way to toggle between hiding and showing large amount of content; waiting for specific items to appear such as text can be quite tricky! I suggest practising wait commands here!</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Dropdown-Checkboxes-RadioButtons/index.html\" target=\"_blank\" id=\"dropdown-checkboxes-radiobuttons\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>DROPDOWN, CHECKBOXE(S) &amp; RADIO BUTTON(S)</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>The choice is yours!</h4>\n              <p>Dropdown lists, check boxes and radio button are very common across websites now days and there are a wide range of options to select from. Try to handle each of the options listed within the challenge that awaits, it\u2019s important to practise, practise and practise in order to hone your selenium webdriver skills.</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Ajax-Loader/index.html\" target=\"_blank\" id=\"ajax-loader\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>AJAX LOADER</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Wait..... for the Ajax Loader</h4>\n              <p>Webdriver waits can be a very very tricky task to understand let alone attempt to implement! All automation testers must perfect the craft of webdriver waits! It\u2019s not only important to implement the code required to practise the necessary waits, it\u2019s essential that you also understand the different types of waits which are available. The following challenge will present an Ajax load screen however are you capable of implementing webdriver wait(s) to click on the button which will appear once the Ajax loader vanishes?</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Actions/index.html\" target=\"_blank\" id=\"actions\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>ACTIONS</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Can you really handle this challenge?</h4>\n              <p>The webdriver actions class enables the developer to perform a wide range of distinct user actions whether it\u2019s trying to perform double click(s), click and hold(s) or even attempting to drag and drop a specific element(s), have fun with the following challenge! I know I would \ud83d\ude0a</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Scrolling/index.html\" target=\"_blank\" id=\"scrolling-around\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>SCROLLING AROUND</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Scrolling Around...</h4>\n              <p>Sometimes we need to scroll to a specific element on a webpage before we conduct specific actions to that element. Let\u2019s say the developer needs to simulate a user click but the element is positioned at the bottom of the page? Luckily for us we can use custom JavaScript code to scroll too specific coordinates of a page or even scroll directly to a specific element which is in an awkward position of a website.</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Popup-Alerts/index.html\" target=\"_blank\" id=\"popup-alerts\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>POPUP &amp; ALERTS</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Close those annoying Popup &amp; Alerts!</h4>\n              <p>At times Popup and alerts can be quite annoying especially when they can impact the results of your automation test scripts. There are various types of popups and alerts which are present such as \u2018JavaScript\u2019 alerts or even \u2018Modal\u2019 popups. Once you understand the way to handle such popups and alerts the process can be straightforward \u2014 provided you keep practising \ud83d\ude0a</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"IFrame/index.html\" target=\"_blank\" id=\"iframe\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>IFRAME</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Practise with inline frame(s)</h4>\n              <p>An inline frame is used to embed another document within the current HTML document. If the developer has no knowledge of \u2018IFrame(s)\u2019 or doesn\u2019t know how to handle them correctly, it can be quite frustrating. To handle IFrames we need to use bespoke code which in turn will enable the developer to toggle between the main HTML page and the IFrame itself. Practise makes perfect \u2014 attempt the challenge for yourself. It\u2019s fairly easy once you get the hang of it.</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Hidden-Elements/index.html\" target=\"_blank\" id=\"hidden-elements\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>HIDDEN ELEMENTS</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Reveal and interact with hidden items</h4>\n              <p>Practice locating and interacting with hidden DOM elements using techniques like visibility toggling and JavaScript execution.</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Data-Table/index.html\" target=\"_blank\" id=\"data-table\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>DATA, TABLES &amp; BUTTON STATES</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Can you extract data to an Excel file?</h4>\n              <p>Practice capturing data from HTML tables and exporting it using Apache POI or similar libraries. Handle button states (enabled/disabled) dynamically!</p>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Autocomplete-TextField/autocomplete-textfield.html\" target=\"_blank\" id=\"autocomplete-textfield\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>AUTOCOMPLETE TEXTFIELD</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Searching for something specific?</h4>\n              <p>Use the autocomplete feature to simulate smart search. Try typing:</p>\n              <ul>\n                <li><p>Apple</p></li>\n                <li><p>Avocado</p></li>\n              </ul>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"File-Upload/index.html\" target=\"_blank\" id=\"file-upload\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>FILE UPLOAD</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Need to upload a specific file?</h4>\n              <p>Perform the following actions:</p>\n              <ul>\n                <li><p>Choose a file.</p></li>\n                <li><p>Click on the 'Submit' button.</p></li>\n              </ul>\n            </div>\n          </div>\n        </a>\n      </div>\n\n      <div class=\"col-md-12\">\n        <a href=\"Datepicker/index.html\" target=\"_blank\" id=\"datepicker\">\n          <div class=\"thumbnail\">\n            <div class=\"section-title\">\n              <h1>DATEPICKER</h1>\n            </div>\n            <div class=\"caption\">\n              <h4>Datepicker</h4>\n              <p>What date will you select?</p>\n              <ul>\n                <li><p>Select a day.</p></li>\n                <li><p>Select a month.</p></li>\n                <li><p>Select a year.</p></li>\n              </ul>\n            </div>\n          </div>\n        </a>\n      </div>\n    </div>\n\n    <!-- Footer -->\n    <div class=\"container\" id=\"nav-container\">\n    <footer>\n        <div class=\"row\">\n        <div class=\"col-lg-12\">\n            <p>\n            \u00a9 2024 by Gianni Bruno (WebDriver University) |\n            <a href=\"https://automationteststore.com/\" id=\"automation-test-store\" target=\"_blank\">\n                Automationteststore\n            </a>\n            </p>\n        </div>\n        </div>\n    </footer>\n    </div>\n\n    <!-- jQuery -->\n    <script src=\"js/jquery.js\"></script>\n    <!-- Bootstrap Core JavaScript -->\n    <script src=\"js/bootstrap.min.js\"></script>\n\n  \n\n</div></body></html>",
+        "url": "https://automationplayground.com/back-office/pages/login.html",
+        "title": "RobotFrameworkTutorial.com Demo Admin Site",
+        "raw_html": "<!DOCTYPE html><html lang=\"en\"><head>\n\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n\n    <title>RobotFrameworkTutorial.com Demo Admin Site</title>\n\n    <!-- Bootstrap Core CSS -->\n    <link href=\"../vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">\n\n    <!-- MetisMenu CSS -->\n    <link href=\"../vendor/metisMenu/metisMenu.min.css\" rel=\"stylesheet\">\n\n    <!-- Custom CSS -->\n    <link href=\"../dist/css/sb-admin-2.css\" rel=\"stylesheet\">\n\n    <!-- Custom Fonts -->\n    <link href=\"../vendor/font-awesome/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\">\n\n    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->\n    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->\n    <!--[if lt IE 9]>\n        <script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>\n        <script src=\"https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js\"></script>\n    <![endif]-->\n\n</head>\n\n<body>\n\n    <div class=\"container\">\n        <div class=\"row\">\n            <div class=\"col-md-4 col-md-offset-4\">\n                <div class=\"login-panel panel panel-default\">\n                    <div class=\"panel-heading\">\n                        <h3 class=\"panel-title\">Please Sign In</h3>\n                    </div>\n                    <div class=\"panel-body\">\n                        <form role=\"form\">\n                            <fieldset>\n                                <div class=\"form-group\">\n                                    <input class=\"form-control\" placeholder=\"E-mail\" name=\"email\" type=\"email\" autofocus=\"\">\n                                </div>\n                                <div class=\"form-group\">\n                                    <input class=\"form-control\" placeholder=\"Password\" name=\"password\" type=\"password\" value=\"\">\n                                </div>\n                                <div class=\"checkbox\">\n                                    <label>\n                                        <input name=\"remember\" type=\"checkbox\" value=\"Remember Me\">Remember Me\n                                    </label>\n                                </div>\n                                <!-- Change this to a button or input when using this as a form -->\n                                <a href=\"index.html\" class=\"btn btn-lg btn-success btn-block\">Login</a>\n                            </fieldset>\n                        </form>\n                    </div>\n                </div>\n            </div>\n        </div>\n    </div>\n\n    <!-- jQuery -->\n    <script src=\"../vendor/jquery/jquery.min.js\"></script>\n\n    <!-- Bootstrap Core JavaScript -->\n    <script src=\"../vendor/bootstrap/js/bootstrap.min.js\"></script>\n\n    <!-- Metis Menu Plugin JavaScript -->\n    <script src=\"../vendor/metisMenu/metisMenu.min.js\"></script>\n\n    <!-- Custom Theme JavaScript -->\n    <script src=\"../dist/js/sb-admin-2.js\"></script>\n\n\n\n\n</body></html>",
         "elements": [
           {
-            "id": "nav-title",
+            "id": "",
             "tag": "a",
-            "text": "WebdriverUniversity.com (New Approach To Learning)",
+            "text": "Login",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a#nav-title",
-            "xpath": "//a[@id=\"nav-title\"]",
+            "css_selector": "a[href=\"index.html\"]",
+            "xpath": "//a[contains(text(), 'Login')]",
+            "attributes": {
+              "href": "index.html"
+            },
+            "classes": [
+              "btn",
+              "btn-lg",
+              "btn-success",
+              "btn-block"
+            ],
+            "bounding_box": {
+              "x": 476,
+              "y": 272.59375,
+              "width": 328,
+              "height": 46
+            }
+          },
+          {
+            "id": "",
+            "tag": "input",
+            "text": "",
+            "role": null,
+            "aria_label": null,
+            "name": "email",
+            "type": "email",
+            "css_selector": "input[name=\"email\"]",
+            "xpath": "//input[@name=\"email\"]",
+            "attributes": {
+              "placeholder": "E-mail"
+            },
+            "classes": [
+              "form-control"
+            ],
+            "bounding_box": {
+              "x": 476,
+              "y": 144.59375,
+              "width": 328,
+              "height": 34
+            }
+          },
+          {
+            "id": "",
+            "tag": "input",
+            "text": "",
+            "role": null,
+            "aria_label": null,
+            "name": "password",
+            "type": "password",
+            "css_selector": "input[name=\"password\"]",
+            "xpath": "//input[@name=\"password\"]",
+            "attributes": {
+              "placeholder": "Password"
+            },
+            "classes": [
+              "form-control"
+            ],
+            "bounding_box": {
+              "x": 476,
+              "y": 193.59375,
+              "width": 328,
+              "height": 34
+            }
+          },
+          {
+            "id": "",
+            "tag": "input",
+            "text": "",
+            "role": null,
+            "aria_label": null,
+            "name": "remember",
+            "type": "checkbox",
+            "css_selector": "input[name=\"remember\"]",
+            "xpath": "//input[@name=\"remember\"]",
+            "attributes": {},
+            "classes": [],
+            "bounding_box": {
+              "x": 476,
+              "y": 246.59375,
+              "width": 13,
+              "height": 13
+            }
+          }
+        ],
+        "screenshot_path": "artifacts\\screenshots\\automationplayground.com_back-office_pages_login.html.png",
+        "summary": "- Purpose: a demo back-office login page to authenticate users for the admin site.\n- Main flow: enter credentials into the input fields and activate the \"Login\" control to authenticate and be redirected to the admin dashboard.\n- Alternate/negative flows: failed login (wrong credentials), empty-field submission, and repeated attempts showing error messages.\n- Navigation: post-login redirect to dashboard, possible return links or session-dependent pages.\n- Input validation edge cases: very long strings, leading/trailing whitespace, unicode/emoji, special characters, SQL injection and XSS payloads.\n- Security/behavior edge cases: account lockout or rate limiting on repeated failures, HTTPS/session cookie behavior, missing/invalid CSRF token handling.\n- UX/accessibility edge cases: missing labels/placeholder text, keyboard-only navigation, autofill behavior, caps-lock warning, password visibility toggles.\n- Resilience edge cases: slow or dropped network, disabled JavaScript, and unexpected server errors (5xx) or redirects.",
+        "meta": {
+          "elapsed_seconds": "0.000"
+        }
+      }
+    },
+    "page_1": {
+      "snapshot": {
+        "url": "https://automationplayground.com/back-office/pages/index.html",
+        "title": "RobotFrameworkTutorial.com Demo Admin Site",
+        "raw_html": "<!DOCTYPE html><html lang=\"en\"><head>\n\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n    <meta name=\"description\" content=\"\">\n    <meta name=\"author\" content=\"\">\n\n    <title>RobotFrameworkTutorial.com Demo Admin Site</title>\n\n    <!-- Bootstrap Core CSS -->\n    <link href=\"../vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">\n\n    <!-- MetisMenu CSS -->\n    <link href=\"../vendor/metisMenu/metisMenu.min.css\" rel=\"stylesheet\">\n\n    <!-- Custom CSS -->\n    <link href=\"../dist/css/sb-admin-2.css\" rel=\"stylesheet\">\n\n    <!-- Morris Charts CSS -->\n    <link href=\"../vendor/morrisjs/morris.css\" rel=\"stylesheet\">\n\n    <!-- Custom Fonts -->\n    <link href=\"../vendor/font-awesome/css/font-awesome.min.css\" rel=\"stylesheet\" type=\"text/css\">\n\n    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->\n    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->\n    <!--[if lt IE 9]>\n        <script src=\"https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js\"></script>\n        <script src=\"https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js\"></script>\n    <![endif]-->\n\n</head>\n\n<body>\n\n    <div id=\"wrapper\">\n\n        <!-- Navigation -->\n        <nav class=\"navbar navbar-default navbar-static-top\" role=\"navigation\" style=\"margin-bottom: 0\">\n            <div class=\"navbar-header\">\n                <button type=\"button\" class=\"navbar-toggle\" data-toggle=\"collapse\" data-target=\".navbar-collapse\">\n                    <span class=\"sr-only\">Toggle navigation</span>\n                    <span class=\"icon-bar\"></span>\n                    <span class=\"icon-bar\"></span>\n                    <span class=\"icon-bar\"></span>\n                </button>\n                <a class=\"navbar-brand\" href=\"index.html\">RobotFrameworkTutorial.com Demo Admin Site</a>\n            </div>\n            <!-- /.navbar-header -->\n\n            <ul class=\"nav navbar-top-links navbar-right\">\n                <li class=\"dropdown\">\n                    <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n                        <i class=\"fa fa-envelope fa-fw\"></i> <i class=\"fa fa-caret-down\"></i>\n                    </a>\n                    <ul class=\"dropdown-menu dropdown-messages\">\n                        <li>\n                            <a href=\"message.html\">\n                                <div>\n                                    <strong>Bryan Lamb</strong>\n                                    <span class=\"pull-right text-muted\">\n                                        <em>Just Now</em>\n                                    </span>\n                                </div>\n                                <div>I'd love more information about your services!</div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a href=\"#\">\n                                <div>\n                                    <strong>John Smith</strong>\n                                    <span class=\"pull-right text-muted\">\n                                        <em>Yesterday</em>\n                                    </span>\n                                </div>\n                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a href=\"#\">\n                                <div>\n                                    <strong>Diane Jenkins</strong>\n                                    <span class=\"pull-right text-muted\">\n                                        <em>Yesterday</em>\n                                    </span>\n                                </div>\n                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a class=\"text-center\" href=\"#\">\n                                <strong>Read All Messages</strong>\n                                <i class=\"fa fa-angle-right\"></i>\n                            </a>\n                        </li>\n                    </ul>\n                    <!-- /.dropdown-messages -->\n                </li>\n                <!-- /.dropdown -->\n                <li class=\"dropdown\">\n                    <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n                        <i class=\"fa fa-tasks fa-fw\"></i> <i class=\"fa fa-caret-down\"></i>\n                    </a>\n                    <ul class=\"dropdown-menu dropdown-tasks\">\n                        <li>\n                            <a href=\"#\">\n                                <div>\n                                    <p>\n                                        <strong>Task 1</strong>\n                                        <span class=\"pull-right text-muted\">40% Complete</span>\n                                    </p>\n                                    <div class=\"progress progress-striped active\">\n                                        <div class=\"progress-bar progress-bar-success\" role=\"progressbar\" aria-valuenow=\"40\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 40%\">\n                                            <span class=\"sr-only\">40% Complete (success)</span>\n                                        </div>\n                                    </div>\n                                </div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a href=\"#\">\n                                <div>\n                                    <p>\n                                        <strong>Task 2</strong>\n                                        <span class=\"pull-right text-muted\">20% Complete</span>\n                                    </p>\n                                    <div class=\"progress progress-striped active\">\n                                        <div class=\"progress-bar progress-bar-info\" role=\"progressbar\" aria-valuenow=\"20\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 20%\">\n                                            <span class=\"sr-only\">20% Complete</span>\n                                        </div>\n                                    </div>\n                                </div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a href=\"#\">\n                                <div>\n                                    <p>\n                                        <strong>Task 3</strong>\n                                        <span class=\"pull-right text-muted\">60% Complete</span>\n                                    </p>\n                                    <div class=\"progress progress-striped active\">\n                                        <div class=\"progress-bar progress-bar-warning\" role=\"progressbar\" aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 60%\">\n                                            <span class=\"sr-only\">60% Complete (warning)</span>\n                                        </div>\n                                    </div>\n                                </div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a href=\"#\">\n                                <div>\n                                    <p>\n                                        <strong>Task 4</strong>\n                                        <span class=\"pull-right text-muted\">80% Complete</span>\n                                    </p>\n                                    <div class=\"progress progress-striped active\">\n                                        <div class=\"progress-bar progress-bar-danger\" role=\"progressbar\" aria-valuenow=\"80\" aria-valuemin=\"0\" aria-valuemax=\"100\" style=\"width: 80%\">\n                                            <span class=\"sr-only\">80% Complete (danger)</span>\n                                        </div>\n                                    </div>\n                                </div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a class=\"text-center\" href=\"#\">\n                                <strong>See All Tasks</strong>\n                                <i class=\"fa fa-angle-right\"></i>\n                            </a>\n                        </li>\n                    </ul>\n                    <!-- /.dropdown-tasks -->\n                </li>\n                <!-- /.dropdown -->\n                <li class=\"dropdown\">\n                    <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n                        <i class=\"fa fa-bell fa-fw\"></i> <i class=\"fa fa-caret-down\"></i>\n                    </a>\n                    <ul class=\"dropdown-menu dropdown-alerts\">\n                        <li>\n                            <a href=\"#\">\n                                <div>\n                                    <i class=\"fa fa-comment fa-fw\"></i> New Comment\n                                    <span class=\"pull-right text-muted small\">4 minutes ago</span>\n                                </div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a href=\"#\">\n                                <div>\n                                    <i class=\"fa fa-twitter fa-fw\"></i> 3 New Followers\n                                    <span class=\"pull-right text-muted small\">12 minutes ago</span>\n                                </div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a href=\"#\">\n                                <div>\n                                    <i class=\"fa fa-envelope fa-fw\"></i> Message Sent\n                                    <span class=\"pull-right text-muted small\">4 minutes ago</span>\n                                </div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a href=\"#\">\n                                <div>\n                                    <i class=\"fa fa-tasks fa-fw\"></i> New Task\n                                    <span class=\"pull-right text-muted small\">4 minutes ago</span>\n                                </div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a href=\"#\">\n                                <div>\n                                    <i class=\"fa fa-upload fa-fw\"></i> Server Rebooted\n                                    <span class=\"pull-right text-muted small\">4 minutes ago</span>\n                                </div>\n                            </a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li>\n                            <a class=\"text-center\" href=\"#\">\n                                <strong>See All Alerts</strong>\n                                <i class=\"fa fa-angle-right\"></i>\n                            </a>\n                        </li>\n                    </ul>\n                    <!-- /.dropdown-alerts -->\n                </li>\n                <!-- /.dropdown -->\n                <li class=\"dropdown\">\n                    <a class=\"dropdown-toggle\" data-toggle=\"dropdown\" href=\"#\">\n                        <i class=\"fa fa-user fa-fw\"></i> <i class=\"fa fa-caret-down\"></i>\n                    </a>\n                    <ul class=\"dropdown-menu dropdown-user\">\n                        <li><a href=\"#\"><i class=\"fa fa-user fa-fw\"></i> User Profile</a>\n                        </li>\n                        <li><a href=\"#\"><i class=\"fa fa-gear fa-fw\"></i> Settings</a>\n                        </li>\n                        <li class=\"divider\"></li>\n                        <li><a href=\"login.html\"><i class=\"fa fa-sign-out fa-fw\"></i> Logout</a>\n                        </li>\n                    </ul>\n                    <!-- /.dropdown-user -->\n                </li>\n                <!-- /.dropdown -->\n            </ul>\n            <!-- /.navbar-top-links -->\n\n            <div class=\"navbar-default sidebar\" role=\"navigation\">\n                <div class=\"sidebar-nav navbar-collapse\">\n                    <ul class=\"nav in\" id=\"side-menu\">\n                        <li class=\"sidebar-search\">\n                            <div class=\"input-group custom-search-form\">\n                                <input type=\"text\" class=\"form-control\" placeholder=\"Search...\">\n                                <span class=\"input-group-btn\">\n                                <button class=\"btn btn-default\" type=\"button\">\n                                    <i class=\"fa fa-search\"></i>\n                                </button>\n                            </span>\n                            </div>\n                            <!-- /input-group -->\n                        </li>\n                        <li>\n                            <a href=\"index.html\" class=\"active\"><i class=\"fa fa-dashboard fa-fw\"></i> Dashboard</a>\n                        </li>\n                        <li>\n                            <a href=\"#\"><i class=\"fa fa-bar-chart-o fa-fw\"></i> Charts<span class=\"fa arrow\"></span></a>\n                            <ul class=\"nav nav-second-level collapse\">\n                                <li>\n                                    <a href=\"flot.html\">Flot Charts</a>\n                                </li>\n                                <li>\n                                    <a href=\"morris.html\">Morris.js Charts</a>\n                                </li>\n                            </ul>\n                            <!-- /.nav-second-level -->\n                        </li>\n                        <li>\n                            <a href=\"tables.html\"><i class=\"fa fa-table fa-fw\"></i> Tables</a>\n                        </li>\n                        <li>\n                            <a href=\"forms.html\"><i class=\"fa fa-edit fa-fw\"></i> Forms</a>\n                        </li>\n                        <li>\n                            <a href=\"#\"><i class=\"fa fa-wrench fa-fw\"></i> UI Elements<span class=\"fa arrow\"></span></a>\n                            <ul class=\"nav nav-second-level collapse\">\n                                <li>\n                                    <a href=\"panels-wells.html\">Panels and Wells</a>\n                                </li>\n                                <li>\n                                    <a href=\"buttons.html\">Buttons</a>\n                                </li>\n                                <li>\n                                    <a href=\"notifications.html\">Notifications</a>\n                                </li>\n                                <li>\n                                    <a href=\"typography.html\">Typography</a>\n                                </li>\n                                <li>\n                                    <a href=\"icons.html\"> Icons</a>\n                                </li>\n                                <li>\n                                    <a href=\"grid.html\">Grid</a>\n                                </li>\n                            </ul>\n                            <!-- /.nav-second-level -->\n                        </li>\n                        <li>\n                            <a href=\"#\"><i class=\"fa fa-sitemap fa-fw\"></i> Multi-Level Dropdown<span class=\"fa arrow\"></span></a>\n                            <ul class=\"nav nav-second-level collapse\">\n                                <li>\n                                    <a href=\"#\">Second Level Item</a>\n                                </li>\n                                <li>\n                                    <a href=\"#\">Second Level Item</a>\n                                </li>\n                                <li>\n                                    <a href=\"#\">Third Level <span class=\"fa arrow\"></span></a>\n                                    <ul class=\"nav nav-third-level collapse\">\n                                        <li>\n                                            <a href=\"#\">Third Level Item</a>\n                                        </li>\n                                        <li>\n                                            <a href=\"#\">Third Level Item</a>\n                                        </li>\n                                        <li>\n                                            <a href=\"#\">Third Level Item</a>\n                                        </li>\n                                        <li>\n                                            <a href=\"#\">Third Level Item</a>\n                                        </li>\n                                    </ul>\n                                    <!-- /.nav-third-level -->\n                                </li>\n                            </ul>\n                            <!-- /.nav-second-level -->\n                        </li>\n                        <li>\n                            <a href=\"#\"><i class=\"fa fa-files-o fa-fw\"></i> Sample Pages<span class=\"fa arrow\"></span></a>\n                            <ul class=\"nav nav-second-level collapse\">\n                                <li>\n                                    <a href=\"blank.html\">Blank Page</a>\n                                </li>\n                                <li>\n                                    <a href=\"login.html\">Login Page</a>\n                                </li>\n                            </ul>\n                            <!-- /.nav-second-level -->\n                        </li>\n                    </ul>\n                </div>\n                <!-- /.sidebar-collapse -->\n            </div>\n            <!-- /.navbar-static-side -->\n        </nav>\n\n        <div id=\"page-wrapper\" style=\"min-height: 669px;\">\n            <div class=\"row\">\n                <div class=\"col-lg-12\">\n                    <h1 class=\"page-header\">Dashboard</h1>\n                </div>\n                <!-- /.col-lg-12 -->\n            </div>\n            <!-- /.row -->\n            <div class=\"row\">\n                <div class=\"col-lg-3 col-md-6\">\n                    <div class=\"panel panel-primary\">\n                        <div class=\"panel-heading\">\n                            <div class=\"row\">\n                                <div class=\"col-xs-3\">\n                                    <i class=\"fa fa-comments fa-5x\"></i>\n                                </div>\n                                <div class=\"col-xs-9 text-right\">\n                                    <div class=\"huge\">26</div>\n                                    <div>New Comments!</div>\n                                </div>\n                            </div>\n                        </div>\n                        <a href=\"#\">\n                            <div class=\"panel-footer\">\n                                <span class=\"pull-left\">View Details</span>\n                                <span class=\"pull-right\"><i class=\"fa fa-arrow-circle-right\"></i></span>\n                                <div class=\"clearfix\"></div>\n                            </div>\n                        </a>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6\">\n                    <div class=\"panel panel-green\">\n                        <div class=\"panel-heading\">\n                            <div class=\"row\">\n                                <div class=\"col-xs-3\">\n                                    <i class=\"fa fa-tasks fa-5x\"></i>\n                                </div>\n                                <div class=\"col-xs-9 text-right\">\n                                    <div class=\"huge\">12</div>\n                                    <div>New Tasks!</div>\n                                </div>\n                            </div>\n                        </div>\n                        <a href=\"#\">\n                            <div class=\"panel-footer\">\n                                <span class=\"pull-left\">View Details</span>\n                                <span class=\"pull-right\"><i class=\"fa fa-arrow-circle-right\"></i></span>\n                                <div class=\"clearfix\"></div>\n                            </div>\n                        </a>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6\">\n                    <div class=\"panel panel-yellow\">\n                        <div class=\"panel-heading\">\n                            <div class=\"row\">\n                                <div class=\"col-xs-3\">\n                                    <i class=\"fa fa-shopping-cart fa-5x\"></i>\n                                </div>\n                                <div class=\"col-xs-9 text-right\">\n                                    <div class=\"huge\">124</div>\n                                    <div>New Orders!</div>\n                                </div>\n                            </div>\n                        </div>\n                        <a href=\"#\">\n                            <div class=\"panel-footer\">\n                                <span class=\"pull-left\">View Details</span>\n                                <span class=\"pull-right\"><i class=\"fa fa-arrow-circle-right\"></i></span>\n                                <div class=\"clearfix\"></div>\n                            </div>\n                        </a>\n                    </div>\n                </div>\n                <div class=\"col-lg-3 col-md-6\">\n                    <div class=\"panel panel-red\">\n                        <div class=\"panel-heading\">\n                            <div class=\"row\">\n                                <div class=\"col-xs-3\">\n                                    <i class=\"fa fa-support fa-5x\"></i>\n                                </div>\n                                <div class=\"col-xs-9 text-right\">\n                                    <div class=\"huge\">13</div>\n                                    <div>Support Tickets!</div>\n                                </div>\n                            </div>\n                        </div>\n                        <a href=\"#\">\n                            <div class=\"panel-footer\">\n                                <span class=\"pull-left\">View Details</span>\n                                <span class=\"pull-right\"><i class=\"fa fa-arrow-circle-right\"></i></span>\n                                <div class=\"clearfix\"></div>\n                            </div>\n                        </a>\n                    </div>\n                </div>\n            </div>\n            <!-- /.row -->\n            <div class=\"row\">\n                <div class=\"col-lg-8\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <i class=\"fa fa-bar-chart-o fa-fw\"></i> Area Chart Example\n                            <div class=\"pull-right\">\n                                <div class=\"btn-group\">\n                                    <button type=\"button\" class=\"btn btn-default btn-xs dropdown-toggle\" data-toggle=\"dropdown\">\n                                        Actions\n                                        <span class=\"caret\"></span>\n                                    </button>\n                                    <ul class=\"dropdown-menu pull-right\" role=\"menu\">\n                                        <li><a href=\"#\">Action</a>\n                                        </li>\n                                        <li><a href=\"#\">Another action</a>\n                                        </li>\n                                        <li><a href=\"#\">Something else here</a>\n                                        </li>\n                                        <li class=\"divider\"></li>\n                                        <li><a href=\"#\">Separated link</a>\n                                        </li>\n                                    </ul>\n                                </div>\n                            </div>\n                        </div>\n                        <!-- /.panel-heading -->\n                        <div class=\"panel-body\">\n                            <div id=\"morris-area-chart\" style=\"position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"><svg height=\"342\" version=\"1.1\" width=\"593\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" style=\"overflow: hidden; position: relative; top: -0.734375px;\"><desc style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">Created with Rapha\u00ebl 2.2.0</desc><defs style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></defs><text x=\"49.529296875\" y=\"308\" text-anchor=\"end\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">0</tspan></text><path fill=\"none\" stroke=\"#aaaaaa\" d=\"M62.029296875,308H567.65625\" stroke-width=\"0.5\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><text x=\"49.529296875\" y=\"237.25\" text-anchor=\"end\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">7,500</tspan></text><path fill=\"none\" stroke=\"#aaaaaa\" d=\"M62.029296875,237.25H567.65625\" stroke-width=\"0.5\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><text x=\"49.529296875\" y=\"166.5\" text-anchor=\"end\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">15,000</tspan></text><path fill=\"none\" stroke=\"#aaaaaa\" d=\"M62.029296875,166.5H567.65625\" stroke-width=\"0.5\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><text x=\"49.529296875\" y=\"95.75\" text-anchor=\"end\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">22,500</tspan></text><path fill=\"none\" stroke=\"#aaaaaa\" d=\"M62.029296875,95.75H567.65625\" stroke-width=\"0.5\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><text x=\"49.529296875\" y=\"25\" text-anchor=\"end\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">30,000</tspan></text><path fill=\"none\" stroke=\"#aaaaaa\" d=\"M62.029296875,25H567.65625\" stroke-width=\"0.5\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><text x=\"474.27192815917374\" y=\"320.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\" transform=\"matrix(1,0,0,1,0,7)\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">2012</tspan></text><text x=\"250.02668163350546\" y=\"320.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\" transform=\"matrix(1,0,0,1,0,7)\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">2011</tspan></text><path fill=\"#7cb57c\" stroke=\"none\" d=\"M62.029296875,257.8807C76.15341956570063,252.69236666666666,104.40166494710186,241.9232228128774,118.5257876378025,237.12736666666666C132.66270971472034,232.32716447954408,160.93655386855605,226.06622609454436,175.0734759454739,219.49646666666666C189.0504056946765,213.0010594278777,217.00426519308172,186.80528908839776,230.98119494228433,184.86669999999998C244.8045320568803,182.94941408839776,272.4512062860723,202.66302023809524,286.2745434006683,204.07296666666667C300.40506578447753,205.51424523809524,328.666110552096,195.3117583333333,342.7966329359052,196.27159999999998C356.9271553197145,197.23144166666665,385.1882000873329,228.79010418943534,399.31872247114217,211.7517C413.2956522203448,194.89849585610202,441.24951171875,68.92631666666665,455.2264414679526,60.705166666666656C469.2033712171552,52.484016666666655,497.15723071556044,133.9280789162113,511.13416046476306,145.9825C525.2646828485723,158.16938724954463,553.5257276161908,154.748425,567.65625,157.6704L567.65625,308L62.029296875,308Z\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></path><path fill=\"none\" stroke=\"#4da74d\" d=\"M62.029296875,257.8807C76.15341956570063,252.69236666666666,104.40166494710186,241.9232228128774,118.5257876378025,237.12736666666666C132.66270971472034,232.32716447954408,160.93655386855605,226.06622609454436,175.0734759454739,219.49646666666666C189.0504056946765,213.0010594278777,217.00426519308172,186.80528908839776,230.98119494228433,184.86669999999998C244.8045320568803,182.94941408839776,272.4512062860723,202.66302023809524,286.2745434006683,204.07296666666667C300.40506578447753,205.51424523809524,328.666110552096,195.3117583333333,342.7966329359052,196.27159999999998C356.9271553197145,197.23144166666665,385.1882000873329,228.79010418943534,399.31872247114217,211.7517C413.2956522203448,194.89849585610202,441.24951171875,68.92631666666665,455.2264414679526,60.705166666666656C469.2033712171552,52.484016666666655,497.15723071556044,133.9280789162113,511.13416046476306,145.9825C525.2646828485723,158.16938724954463,553.5257276161908,154.748425,567.65625,157.6704\" stroke-width=\"3\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><circle cx=\"62.029296875\" cy=\"257.8807\" r=\"2\" fill=\"#4da74d\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"118.5257876378025\" cy=\"237.12736666666666\" r=\"2\" fill=\"#4da74d\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"175.0734759454739\" cy=\"219.49646666666666\" r=\"2\" fill=\"#4da74d\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"230.98119494228433\" cy=\"184.86669999999998\" r=\"2\" fill=\"#4da74d\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"286.2745434006683\" cy=\"204.07296666666667\" r=\"2\" fill=\"#4da74d\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"342.7966329359052\" cy=\"196.27159999999998\" r=\"2\" fill=\"#4da74d\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"399.31872247114217\" cy=\"211.7517\" r=\"2\" fill=\"#4da74d\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"455.2264414679526\" cy=\"60.705166666666656\" r=\"2\" fill=\"#4da74d\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"511.13416046476306\" cy=\"145.9825\" r=\"2\" fill=\"#4da74d\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"567.65625\" cy=\"157.6704\" r=\"2\" fill=\"#4da74d\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><path fill=\"#a8b4bd\" stroke=\"none\" d=\"M62.029296875,282.8507333333333C76.15341956570063,277.1765833333333,104.40166494710186,265.12206984261775,118.5257876378025,260.15413333333333C132.66270971472034,255.18169484261776,160.93655386855605,245.80726376811592,175.0734759454739,243.0892333333333C189.0504056946765,240.40196376811593,217.00426519308172,240.71814415285453,230.98119494228433,238.53293333333335C244.8045320568803,236.3717358195212,272.4512062860723,228.73457664835163,286.2745434006683,225.7036C300.40506578447753,222.6052683150183,328.666110552096,213.8871708333333,342.7966329359052,214.01569999999998C356.9271553197145,214.14422916666666,385.1882000873329,239.86483752276865,399.31872247114217,226.73183333333333C413.2956522203448,213.74157918943533,441.24951171875,117.22498333333331,455.2264414679526,109.52266666666665C469.2033712171552,101.82034999999999,497.15723071556044,157.02737399817852,511.13416046476306,165.1133C525.2646828485723,173.28808233151184,553.5257276161908,172.20245,567.65625,174.5655L567.65625,308L62.029296875,308Z\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></path><path fill=\"none\" stroke=\"#7a92a3\" d=\"M62.029296875,282.8507333333333C76.15341956570063,277.1765833333333,104.40166494710186,265.12206984261775,118.5257876378025,260.15413333333333C132.66270971472034,255.18169484261776,160.93655386855605,245.80726376811592,175.0734759454739,243.0892333333333C189.0504056946765,240.40196376811593,217.00426519308172,240.71814415285453,230.98119494228433,238.53293333333335C244.8045320568803,236.3717358195212,272.4512062860723,228.73457664835163,286.2745434006683,225.7036C300.40506578447753,222.6052683150183,328.666110552096,213.8871708333333,342.7966329359052,214.01569999999998C356.9271553197145,214.14422916666666,385.1882000873329,239.86483752276865,399.31872247114217,226.73183333333333C413.2956522203448,213.74157918943533,441.24951171875,117.22498333333331,455.2264414679526,109.52266666666665C469.2033712171552,101.82034999999999,497.15723071556044,157.02737399817852,511.13416046476306,165.1133C525.2646828485723,173.28808233151184,553.5257276161908,172.20245,567.65625,174.5655\" stroke-width=\"3\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><circle cx=\"62.029296875\" cy=\"282.8507333333333\" r=\"2\" fill=\"#7a92a3\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"118.5257876378025\" cy=\"260.15413333333333\" r=\"2\" fill=\"#7a92a3\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"175.0734759454739\" cy=\"243.0892333333333\" r=\"2\" fill=\"#7a92a3\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"230.98119494228433\" cy=\"238.53293333333335\" r=\"2\" fill=\"#7a92a3\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"286.2745434006683\" cy=\"225.7036\" r=\"2\" fill=\"#7a92a3\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"342.7966329359052\" cy=\"214.01569999999998\" r=\"2\" fill=\"#7a92a3\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"399.31872247114217\" cy=\"226.73183333333333\" r=\"2\" fill=\"#7a92a3\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"455.2264414679526\" cy=\"109.52266666666665\" r=\"2\" fill=\"#7a92a3\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"511.13416046476306\" cy=\"165.1133\" r=\"2\" fill=\"#7a92a3\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"567.65625\" cy=\"174.5655\" r=\"2\" fill=\"#7a92a3\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><path fill=\"#2677b5\" stroke=\"none\" d=\"M62.029296875,282.8507333333333C76.15341956570063,282.5866,104.40166494710186,284.4414088730374,118.5257876378025,281.7942C132.66270971472034,279.14459220637076,160.93655386855605,262.8362991710296,175.0734759454739,261.66346666666664C189.0504056946765,260.503907504363,217.00426519308172,274.71505662983424,230.98119494228433,272.4646333333333C244.8045320568803,270.2389399631676,272.4512062860723,245.97829532967035,286.2745434006683,243.75900000000001C300.40506578447753,241.490386996337,328.666110552096,252.16645833333334,342.7966329359052,254.513C356.9271553197145,256.8595416666667,385.1882000873329,273.67962604735885,399.31872247114217,262.53133333333335C413.2956522203448,251.50421771402551,441.24951171875,172.7295375,455.2264414679526,165.81136666666666C469.2033712171552,158.89319583333332,497.15723071556044,199.3979123406193,511.13416046476306,207.18596666666667C525.2646828485723,215.05960400728597,553.5257276161908,223.14009166666668,567.65625,228.45813333333334L567.65625,308L62.029296875,308Z\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></path><path fill=\"none\" stroke=\"#0b62a4\" d=\"M62.029296875,282.8507333333333C76.15341956570063,282.5866,104.40166494710186,284.4414088730374,118.5257876378025,281.7942C132.66270971472034,279.14459220637076,160.93655386855605,262.8362991710296,175.0734759454739,261.66346666666664C189.0504056946765,260.503907504363,217.00426519308172,274.71505662983424,230.98119494228433,272.4646333333333C244.8045320568803,270.2389399631676,272.4512062860723,245.97829532967035,286.2745434006683,243.75900000000001C300.40506578447753,241.490386996337,328.666110552096,252.16645833333334,342.7966329359052,254.513C356.9271553197145,256.8595416666667,385.1882000873329,273.67962604735885,399.31872247114217,262.53133333333335C413.2956522203448,251.50421771402551,441.24951171875,172.7295375,455.2264414679526,165.81136666666666C469.2033712171552,158.89319583333332,497.15723071556044,199.3979123406193,511.13416046476306,207.18596666666667C525.2646828485723,215.05960400728597,553.5257276161908,223.14009166666668,567.65625,228.45813333333334\" stroke-width=\"3\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><circle cx=\"62.029296875\" cy=\"282.8507333333333\" r=\"2\" fill=\"#0b62a4\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"118.5257876378025\" cy=\"281.7942\" r=\"2\" fill=\"#0b62a4\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"175.0734759454739\" cy=\"261.66346666666664\" r=\"2\" fill=\"#0b62a4\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"230.98119494228433\" cy=\"272.4646333333333\" r=\"2\" fill=\"#0b62a4\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"286.2745434006683\" cy=\"243.75900000000001\" r=\"2\" fill=\"#0b62a4\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"342.7966329359052\" cy=\"254.513\" r=\"2\" fill=\"#0b62a4\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"399.31872247114217\" cy=\"262.53133333333335\" r=\"2\" fill=\"#0b62a4\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"455.2264414679526\" cy=\"165.81136666666666\" r=\"2\" fill=\"#0b62a4\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"511.13416046476306\" cy=\"207.18596666666667\" r=\"2\" fill=\"#0b62a4\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle><circle cx=\"567.65625\" cy=\"228.45813333333334\" r=\"2\" fill=\"#0b62a4\" stroke=\"#ffffff\" stroke-width=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></circle></svg><div class=\"morris-hover morris-default-style\" style=\"display: none;\"></div></div>\n                        </div>\n                        <!-- /.panel-body -->\n                    </div>\n                    <!-- /.panel -->\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <i class=\"fa fa-bar-chart-o fa-fw\"></i> Bar Chart Example\n                            <div class=\"pull-right\">\n                                <div class=\"btn-group\">\n                                    <button type=\"button\" class=\"btn btn-default btn-xs dropdown-toggle\" data-toggle=\"dropdown\">\n                                        Actions\n                                        <span class=\"caret\"></span>\n                                    </button>\n                                    <ul class=\"dropdown-menu pull-right\" role=\"menu\">\n                                        <li><a href=\"#\">Action</a>\n                                        </li>\n                                        <li><a href=\"#\">Another action</a>\n                                        </li>\n                                        <li><a href=\"#\">Something else here</a>\n                                        </li>\n                                        <li class=\"divider\"></li>\n                                        <li><a href=\"#\">Separated link</a>\n                                        </li>\n                                    </ul>\n                                </div>\n                            </div>\n                        </div>\n                        <!-- /.panel-heading -->\n                        <div class=\"panel-body\">\n                            <div class=\"row\">\n                                <div class=\"col-lg-4\">\n                                    <div class=\"table-responsive\">\n                                        <table class=\"table table-bordered table-hover table-striped\">\n                                            <thead>\n                                                <tr>\n                                                    <th>#</th>\n                                                    <th>Date</th>\n                                                    <th>Time</th>\n                                                    <th>Amount</th>\n                                                </tr>\n                                            </thead>\n                                            <tbody>\n                                                <tr>\n                                                    <td>3326</td>\n                                                    <td>10/21/2013</td>\n                                                    <td>3:29 PM</td>\n                                                    <td>$321.33</td>\n                                                </tr>\n                                                <tr>\n                                                    <td>3325</td>\n                                                    <td>10/21/2013</td>\n                                                    <td>3:20 PM</td>\n                                                    <td>$234.34</td>\n                                                </tr>\n                                                <tr>\n                                                    <td>3324</td>\n                                                    <td>10/21/2013</td>\n                                                    <td>3:03 PM</td>\n                                                    <td>$724.17</td>\n                                                </tr>\n                                                <tr>\n                                                    <td>3323</td>\n                                                    <td>10/21/2013</td>\n                                                    <td>3:00 PM</td>\n                                                    <td>$23.71</td>\n                                                </tr>\n                                                <tr>\n                                                    <td>3322</td>\n                                                    <td>10/21/2013</td>\n                                                    <td>2:49 PM</td>\n                                                    <td>$8345.23</td>\n                                                </tr>\n                                                <tr>\n                                                    <td>3321</td>\n                                                    <td>10/21/2013</td>\n                                                    <td>2:23 PM</td>\n                                                    <td>$245.12</td>\n                                                </tr>\n                                                <tr>\n                                                    <td>3320</td>\n                                                    <td>10/21/2013</td>\n                                                    <td>2:15 PM</td>\n                                                    <td>$5663.54</td>\n                                                </tr>\n                                                <tr>\n                                                    <td>3319</td>\n                                                    <td>10/21/2013</td>\n                                                    <td>2:13 PM</td>\n                                                    <td>$943.45</td>\n                                                </tr>\n                                            </tbody>\n                                        </table>\n                                    </div>\n                                    <!-- /.table-responsive -->\n                                </div>\n                                <!-- /.col-lg-4 (nested) -->\n                                <div class=\"col-lg-8\">\n                                    <div id=\"morris-bar-chart\" style=\"position: relative; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"><svg height=\"342\" version=\"1.1\" width=\"385\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" style=\"overflow: hidden; position: relative; left: -0.546875px; top: -0.734375px;\"><desc style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">Created with Rapha\u00ebl 2.2.0</desc><defs style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></defs><text x=\"32.84765625\" y=\"308\" text-anchor=\"end\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">0</tspan></text><path fill=\"none\" stroke=\"#aaaaaa\" d=\"M45.34765625,308H360.09375\" stroke-width=\"0.5\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><text x=\"32.84765625\" y=\"237.25\" text-anchor=\"end\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">25</tspan></text><path fill=\"none\" stroke=\"#aaaaaa\" d=\"M45.34765625,237.25H360.09375\" stroke-width=\"0.5\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><text x=\"32.84765625\" y=\"166.5\" text-anchor=\"end\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">50</tspan></text><path fill=\"none\" stroke=\"#aaaaaa\" d=\"M45.34765625,166.5H360.09375\" stroke-width=\"0.5\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><text x=\"32.84765625\" y=\"95.75\" text-anchor=\"end\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">75</tspan></text><path fill=\"none\" stroke=\"#aaaaaa\" d=\"M45.34765625,95.75H360.09375\" stroke-width=\"0.5\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><text x=\"32.84765625\" y=\"25\" text-anchor=\"end\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: end; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">100</tspan></text><path fill=\"none\" stroke=\"#aaaaaa\" d=\"M45.34765625,25H360.09375\" stroke-width=\"0.5\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><text x=\"337.6118861607143\" y=\"320.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\" transform=\"matrix(1,0,0,1,0,7)\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">2012</tspan></text><text x=\"247.68443080357142\" y=\"320.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\" transform=\"matrix(1,0,0,1,0,7)\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">2010</tspan></text><text x=\"157.75697544642856\" y=\"320.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\" transform=\"matrix(1,0,0,1,0,7)\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">2008</tspan></text><text x=\"67.82952008928572\" y=\"320.5\" text-anchor=\"middle\" font-family=\"sans-serif\" font-size=\"12px\" stroke=\"none\" fill=\"#888888\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: sans-serif; font-size: 12px; font-weight: normal;\" font-weight=\"normal\" transform=\"matrix(1,0,0,1,0,7)\"><tspan dy=\"4\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">2006</tspan></text><rect x=\"50.96812220982143\" y=\"25\" width=\"15.361397879464285\" height=\"283\" rx=\"0\" ry=\"0\" fill=\"#0b62a4\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"69.32952008928572\" y=\"53.29999999999998\" width=\"15.361397879464285\" height=\"254.70000000000002\" rx=\"0\" ry=\"0\" fill=\"#7a92a3\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"95.93184988839286\" y=\"95.75\" width=\"15.361397879464285\" height=\"212.25\" rx=\"0\" ry=\"0\" fill=\"#0b62a4\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"114.29324776785714\" y=\"124.04999999999998\" width=\"15.361397879464285\" height=\"183.95000000000002\" rx=\"0\" ry=\"0\" fill=\"#7a92a3\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"140.89557756696428\" y=\"166.5\" width=\"15.361397879464285\" height=\"141.5\" rx=\"0\" ry=\"0\" fill=\"#0b62a4\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"159.25697544642856\" y=\"194.8\" width=\"15.361397879464285\" height=\"113.19999999999999\" rx=\"0\" ry=\"0\" fill=\"#7a92a3\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"185.85930524553572\" y=\"95.75\" width=\"15.361397879464285\" height=\"212.25\" rx=\"0\" ry=\"0\" fill=\"#0b62a4\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"204.220703125\" y=\"124.04999999999998\" width=\"15.361397879464285\" height=\"183.95000000000002\" rx=\"0\" ry=\"0\" fill=\"#7a92a3\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"230.82303292410717\" y=\"166.5\" width=\"15.361397879464285\" height=\"141.5\" rx=\"0\" ry=\"0\" fill=\"#0b62a4\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"249.18443080357144\" y=\"194.8\" width=\"15.361397879464285\" height=\"113.19999999999999\" rx=\"0\" ry=\"0\" fill=\"#7a92a3\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"275.7867606026786\" y=\"95.75\" width=\"15.361397879464285\" height=\"212.25\" rx=\"0\" ry=\"0\" fill=\"#0b62a4\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"294.1481584821429\" y=\"124.04999999999998\" width=\"15.361397879464285\" height=\"183.95000000000002\" rx=\"0\" ry=\"0\" fill=\"#7a92a3\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"320.75048828125\" y=\"25\" width=\"15.361397879464285\" height=\"283\" rx=\"0\" ry=\"0\" fill=\"#0b62a4\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect><rect x=\"339.1118861607143\" y=\"53.29999999999998\" width=\"15.361397879464285\" height=\"254.70000000000002\" rx=\"0\" ry=\"0\" fill=\"#7a92a3\" stroke=\"none\" fill-opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); fill-opacity: 1;\"></rect></svg><div class=\"morris-hover morris-default-style\" style=\"display: none;\"></div></div>\n                                </div>\n                                <!-- /.col-lg-8 (nested) -->\n                            </div>\n                            <!-- /.row -->\n                        </div>\n                        <!-- /.panel-body -->\n                    </div>\n                    <!-- /.panel -->\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <i class=\"fa fa-clock-o fa-fw\"></i> Responsive Timeline\n                        </div>\n                        <!-- /.panel-heading -->\n                        <div class=\"panel-body\">\n                            <ul class=\"timeline\">\n                                <li>\n                                    <div class=\"timeline-badge\"><i class=\"fa fa-check\"></i>\n                                    </div>\n                                    <div class=\"timeline-panel\">\n                                        <div class=\"timeline-heading\">\n                                            <h4 class=\"timeline-title\">Lorem ipsum dolor</h4>\n                                            <p><small class=\"text-muted\"><i class=\"fa fa-clock-o\"></i> 11 hours ago via Twitter</small>\n                                            </p>\n                                        </div>\n                                        <div class=\"timeline-body\">\n                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero laboriosam dolor perspiciatis omnis exercitationem. Beatae, officia pariatur? Est cum veniam excepturi. Maiores praesentium, porro voluptas suscipit facere rem dicta, debitis.</p>\n                                        </div>\n                                    </div>\n                                </li>\n                                <li class=\"timeline-inverted\">\n                                    <div class=\"timeline-badge warning\"><i class=\"fa fa-credit-card\"></i>\n                                    </div>\n                                    <div class=\"timeline-panel\">\n                                        <div class=\"timeline-heading\">\n                                            <h4 class=\"timeline-title\">Lorem ipsum dolor</h4>\n                                        </div>\n                                        <div class=\"timeline-body\">\n                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem dolorem quibusdam, tenetur commodi provident cumque magni voluptatem libero, quis rerum. Fugiat esse debitis optio, tempore. Animi officiis alias, officia repellendus.</p>\n                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium maiores odit qui est tempora eos, nostrum provident explicabo dignissimos debitis vel! Adipisci eius voluptates, ad aut recusandae minus eaque facere.</p>\n                                        </div>\n                                    </div>\n                                </li>\n                                <li>\n                                    <div class=\"timeline-badge danger\"><i class=\"fa fa-bomb\"></i>\n                                    </div>\n                                    <div class=\"timeline-panel\">\n                                        <div class=\"timeline-heading\">\n                                            <h4 class=\"timeline-title\">Lorem ipsum dolor</h4>\n                                        </div>\n                                        <div class=\"timeline-body\">\n                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Repellendus numquam facilis enim eaque, tenetur nam id qui vel velit similique nihil iure molestias aliquam, voluptatem totam quaerat, magni commodi quisquam.</p>\n                                        </div>\n                                    </div>\n                                </li>\n                                <li class=\"timeline-inverted\">\n                                    <div class=\"timeline-panel\">\n                                        <div class=\"timeline-heading\">\n                                            <h4 class=\"timeline-title\">Lorem ipsum dolor</h4>\n                                        </div>\n                                        <div class=\"timeline-body\">\n                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptates est quaerat asperiores sapiente, eligendi, nihil. Itaque quos, alias sapiente rerum quas odit! Aperiam officiis quidem delectus libero, omnis ut debitis!</p>\n                                        </div>\n                                    </div>\n                                </li>\n                                <li>\n                                    <div class=\"timeline-badge info\"><i class=\"fa fa-save\"></i>\n                                    </div>\n                                    <div class=\"timeline-panel\">\n                                        <div class=\"timeline-heading\">\n                                            <h4 class=\"timeline-title\">Lorem ipsum dolor</h4>\n                                        </div>\n                                        <div class=\"timeline-body\">\n                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nobis minus modi quam ipsum alias at est molestiae excepturi delectus nesciunt, quibusdam debitis amet, beatae consequuntur impedit nulla qui! Laborum, atque.</p>\n                                            <hr>\n                                            <div class=\"btn-group\">\n                                                <button type=\"button\" class=\"btn btn-primary btn-sm dropdown-toggle\" data-toggle=\"dropdown\">\n                                                    <i class=\"fa fa-gear\"></i> <span class=\"caret\"></span>\n                                                </button>\n                                                <ul class=\"dropdown-menu\" role=\"menu\">\n                                                    <li><a href=\"#\">Action</a>\n                                                    </li>\n                                                    <li><a href=\"#\">Another action</a>\n                                                    </li>\n                                                    <li><a href=\"#\">Something else here</a>\n                                                    </li>\n                                                    <li class=\"divider\"></li>\n                                                    <li><a href=\"#\">Separated link</a>\n                                                    </li>\n                                                </ul>\n                                            </div>\n                                        </div>\n                                    </div>\n                                </li>\n                                <li>\n                                    <div class=\"timeline-panel\">\n                                        <div class=\"timeline-heading\">\n                                            <h4 class=\"timeline-title\">Lorem ipsum dolor</h4>\n                                        </div>\n                                        <div class=\"timeline-body\">\n                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi fuga odio quibusdam. Iure expedita, incidunt unde quis nam! Quod, quisquam. Officia quam qui adipisci quas consequuntur nostrum sequi. Consequuntur, commodi.</p>\n                                        </div>\n                                    </div>\n                                </li>\n                                <li class=\"timeline-inverted\">\n                                    <div class=\"timeline-badge success\"><i class=\"fa fa-graduation-cap\"></i>\n                                    </div>\n                                    <div class=\"timeline-panel\">\n                                        <div class=\"timeline-heading\">\n                                            <h4 class=\"timeline-title\">Lorem ipsum dolor</h4>\n                                        </div>\n                                        <div class=\"timeline-body\">\n                                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deserunt obcaecati, quaerat tempore officia voluptas debitis consectetur culpa amet, accusamus dolorum fugiat, animi dicta aperiam, enim incidunt quisquam maxime neque eaque.</p>\n                                        </div>\n                                    </div>\n                                </li>\n                            </ul>\n                        </div>\n                        <!-- /.panel-body -->\n                    </div>\n                    <!-- /.panel -->\n                </div>\n                <!-- /.col-lg-8 -->\n                <div class=\"col-lg-4\">\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <i class=\"fa fa-bell fa-fw\"></i> Notifications Panel\n                        </div>\n                        <!-- /.panel-heading -->\n                        <div class=\"panel-body\">\n                            <div class=\"list-group\">\n                                <a href=\"#\" class=\"list-group-item\">\n                                    <i class=\"fa fa-comment fa-fw\"></i> New Comment\n                                    <span class=\"pull-right text-muted small\"><em>4 minutes ago</em>\n                                    </span>\n                                </a>\n                                <a href=\"#\" class=\"list-group-item\">\n                                    <i class=\"fa fa-twitter fa-fw\"></i> 3 New Followers\n                                    <span class=\"pull-right text-muted small\"><em>12 minutes ago</em>\n                                    </span>\n                                </a>\n                                <a href=\"#\" class=\"list-group-item\">\n                                    <i class=\"fa fa-envelope fa-fw\"></i> Message Sent\n                                    <span class=\"pull-right text-muted small\"><em>27 minutes ago</em>\n                                    </span>\n                                </a>\n                                <a href=\"#\" class=\"list-group-item\">\n                                    <i class=\"fa fa-tasks fa-fw\"></i> New Task\n                                    <span class=\"pull-right text-muted small\"><em>43 minutes ago</em>\n                                    </span>\n                                </a>\n                                <a href=\"#\" class=\"list-group-item\">\n                                    <i class=\"fa fa-upload fa-fw\"></i> Server Rebooted\n                                    <span class=\"pull-right text-muted small\"><em>11:32 AM</em>\n                                    </span>\n                                </a>\n                                <a href=\"#\" class=\"list-group-item\">\n                                    <i class=\"fa fa-bolt fa-fw\"></i> Server Crashed!\n                                    <span class=\"pull-right text-muted small\"><em>11:13 AM</em>\n                                    </span>\n                                </a>\n                                <a href=\"#\" class=\"list-group-item\">\n                                    <i class=\"fa fa-warning fa-fw\"></i> Server Not Responding\n                                    <span class=\"pull-right text-muted small\"><em>10:57 AM</em>\n                                    </span>\n                                </a>\n                                <a href=\"#\" class=\"list-group-item\">\n                                    <i class=\"fa fa-shopping-cart fa-fw\"></i> New Order Placed\n                                    <span class=\"pull-right text-muted small\"><em>9:49 AM</em>\n                                    </span>\n                                </a>\n                                <a href=\"#\" class=\"list-group-item\">\n                                    <i class=\"fa fa-money fa-fw\"></i> Payment Received\n                                    <span class=\"pull-right text-muted small\"><em>Yesterday</em>\n                                    </span>\n                                </a>\n                            </div>\n                            <!-- /.list-group -->\n                            <a href=\"#\" class=\"btn btn-default btn-block\">View All Alerts</a>\n                        </div>\n                        <!-- /.panel-body -->\n                    </div>\n                    <!-- /.panel -->\n                    <div class=\"panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <i class=\"fa fa-bar-chart-o fa-fw\"></i> Donut Chart Example\n                        </div>\n                        <div class=\"panel-body\">\n                            <div id=\"morris-donut-chart\"><svg height=\"342\" version=\"1.1\" width=\"265\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" style=\"overflow: hidden; position: relative; left: -0.65625px; top: -0.734375px;\"><desc style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">Created with Rapha\u00ebl 2.2.0</desc><defs style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></defs><path fill=\"none\" stroke=\"#0b62a4\" d=\"M132.6640625,255.27604166666669A81.77604166666667,81.77604166666667,0,0,0,210.05104742408525,199.93057992227577\" stroke-width=\"2\" opacity=\"0\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;\"></path><path fill=\"#0b62a4\" stroke=\"#ffffff\" d=\"M132.6640625,258.2760416666667A84.77604166666667,84.77604166666667,0,0,0,212.890032413339,200.90020058562402L244.0128982373716,211.52983544449992A117.6640625,117.6640625,0,0,1,132.6640625,291.1640625Z\" stroke-width=\"3\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><path fill=\"none\" stroke=\"#3980b5\" d=\"M210.05104742408525,199.93057992227577A81.77604166666667,81.77604166666667,0,0,0,59.32403194637165,137.3259636056292\" stroke-width=\"2\" opacity=\"1\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 1;\"></path><path fill=\"#3980b5\" stroke=\"#ffffff\" d=\"M212.890032413339,200.90020058562402A84.77604166666667,84.77604166666667,0,0,0,56.6335117502765,135.9988987713411L22.65401666955748,119.2389454084438A122.6640625,122.6640625,0,0,1,248.74453988612785,213.14586988341367Z\" stroke-width=\"3\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><path fill=\"none\" stroke=\"#679dc6\" d=\"M59.32403194637165,137.3259636056292A81.77604166666667,81.77604166666667,0,0,0,132.63837179924863,255.2760376311808\" stroke-width=\"2\" opacity=\"0\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); opacity: 0;\"></path><path fill=\"#679dc6\" stroke=\"#ffffff\" d=\"M56.6335117502765,135.9988987713411A84.77604166666667,84.77604166666667,0,0,0,132.63742932146806,258.27603748313675L132.62709724517393,291.1640566935113A117.6640625,117.6640625,0,0,1,27.138216996382724,121.45072013225732Z\" stroke-width=\"3\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\"></path><text x=\"132.6640625\" y=\"163.5\" text-anchor=\"middle\" font-family=\"&quot;Arial&quot;\" font-size=\"15px\" stroke=\"none\" fill=\"#000000\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 15px; font-weight: 800;\" font-weight=\"800\" transform=\"matrix(1.2772,0,0,1.2772,-36.774,-48.3708)\" stroke-width=\"0.7829649916141223\"><tspan dy=\"6\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">In-Store Sales</tspan></text><text x=\"132.6640625\" y=\"183.5\" text-anchor=\"middle\" font-family=\"&quot;Arial&quot;\" font-size=\"14px\" stroke=\"none\" fill=\"#000000\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0); text-anchor: middle; font-family: Arial; font-size: 14px;\" transform=\"matrix(1.7037,0,0,1.7037,-93.4246,-123.4937)\" stroke-width=\"0.5869689828673332\"><tspan dy=\"5\" style=\"-webkit-tap-highlight-color: rgba(0, 0, 0, 0);\">30</tspan></text></svg></div>\n                            <a href=\"#\" class=\"btn btn-default btn-block\">View Details</a>\n                        </div>\n                        <!-- /.panel-body -->\n                    </div>\n                    <!-- /.panel -->\n                    <div class=\"chat-panel panel panel-default\">\n                        <div class=\"panel-heading\">\n                            <i class=\"fa fa-comments fa-fw\"></i> Chat\n                            <div class=\"btn-group pull-right\">\n                                <button type=\"button\" class=\"btn btn-default btn-xs dropdown-toggle\" data-toggle=\"dropdown\">\n                                    <i class=\"fa fa-chevron-down\"></i>\n                                </button>\n                                <ul class=\"dropdown-menu slidedown\">\n                                    <li>\n                                        <a href=\"#\">\n                                            <i class=\"fa fa-refresh fa-fw\"></i> Refresh\n                                        </a>\n                                    </li>\n                                    <li>\n                                        <a href=\"#\">\n                                            <i class=\"fa fa-check-circle fa-fw\"></i> Available\n                                        </a>\n                                    </li>\n                                    <li>\n                                        <a href=\"#\">\n                                            <i class=\"fa fa-times fa-fw\"></i> Busy\n                                        </a>\n                                    </li>\n                                    <li>\n                                        <a href=\"#\">\n                                            <i class=\"fa fa-clock-o fa-fw\"></i> Away\n                                        </a>\n                                    </li>\n                                    <li class=\"divider\"></li>\n                                    <li>\n                                        <a href=\"#\">\n                                            <i class=\"fa fa-sign-out fa-fw\"></i> Sign Out\n                                        </a>\n                                    </li>\n                                </ul>\n                            </div>\n                        </div>\n                        <!-- /.panel-heading -->\n                        <div class=\"panel-body\">\n                            <ul class=\"chat\">\n                                <li class=\"left clearfix\">\n                                    <span class=\"chat-img pull-left\">\n                                        <img src=\"http://placehold.it/50/55C1E7/fff\" alt=\"User Avatar\" class=\"img-circle\">\n                                    </span>\n                                    <div class=\"chat-body clearfix\">\n                                        <div class=\"header\">\n                                            <strong class=\"primary-font\">Jack Sparrow</strong>\n                                            <small class=\"pull-right text-muted\">\n                                                <i class=\"fa fa-clock-o fa-fw\"></i> 12 mins ago\n                                            </small>\n                                        </div>\n                                        <p>\n                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.\n                                        </p>\n                                    </div>\n                                </li>\n                                <li class=\"right clearfix\">\n                                    <span class=\"chat-img pull-right\">\n                                        <img src=\"http://placehold.it/50/FA6F57/fff\" alt=\"User Avatar\" class=\"img-circle\">\n                                    </span>\n                                    <div class=\"chat-body clearfix\">\n                                        <div class=\"header\">\n                                            <small class=\" text-muted\">\n                                                <i class=\"fa fa-clock-o fa-fw\"></i> 13 mins ago</small>\n                                            <strong class=\"pull-right primary-font\">Bhaumik Patel</strong>\n                                        </div>\n                                        <p>\n                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.\n                                        </p>\n                                    </div>\n                                </li>\n                                <li class=\"left clearfix\">\n                                    <span class=\"chat-img pull-left\">\n                                        <img src=\"http://placehold.it/50/55C1E7/fff\" alt=\"User Avatar\" class=\"img-circle\">\n                                    </span>\n                                    <div class=\"chat-body clearfix\">\n                                        <div class=\"header\">\n                                            <strong class=\"primary-font\">Jack Sparrow</strong>\n                                            <small class=\"pull-right text-muted\">\n                                                <i class=\"fa fa-clock-o fa-fw\"></i> 14 mins ago</small>\n                                        </div>\n                                        <p>\n                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.\n                                        </p>\n                                    </div>\n                                </li>\n                                <li class=\"right clearfix\">\n                                    <span class=\"chat-img pull-right\">\n                                        <img src=\"http://placehold.it/50/FA6F57/fff\" alt=\"User Avatar\" class=\"img-circle\">\n                                    </span>\n                                    <div class=\"chat-body clearfix\">\n                                        <div class=\"header\">\n                                            <small class=\" text-muted\">\n                                                <i class=\"fa fa-clock-o fa-fw\"></i> 15 mins ago</small>\n                                            <strong class=\"pull-right primary-font\">Bhaumik Patel</strong>\n                                        </div>\n                                        <p>\n                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum ornare dolor, quis ullamcorper ligula sodales.\n                                        </p>\n                                    </div>\n                                </li>\n                            </ul>\n                        </div>\n                        <!-- /.panel-body -->\n                        <div class=\"panel-footer\">\n                            <div class=\"input-group\">\n                                <input id=\"btn-input\" type=\"text\" class=\"form-control input-sm\" placeholder=\"Type your message here...\">\n                                <span class=\"input-group-btn\">\n                                    <button class=\"btn btn-warning btn-sm\" id=\"btn-chat\">\n                                        Send\n                                    </button>\n                                </span>\n                            </div>\n                        </div>\n                        <!-- /.panel-footer -->\n                    </div>\n                    <!-- /.panel .chat-panel -->\n                </div>\n                <!-- /.col-lg-4 -->\n            </div>\n            <!-- /.row -->\n        </div>\n        <!-- /#page-wrapper -->\n\n    </div>\n    <!-- /#wrapper -->\n\n    <!-- jQuery -->\n    <script src=\"../vendor/jquery/jquery.min.js\"></script>\n\n    <!-- Bootstrap Core JavaScript -->\n    <script src=\"../vendor/bootstrap/js/bootstrap.min.js\"></script>\n\n    <!-- Metis Menu Plugin JavaScript -->\n    <script src=\"../vendor/metisMenu/metisMenu.min.js\"></script>\n\n    <!-- Morris Charts JavaScript -->\n    <script src=\"../vendor/raphael/raphael.min.js\"></script>\n    <script src=\"../vendor/morrisjs/morris.min.js\"></script>\n    <script src=\"../data/morris-data.js\"></script>\n\n    <!-- Custom Theme JavaScript -->\n    <script src=\"../dist/js/sb-admin-2.js\"></script>\n\n\n\n\n</body></html>",
+        "elements": [
+          {
+            "id": "",
+            "tag": "a",
+            "text": "RobotFrameworkTutorial.com Demo Admin Site",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a[href=\"index.html\"]",
+            "xpath": "//a[contains(text(), 'RobotFrameworkTutorial.com Dem')]",
             "attributes": {
               "href": "index.html"
             },
@@ -24,639 +129,1082 @@
               "navbar-brand"
             ],
             "bounding_box": {
-              "x": 46.66666793823242,
+              "x": 0,
               "y": 0,
-              "width": 369.41667556762695,
+              "width": 410.46875,
               "height": 50
             }
           },
           {
             "id": "",
             "tag": "a",
-            "text": "Master Generative AI for Software Testing",
+            "text": "",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a.btn-promo.btn-block",
-            "xpath": "//a[contains(text(), \"Master Generative AI for Softw\")]",
+            "css_selector": "a.dropdown-toggle",
+            "xpath": "//a",
             "attributes": {
-              "href": "https://www.udemy.com/course/master-generative-ai-for-software-testing-manual-to-auto/?couponCode=10DFB3C1A5359AFC8F50"
+              "href": "#"
             },
             "classes": [
-              "btn",
-              "btn-promo",
-              "btn-block"
+              "dropdown-toggle"
             ],
             "bounding_box": {
-              "x": 92.95833587646484,
-              "y": 250.2604217529297,
-              "width": 327.63541412353516,
-              "height": 44.00001525878906
+              "x": 996.765625,
+              "y": 0,
+              "width": 59.890625,
+              "height": 50
             }
           },
           {
             "id": "",
             "tag": "a",
-            "text": "API Testing with Postman",
+            "text": "Bryan Lamb\n                                    \n                                        Just Now\n                                    \n                                \n                                I",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a.btn-promo.btn-block",
-            "xpath": "//a[contains(text(), \"API Testing with Postman\")]",
+            "css_selector": "a[href=\"message.html\"]",
+            "xpath": "//a",
             "attributes": {
-              "href": "https://www.udemy.com/course/the-api-master-class-testing-in-detail-using-postman/?couponCode=E2ECCE8CD157D53911D8"
+              "href": "message.html"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "John Smith\n                                    \n                                        Yesterday\n                                    \n                                \n                                ",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "li > a:nth-child(1)",
+            "xpath": "//a",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Diane Jenkins\n                                    \n                                        Yesterday\n                                    \n                                \n                             ",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "li > a:nth-child(1)",
+            "xpath": "//a",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Read All Messages",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Read All Messages\")",
+            "xpath": "//a[contains(text(), 'Read All Messages')]",
+            "attributes": {
+              "href": "#"
             },
             "classes": [
-              "btn",
-              "btn-promo",
-              "btn-block"
+              "text-center"
+            ],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Task 1\n                                        40% Complete\n                                    \n                                    \n                                        \n                         ",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "li > a:nth-child(1)",
+            "xpath": "//a",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Task 2\n                                        20% Complete\n                                    \n                                    \n                                        \n                         ",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "li > a:nth-child(1)",
+            "xpath": "//a",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Task 3\n                                        60% Complete\n                                    \n                                    \n                                        \n                         ",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "li > a:nth-child(1)",
+            "xpath": "//a",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Task 4\n                                        80% Complete\n                                    \n                                    \n                                        \n                         ",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "li > a:nth-child(1)",
+            "xpath": "//a",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "See All Tasks",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"See All Tasks\")",
+            "xpath": "//a[contains(text(), 'See All Tasks')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [
+              "text-center"
+            ],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "New Comment\n                                    4 minutes ago",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "li > a:nth-child(1)",
+            "xpath": "//a",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "3 New Followers\n                                    12 minutes ago",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "li > a:nth-child(1)",
+            "xpath": "//a",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Message Sent\n                                    4 minutes ago",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "li > a:nth-child(1)",
+            "xpath": "//a",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "New Task\n                                    4 minutes ago",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "li > a:nth-child(1)",
+            "xpath": "//a",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Server Rebooted\n                                    4 minutes ago",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "li > a:nth-child(1)",
+            "xpath": "//a",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "See All Alerts",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"See All Alerts\")",
+            "xpath": "//a[contains(text(), 'See All Alerts')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [
+              "text-center"
+            ],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "User Profile",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"User Profile\")",
+            "xpath": "//a[contains(text(), 'User Profile')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Settings",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Settings\")",
+            "xpath": "//a[contains(text(), 'Settings')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Logout",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a[href=\"login.html\"]",
+            "xpath": "//a[contains(text(), 'Logout')]",
+            "attributes": {
+              "href": "login.html"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Dashboard",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a[href=\"index.html\"]",
+            "xpath": "//a[contains(text(), 'Dashboard')]",
+            "attributes": {
+              "href": "index.html"
+            },
+            "classes": [
+              "active"
             ],
             "bounding_box": {
-              "x": 467.84375,
-              "y": 250.2604217529297,
-              "width": 327.63543701171875,
-              "height": 44.00001525878906
+              "x": 0,
+              "y": 116,
+              "width": 250,
+              "height": 40
             }
           },
           {
             "id": "",
             "tag": "a",
-            "text": "Playwright with TypeScript",
+            "text": "Charts",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a.btn-promo.btn-block",
-            "xpath": "//a[contains(text(), \"Playwright with TypeScript\")]",
+            "css_selector": "a:has-text(\"Charts\")",
+            "xpath": "//a[contains(text(), 'Charts')]",
             "attributes": {
-              "href": "https://www.udemy.com/course/playwright-with-cucumber-bdd-typescript-beginner-to-pro/?couponCode=7C0EA5E6D404090D2E79"
+              "href": "#"
             },
-            "classes": [
-              "btn",
-              "btn-promo",
-              "btn-block"
-            ],
+            "classes": [],
             "bounding_box": {
-              "x": 842.7291870117188,
-              "y": 250.2604217529297,
-              "width": 327.63543701171875,
-              "height": 44.00001525878906
+              "x": 0,
+              "y": 157,
+              "width": 250,
+              "height": 40
             }
           },
           {
             "id": "",
             "tag": "a",
-            "text": "Playwright with Java",
+            "text": "Flot Charts",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a.btn-promo.btn-block",
-            "xpath": "//a[contains(text(), \"Playwright with Java\")]",
+            "css_selector": "a[href=\"flot.html\"]",
+            "xpath": "//a[contains(text(), 'Flot Charts')]",
             "attributes": {
-              "href": "https://www.udemy.com/course/playwright-cucumber-bdd-with-java-novice-to-pro/?couponCode=3AA7167D29A107CCCACC"
+              "href": "flot.html"
             },
-            "classes": [
-              "btn",
-              "btn-promo",
-              "btn-block"
-            ],
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Morris.js Charts",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a[href=\"morris.html\"]",
+            "xpath": "//a[contains(text(), 'Morris.js Charts')]",
+            "attributes": {
+              "href": "morris.html"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Tables",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a[href=\"tables.html\"]",
+            "xpath": "//a[contains(text(), 'Tables')]",
+            "attributes": {
+              "href": "tables.html"
+            },
+            "classes": [],
             "bounding_box": {
-              "x": 92.95833587646484,
-              "y": 310.26043701171875,
-              "width": 327.63541412353516,
-              "height": 44
+              "x": 0,
+              "y": 198,
+              "width": 250,
+              "height": 40
             }
           },
           {
             "id": "",
             "tag": "a",
-            "text": "Cypress with Cucumber BDD",
+            "text": "Forms",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a.btn-promo.btn-block",
-            "xpath": "//a[contains(text(), \"Cypress with Cucumber BDD\")]",
+            "css_selector": "a[href=\"forms.html\"]",
+            "xpath": "//a[contains(text(), 'Forms')]",
             "attributes": {
-              "href": "https://www.udemy.com/course/cypress-with-cucumber-bdd-beginner-to-expert-in-9-hours/?couponCode=7FC7B7FACC3F0FB4019B"
+              "href": "forms.html"
             },
-            "classes": [
-              "btn",
-              "btn-promo",
-              "btn-block"
-            ],
+            "classes": [],
             "bounding_box": {
-              "x": 467.84375,
-              "y": 310.26043701171875,
-              "width": 327.63543701171875,
-              "height": 44
+              "x": 0,
+              "y": 239,
+              "width": 250,
+              "height": 40
             }
           },
           {
             "id": "",
             "tag": "a",
-            "text": "Complete Cypress v13 Course",
+            "text": "UI Elements",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a[href=\"https://www.udemy.com/course/cypress-io-master-class/?couponCode=4841C490538E26385B2D8\"]",
-            "xpath": "//a[contains(text(), \"Complete Cypress v13 Course\")]",
+            "css_selector": "a:has-text(\"UI Elements\")",
+            "xpath": "//a[contains(text(), 'UI Elements')]",
             "attributes": {
-              "href": "https://www.udemy.com/course/cypress-io-master-class/?couponCode=4841C490538E26385B2D8"
+              "href": "#"
             },
-            "classes": [
-              "btn",
-              "btn-promo",
-              "btn-block"
-            ],
+            "classes": [],
             "bounding_box": {
-              "x": 842.7291870117188,
-              "y": 310.26043701171875,
-              "width": 327.63543701171875,
-              "height": 44
+              "x": 0,
+              "y": 280,
+              "width": 250,
+              "height": 40
             }
           },
           {
             "id": "",
             "tag": "a",
-            "text": "Complete WebdriverIO Course",
+            "text": "Panels and Wells",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a.btn-promo.btn-block",
-            "xpath": "//a[contains(text(), \"Complete WebdriverIO Course\")]",
+            "css_selector": "a[href=\"panels-wells.html\"]",
+            "xpath": "//a[contains(text(), 'Panels and Wells')]",
             "attributes": {
-              "href": "https://www.udemy.com/course/automation-testing-javascript-webdriverio-selenium-more/?couponCode=F57756FB51C2D50854D8"
+              "href": "panels-wells.html"
             },
-            "classes": [
-              "btn",
-              "btn-promo",
-              "btn-block"
-            ],
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Buttons",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a[href=\"buttons.html\"]",
+            "xpath": "//a[contains(text(), 'Buttons')]",
+            "attributes": {
+              "href": "buttons.html"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Notifications",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a[href=\"notifications.html\"]",
+            "xpath": "//a[contains(text(), 'Notifications')]",
+            "attributes": {
+              "href": "notifications.html"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Typography",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a[href=\"typography.html\"]",
+            "xpath": "//a[contains(text(), 'Typography')]",
+            "attributes": {
+              "href": "typography.html"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Icons",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a[href=\"icons.html\"]",
+            "xpath": "//a[contains(text(), 'Icons')]",
+            "attributes": {
+              "href": "icons.html"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Grid",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a[href=\"grid.html\"]",
+            "xpath": "//a[contains(text(), 'Grid')]",
+            "attributes": {
+              "href": "grid.html"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Multi-Level Dropdown",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Multi-Level Dropdown\")",
+            "xpath": "//a[contains(text(), 'Multi-Level Dropdown')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
             "bounding_box": {
-              "x": 92.95833587646484,
-              "y": 370.26043701171875,
-              "width": 327.63541412353516,
-              "height": 44
+              "x": 0,
+              "y": 321,
+              "width": 250,
+              "height": 40
             }
           },
           {
             "id": "",
             "tag": "a",
-            "text": "Selenium WebDriver 4",
+            "text": "Second Level Item",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a.btn-promo.btn-block",
-            "xpath": "//a[contains(text(), \"Selenium WebDriver 4\")]",
+            "css_selector": "a:has-text(\"Second Level Item\")",
+            "xpath": "//a[contains(text(), 'Second Level Item')]",
             "attributes": {
-              "href": "https://www.udemy.com/course/selenium-webdriver-4-new-features-in-detail/?couponCode=F566DA3753B2B80E3605"
+              "href": "#"
             },
-            "classes": [
-              "btn",
-              "btn-promo",
-              "btn-block"
-            ],
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Third Level",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Third Level\")",
+            "xpath": "//a[contains(text(), 'Third Level')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Third Level Item",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Third Level Item\")",
+            "xpath": "//a[contains(text(), 'Third Level Item')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Sample Pages",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Sample Pages\")",
+            "xpath": "//a[contains(text(), 'Sample Pages')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
             "bounding_box": {
-              "x": 467.84375,
-              "y": 370.26043701171875,
-              "width": 327.63543701171875,
-              "height": 44
+              "x": 0,
+              "y": 362,
+              "width": 250,
+              "height": 40
             }
           },
           {
             "id": "",
             "tag": "a",
-            "text": "Selenium + Cucumber + Java",
+            "text": "Blank Page",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a.btn-promo.btn-block",
-            "xpath": "//a[contains(text(), \"Selenium + Cucumber + Java\")]",
+            "css_selector": "a[href=\"blank.html\"]",
+            "xpath": "//a[contains(text(), 'Blank Page')]",
             "attributes": {
-              "href": "https://www.udemy.com/course/cucumber-bdd-selenium-java-complete-automation-course/?couponCode=5A3412B01DDD09DA39F4"
+              "href": "blank.html"
             },
-            "classes": [
-              "btn",
-              "btn-promo",
-              "btn-block"
-            ],
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Login Page",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a[href=\"login.html\"]",
+            "xpath": "//a[contains(text(), 'Login Page')]",
+            "attributes": {
+              "href": "login.html"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "View Details",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"View Details\")",
+            "xpath": "//a[contains(text(), 'View Details')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
             "bounding_box": {
-              "x": 842.7291870117188,
-              "y": 370.26043701171875,
-              "width": 327.63543701171875,
-              "height": 44
+              "x": 282,
+              "y": 259.734375,
+              "width": 213.5,
+              "height": 41
             }
           },
           {
             "id": "",
             "tag": "a",
-            "text": "Mastering Locators",
+            "text": "Action",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a[href=\"https://www.udemy.com/course/mastering-locators/?couponCode=7AF1F72CF44990E1F48B\"]",
-            "xpath": "//a[contains(text(), \"Mastering Locators\")]",
+            "css_selector": "a:has-text(\"Action\")",
+            "xpath": "//a[contains(text(), 'Action')]",
             "attributes": {
-              "href": "https://www.udemy.com/course/mastering-locators/?couponCode=7AF1F72CF44990E1F48B"
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Another action",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Another action\")",
+            "xpath": "//a[contains(text(), 'Another action')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Something else here",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Something else here\")",
+            "xpath": "//a[contains(text(), 'Something else here')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Separated link",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Separated link\")",
+            "xpath": "//a[contains(text(), 'Separated link')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [],
+            "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "New Comment\n4 minutes ago",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"New Comment 4 minutes ago\")",
+            "xpath": "//a[contains(text(), 'New Comment 4 minutes ago')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [
+              "list-group-item"
+            ],
+            "bounding_box": {
+              "x": 951.65625,
+              "y": 378.734375,
+              "width": 265.328125,
+              "height": 42
+            }
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "3 New Followers\n12 minutes ago",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"3 New Followers 12 minutes ago\")",
+            "xpath": "//a[contains(text(), '3 New Followers 12 minutes ago')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [
+              "list-group-item"
+            ],
+            "bounding_box": {
+              "x": 951.65625,
+              "y": 419.734375,
+              "width": 265.328125,
+              "height": 42
+            }
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Message Sent\n27 minutes ago",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Message Sent 27 minutes ago\")",
+            "xpath": "//a[contains(text(), 'Message Sent 27 minutes ago')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [
+              "list-group-item"
+            ],
+            "bounding_box": {
+              "x": 951.65625,
+              "y": 460.734375,
+              "width": 265.328125,
+              "height": 42
+            }
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "New Task\n43 minutes ago",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"New Task 43 minutes ago\")",
+            "xpath": "//a[contains(text(), 'New Task 43 minutes ago')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [
+              "list-group-item"
+            ],
+            "bounding_box": {
+              "x": 951.65625,
+              "y": 501.734375,
+              "width": 265.328125,
+              "height": 42
+            }
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Server Rebooted\n11:32 AM",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Server Rebooted 11:32 AM\")",
+            "xpath": "//a[contains(text(), 'Server Rebooted 11:32 AM')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [
+              "list-group-item"
+            ],
+            "bounding_box": {
+              "x": 951.65625,
+              "y": 542.734375,
+              "width": 265.328125,
+              "height": 42
+            }
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Server Crashed!\n11:13 AM",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Server Crashed! 11:13 AM\")",
+            "xpath": "//a[contains(text(), 'Server Crashed! 11:13 AM')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [
+              "list-group-item"
+            ],
+            "bounding_box": {
+              "x": 951.65625,
+              "y": 583.734375,
+              "width": 265.328125,
+              "height": 42
+            }
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Server Not Responding\n10:57 AM",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Server Not Responding 10:57 AM\")",
+            "xpath": "//a[contains(text(), 'Server Not Responding 10:57 AM')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [
+              "list-group-item"
+            ],
+            "bounding_box": {
+              "x": 951.65625,
+              "y": 624.734375,
+              "width": 265.328125,
+              "height": 42
+            }
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "New Order Placed\n9:49 AM",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"New Order Placed 9:49 AM\")",
+            "xpath": "//a[contains(text(), 'New Order Placed 9:49 AM')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [
+              "list-group-item"
+            ],
+            "bounding_box": {
+              "x": 951.65625,
+              "y": 665.734375,
+              "width": 265.328125,
+              "height": 42
+            }
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "Payment Received\nYesterday",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"Payment Received Yesterday\")",
+            "xpath": "//a[contains(text(), 'Payment Received Yesterday')]",
+            "attributes": {
+              "href": "#"
+            },
+            "classes": [
+              "list-group-item"
+            ],
+            "bounding_box": {
+              "x": 951.65625,
+              "y": 706.734375,
+              "width": 265.328125,
+              "height": 42
+            }
+          },
+          {
+            "id": "",
+            "tag": "a",
+            "text": "View All Alerts",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "a:has-text(\"View All Alerts\")",
+            "xpath": "//a[contains(text(), 'View All Alerts')]",
+            "attributes": {
+              "href": "#"
             },
             "classes": [
               "btn",
-              "btn-promo",
+              "btn-default",
               "btn-block"
             ],
             "bounding_box": {
-              "x": 92.95833587646484,
-              "y": 430.26043701171875,
-              "width": 327.63541412353516,
-              "height": 44
+              "x": 951.65625,
+              "y": 768.734375,
+              "width": 265.328125,
+              "height": 34
             }
           },
           {
-            "id": "contact-us",
+            "id": "",
             "tag": "a",
-            "text": "CONTACT US\nContact Us Form\n\nNeed to perfect your Webdriver Cucumber skills? BDD also referred to as \u2018Behaviour Driven Development\u2019 is a great way to test and simulate different user scenarios, for exa",
+            "text": "Refresh",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a#contact-us",
-            "xpath": "//a[@id=\"contact-us\"]",
+            "css_selector": "a:has-text(\"Refresh\")",
+            "xpath": "//a[contains(text(), 'Refresh')]",
             "attributes": {
-              "href": "Contact-Us/contactus.html"
+              "href": "#"
             },
             "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 570,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
+            "bounding_box": null
           },
           {
-            "id": "login-portal",
+            "id": "",
             "tag": "a",
-            "text": "LOGIN PORTAL\nLogin Portal\n\nAre you really an actually user of webdriveruniversity.com? Do you really have a valid username and password? Cucumber enables us to validate multiple sets of username(s) an",
+            "text": "Available",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a#login-portal",
-            "xpath": "//a[@id=\"login-portal\"]",
+            "css_selector": "a:has-text(\"Available\")",
+            "xpath": "//a[contains(text(), 'Available')]",
             "attributes": {
-              "href": "Login-Portal/index.html"
+              "href": "#"
             },
             "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 850,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
+            "bounding_box": null
           },
           {
-            "id": "button-clicks",
+            "id": "",
             "tag": "a",
-            "text": "BUTTON CLICKS\nWebElement Click, JavaScript Click, Actions Move & Click!\n\nSimulating various types of user click(s) can be a very tricky task within Selenium Webdriver, there are many types of clicks a",
+            "text": "Busy",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a#button-clicks",
-            "xpath": "//a[@id=\"button-clicks\"]",
+            "css_selector": "a:has-text(\"Busy\")",
+            "xpath": "//a[contains(text(), 'Busy')]",
             "attributes": {
-              "href": "Click-Buttons/index.html"
+              "href": "#"
             },
             "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 1130,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
+            "bounding_box": null
           },
           {
-            "id": "to-do-list",
+            "id": "",
             "tag": "a",
-            "text": "TO DO LIST\nTask1 [ ] - Task2 [ ] - Task3 [ ] - Task4 [ ] - Task5 [ ]\n\nHave you perfected the craft of combining multiple user actions in one? The following \u2018To Do List\u2019 can be a tricky one! Luckily Se",
+            "text": "Away",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a#to-do-list",
-            "xpath": "//a[@id=\"to-do-list\"]",
+            "css_selector": "a:has-text(\"Away\")",
+            "xpath": "//a[contains(text(), 'Away')]",
             "attributes": {
-              "href": "To-Do-List/index.html"
+              "href": "#"
             },
             "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 1410,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
+            "bounding_box": null
           },
           {
-            "id": "page-object-model",
+            "id": "",
             "tag": "a",
-            "text": "PAGE OBJECT MODEL\nDesign a robust framework which is maintainable and reusable!\n\nPage object model (POM) is a fantastic design pattern which can be used to construct the architecture of your framework",
+            "text": "Sign Out",
             "role": null,
             "aria_label": null,
             "name": null,
             "type": null,
-            "css_selector": "a#page-object-model",
-            "xpath": "//a[@id=\"page-object-model\"]",
+            "css_selector": "a:has-text(\"Sign Out\")",
+            "xpath": "//a[contains(text(), 'Sign Out')]",
             "attributes": {
-              "href": "Page-Object-Model/index.html"
+              "href": "#"
             },
             "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 1690,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "page-object-model",
-            "tag": "a",
-            "text": "ACCORDION & TEXT AFFECTS (APPEAR & DISAPPEAR)\nClick on one of the accordion panels! Do you see any text?\n\nAccordions are great way to toggle between hiding and showing large amount of content; waiting",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#page-object-model",
-            "xpath": "//a[@id=\"page-object-model\"]",
-            "attributes": {
-              "href": "Accordion/index.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 1970,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "dropdown-checkboxes-radiobuttons",
-            "tag": "a",
-            "text": "DROPDOWN, CHECKBOXE(S) & RADIO BUTTON(S)\nThe choice is yours!\n\nDropdown lists, check boxes and radio button are very common across websites now days and there are a wide range of options to select fro",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#dropdown-checkboxes-radiobuttons",
-            "xpath": "//a[@id=\"dropdown-checkboxes-radiobuttons\"]",
-            "attributes": {
-              "href": "Dropdown-Checkboxes-RadioButtons/index.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 2250,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "ajax-loader",
-            "tag": "a",
-            "text": "AJAX LOADER\nWait..... for the Ajax Loader\n\nWebdriver waits can be a very very tricky task to understand let alone attempt to implement! All automation testers must perfect the craft of webdriver waits",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#ajax-loader",
-            "xpath": "//a[@id=\"ajax-loader\"]",
-            "attributes": {
-              "href": "Ajax-Loader/index.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 2530,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "actions",
-            "tag": "a",
-            "text": "ACTIONS\nCan you really handle this challenge?\n\nThe webdriver actions class enables the developer to perform a wide range of distinct user actions whether it\u2019s trying to perform double click(s), click ",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#actions",
-            "xpath": "//a[@id=\"actions\"]",
-            "attributes": {
-              "href": "Actions/index.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 2810,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "scrolling-around",
-            "tag": "a",
-            "text": "SCROLLING AROUND\nScrolling Around...\n\nSometimes we need to scroll to a specific element on a webpage before we conduct specific actions to that element. Let\u2019s say the developer needs to simulate a use",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#scrolling-around",
-            "xpath": "//a[@id=\"scrolling-around\"]",
-            "attributes": {
-              "href": "Scrolling/index.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 3090,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "popup-alerts",
-            "tag": "a",
-            "text": "POPUP & ALERTS\nClose those annoying Popup & Alerts!\n\nAt times Popup and alerts can be quite annoying especially when they can impact the results of your automation test scripts. There are various type",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#popup-alerts",
-            "xpath": "//a[@id=\"popup-alerts\"]",
-            "attributes": {
-              "href": "Popup-Alerts/index.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 3370,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "iframe",
-            "tag": "a",
-            "text": "IFRAME\nPractise with inline frame(s)\n\nAn inline frame is used to embed another document within the current HTML document. If the developer has no knowledge of \u2018IFrame(s)\u2019 or doesn\u2019t know how to handle",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#iframe",
-            "xpath": "//a[@id=\"iframe\"]",
-            "attributes": {
-              "href": "IFrame/index.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 3650,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "hidden-elements",
-            "tag": "a",
-            "text": "HIDDEN ELEMENTS\nReveal and interact with hidden items\n\nPractice locating and interacting with hidden DOM elements using techniques like visibility toggling and JavaScript execution.",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#hidden-elements",
-            "xpath": "//a[@id=\"hidden-elements\"]",
-            "attributes": {
-              "href": "Hidden-Elements/index.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 3930,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "data-table",
-            "tag": "a",
-            "text": "DATA, TABLES & BUTTON STATES\nCan you extract data to an Excel file?\n\nPractice capturing data from HTML tables and exporting it using Apache POI or similar libraries. Handle button states (enabled/disa",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#data-table",
-            "xpath": "//a[@id=\"data-table\"]",
-            "attributes": {
-              "href": "Data-Table/index.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 4210,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "autocomplete-textfield",
-            "tag": "a",
-            "text": "AUTOCOMPLETE TEXTFIELD\nSearching for something specific?\n\nUse the autocomplete feature to simulate smart search. Try typing:\n\nApple\n\nAvocado",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#autocomplete-textfield",
-            "xpath": "//a[@id=\"autocomplete-textfield\"]",
-            "attributes": {
-              "href": "Autocomplete-TextField/autocomplete-textfield.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 4490,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "file-upload",
-            "tag": "a",
-            "text": "FILE UPLOAD\nNeed to upload a specific file?\n\nPerform the following actions:\n\nChoose a file.\n\nClick on the 'Submit' button.",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#file-upload",
-            "xpath": "//a[@id=\"file-upload\"]",
-            "attributes": {
-              "href": "File-Upload/index.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 4770,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "datepicker",
-            "tag": "a",
-            "text": "DATEPICKER\nDatepicker\n\nWhat date will you select?\n\nSelect a day.\n\nSelect a month.\n\nSelect a year.",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#datepicker",
-            "xpath": "//a[@id=\"datepicker\"]",
-            "attributes": {
-              "href": "Datepicker/index.html"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 61.66666793823242,
-              "y": 5050,
-              "width": 1140.0000801086426,
-              "height": 260
-            }
-          },
-          {
-            "id": "automation-test-store",
-            "tag": "a",
-            "text": "Automationteststore",
-            "role": null,
-            "aria_label": null,
-            "name": null,
-            "type": null,
-            "css_selector": "a#automation-test-store",
-            "xpath": "//a[@id=\"automation-test-store\"]",
-            "attributes": {
-              "href": "https://automationteststore.com/"
-            },
-            "classes": [],
-            "bounding_box": {
-              "x": 375.46875,
-              "y": 5341.33349609375,
-              "width": 128.30209350585938,
-              "height": 16.66650390625
-            }
+            "bounding_box": null
           },
           {
             "id": "",
@@ -666,30 +1214,151 @@
             "aria_label": null,
             "name": null,
             "type": "button",
-            "css_selector": "button.navbar-toggle",
-            "xpath": "//button[contains(text(), \"Toggle navigation\")]",
+            "css_selector": "button:has-text(\"Toggle navigation\")",
+            "xpath": "//button[contains(text(), 'Toggle navigation')]",
             "attributes": {},
             "classes": [
               "navbar-toggle"
             ],
             "bounding_box": null
+          },
+          {
+            "id": "",
+            "tag": "button",
+            "text": "",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": "button",
+            "css_selector": "button.btn-default",
+            "xpath": "//button",
+            "attributes": {},
+            "classes": [
+              "btn",
+              "btn-default"
+            ],
+            "bounding_box": {
+              "x": 196,
+              "y": 66,
+              "width": 39,
+              "height": 34
+            }
+          },
+          {
+            "id": "",
+            "tag": "button",
+            "text": "Actions",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": "button",
+            "css_selector": "button:has-text(\"Actions\")",
+            "xpath": "//button[contains(text(), 'Actions')]",
+            "attributes": {},
+            "classes": [
+              "btn",
+              "btn-default",
+              "btn-xs",
+              "dropdown-toggle"
+            ],
+            "bounding_box": {
+              "x": 826.96875,
+              "y": 333.109375,
+              "width": 62.6875,
+              "height": 22
+            }
+          },
+          {
+            "id": "btn-chat",
+            "tag": "button",
+            "text": "Send",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": null,
+            "css_selector": "#btn-chat",
+            "xpath": "//button[@id=\"btn-chat\"]",
+            "attributes": {},
+            "classes": [
+              "btn",
+              "btn-warning",
+              "btn-sm"
+            ],
+            "bounding_box": {
+              "x": 1166.953125,
+              "y": 1715.734375,
+              "width": 50.03125,
+              "height": 30
+            }
+          },
+          {
+            "id": "",
+            "tag": "input",
+            "text": "",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": "text",
+            "css_selector": "input[placeholder=\"Search...\"]",
+            "xpath": "//input",
+            "attributes": {
+              "placeholder": "Search..."
+            },
+            "classes": [
+              "form-control"
+            ],
+            "bounding_box": {
+              "x": 15,
+              "y": 66,
+              "width": 182,
+              "height": 34
+            }
+          },
+          {
+            "id": "btn-input",
+            "tag": "input",
+            "text": "",
+            "role": null,
+            "aria_label": null,
+            "name": null,
+            "type": "text",
+            "css_selector": "#btn-input",
+            "xpath": "//input[@id=\"btn-input\"]",
+            "attributes": {
+              "placeholder": "Type your message here..."
+            },
+            "classes": [
+              "form-control",
+              "input-sm"
+            ],
+            "bounding_box": {
+              "x": 951.65625,
+              "y": 1715.734375,
+              "width": 216.296875,
+              "height": 30
+            }
           }
         ],
-        "screenshot_path": "artifacts\\screenshots\\www.webdriveruniversity.com.png",
-        "summary": "- Main purpose: a hub/catalog for Automation & AI testing courses and interactive demo pages (practice modules) hosted by WebDriver University.\n- Main user flows: browse/select course or demo tiles via navigation/toggle, open interactive modules (e.g., BUTTON CLICKS, TO DO LIST, IFRAME, FILE UPLOAD, DATEPICKER), use CONTACT US form, and use LOGIN PORTAL.\n- Key interactive targets: demo pages with IDs (#button-clicks, #to-do-list, #iframe, #file-upload, #ajax-loader, #datepicker, #hidden-elements, #popup-alerts, #dropdown-checkboxes-radiobuttons, etc.).\n- Typical actions: click/toggle nav items, submit login/contact forms, upload files, pick dates, interact with alerts/iframes, wait for AJAX, scroll and perform action sequences.\n- Important edge cases: asynchronous loads and timing (AJAX loader, delayed elements), iframe cross-origin and focus/selector scope, hidden/disabled elements and reveal behaviors, file upload size/type errors, datepicker bounds/formatting, modal/alert interrupting flows, stale element references after DOM updates.\n- Other considerations: navigation toggle responsiveness, stateful flows (session/login persistence), accessibility and keyboard interactions for interactive widgets.",
+        "screenshot_path": "artifacts\\screenshots\\automationplayground.com_back-office_pages_index.html.png",
+        "summary": "- Main purpose: Admin dashboard demo showing notifications, messages, tasks, alerts and navigation to admin pages (charts, tables, forms, UI elements) for managing/inspecting application data.\n- Main user flows: navigate main menu (Dashboard, Charts, Tables, Forms, UI Elements), open message/task/alert summaries (Read All Messages, See All Tasks, See All Alerts), access user menu (User Profile, Settings, Logout), and drill into specific pages (Flot/Morris charts, panels, buttons, notifications).\n- Key UI interactions to test: click navigation items, open/close message/task/alert lists, follow links to detailed pages, and use user profile menu actions.\n- Data/visualization flows: rendering of chart pages, tables and forms, and state changes when marking tasks/messages/alerts.\n- Important edge cases: empty lists or zero notifications, extremely long user/message/task text (truncation/wrapping), duplicate or missing element IDs, and special characters in names.\n- Robustness/resilience: behavior with slow/no JS, slow network or timeouts, session expiration (logout), and broken links to detail pages.\n- Accessibility/keyboard: keyboard navigation, focus order, and screen-reader labels for interactive items.",
         "meta": {
           "elapsed_seconds": "0.000"
         }
-      },
-      "coverage_overlay_path": "artifacts\\coverage\\page_0_coverage.png"
+      }
     }
   },
-  "edges": [],
+  "edges": [
+    {
+      "from_page_id": "page_0",
+      "to_page_id": "page_1",
+      "element_key": "a|Login|",
+      "description": "Login functionality is critical to test and likely leads to the admin dashboard, a core area of the site"
+    }
+  ],
   "meta": {
-    "elapsed_seconds": "36.637",
-    "max_depth": 2,
-    "max_pages": 10,
-    "max_links_per_page": 5,
-    "exploration_mode": "Agent-based"
+    "max_depth": 1,
+    "max_pages": 3,
+    "max_links_per_page": 3,
+    "use_agent": true
   }
 }

@@ -2,15 +2,48 @@ from __future__ import annotations
 from ..models.element_descriptor import ElementDescriptor
 
 
-def build_element_key(tag: str, text: str | None, element_id: str | None) -> str:
+def build_element_key(
+    tag: str, 
+    text: str, 
+    id: str, 
+    name: str = None, 
+    input_type: str = None
+) -> str:
     """
-    Build our canonical internal key in the form: tag|text|id
-    where id may be empty string.
+    Build a unique key for an element.
+    Format: tag|text|id|name|type
+    
+    For inputs, includes name and type to distinguish between:
+    - email input: input|||email|email
+    - password input: input|||password|password  
+    - checkbox: input|||remember|checkbox
     """
-    text = (text or "").strip()
-    element_id = element_id or ""
-    return f"{tag}|{text}|{element_id}"
-
+    parts = [
+        tag or "",
+        (text or "").strip()[:50],  # Truncate long text
+        id or "",
+    ]
+    
+    # For form elements, add name and type for uniqueness
+    if tag in ["input", "select", "textarea"]:
+        parts.append(name or "")
+        parts.append(input_type or "")
+    
+    return "|".join(parts)
+def canonicalize_key(raw_key: str) -> str:
+    """
+    Normalize element key for comparison.
+    Handles variations in whitespace and trailing pipes.
+    """
+    # Strip whitespace from each part
+    parts = raw_key.split("|")
+    cleaned = [p.strip() for p in parts]
+    
+    # Remove trailing empty parts
+    while cleaned and not cleaned[-1]:
+        cleaned.pop()
+    
+    return "|".join(cleaned)
 
 def key_from_descriptor(e: ElementDescriptor) -> str:
     """

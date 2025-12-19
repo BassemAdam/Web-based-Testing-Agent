@@ -200,3 +200,74 @@ class TestRunner:
             json.dump(plan, f, indent=2, default=lambda o: o.__dict__)
         
         return str(plan_path)
+    def refine_test_file(self, file_path: str, feedback: str, model_name: str = None) -> bool:
+        """
+        Refine a single test file based on feedback.
+        
+        Args:
+            file_path: Path to the test file to refine
+            feedback: User feedback to apply
+            model_name: Optional model name override
+            
+        Returns:
+            True if successful, False otherwise
+        """
+        try:
+            from src.agent.llm.ollama_client import CopilotClient
+            
+            # Read current file content
+            with open(file_path, "r", encoding="utf-8") as f:
+                current_code = f.read()
+            
+            # Build refinement prompt
+            prompt = f"""You are an expert test automation engineer. 
+Refine the following Playwright test code based on the user's feedback.
+
+CURRENT CODE:
+```python
+{current_code}
+```
+
+USER FEEDBACK:
+{feedback}
+
+REQUIREMENTS:
+1. Apply the user's feedback to improve the test code
+2. Maintain the same test structure and naming
+3. Keep all existing functionality unless explicitly asked to change
+4. Use Playwright best practices (explicit waits, proper assertions)
+5. Return ONLY the complete updated Python code, no explanations
+
+OUTPUT:
+Return the complete updated Python file content."""
+
+            # Call LLM
+            client = CopilotClient(model=model_name or "gpt-4o")
+            response = client.chat([
+                {"role": "system", "content": "You are an expert Playwright test automation engineer."},
+                {"role": "user", "content": prompt}
+            ])
+            
+            # Extract code from response
+            refined_code = response.strip()
+            if refined_code.startswith("```python"):
+                refined_code = refined_code[9:]
+            if refined_code.startswith("```"):
+                refined_code = refined_code[3:]
+            if refined_code.endswith("```"):
+                refined_code = refined_code[:-3]
+            refined_code = refined_code.strip()
+            
+            # Validate it's valid Python
+            import ast
+            ast.parse(refined_code)
+            
+            # Write back to file
+            with open(file_path, "w", encoding="utf-8") as f:
+                f.write(refined_code)
+            
+            return True
+            
+        except Exception as e:
+            print(f"Error refining {file_path}: {e}")
+            return False

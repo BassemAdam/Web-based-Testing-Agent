@@ -55,7 +55,7 @@ class BrowserDriver:
         selector_groups = [
             "a",
             "button",
-            "input",
+            "input",          # All input types
             "select",
             "textarea",
             "[role=button]",
@@ -72,23 +72,53 @@ class BrowserDriver:
                 try:
                     box = handle.bounding_box()
                     tag = handle.evaluate("e => e.tagName.toLowerCase()")
-                    text = handle.inner_text().strip()[:200] if tag != "input" else ""
+                    text = handle.inner_text().strip()[:200] if tag not in ["input", "select", "textarea"] else ""
                     element_id = handle.get_attribute("id") or ""
                     classes = (handle.get_attribute("class") or "").split()
                     aria_label = handle.get_attribute("aria-label")
                     name_attr = handle.get_attribute("name")
                     type_attr = handle.get_attribute("type")
                     href = handle.get_attribute("href") if tag == "a" else None
+                    placeholder = handle.get_attribute("placeholder")
                     
-                    # Build a more specific CSS selector
-                    css_selector = self._build_specific_selector(
-                        handle, tag, element_id, classes, text, aria_label, href
+                    # Get testing-specific attributes
+                    data_testid = (
+                        handle.get_attribute("data-testid") or
+                        handle.get_attribute("data-test") or
+                        handle.get_attribute("data-cy") or
+                        handle.get_attribute("data-test-id")
                     )
-
-                    key = (tag, element_id, text, tuple(classes))
-                    if key in seen:
+                    
+                    # Build attributes dict
+                    attributes = {}
+                    if href:
+                        attributes["href"] = href
+                    if placeholder:
+                        attributes["placeholder"] = placeholder
+                    if data_testid:
+                        attributes["data-testid"] = data_testid
+                    
+                    # Build unique key - INCLUDE name and type for inputs
+                    from ..utils.keys import build_element_key
+                    element_key = build_element_key(
+                        tag=tag,
+                        text=text,
+                        id=element_id,
+                        name=name_attr,
+                        input_type=type_attr
+                    )
+                    
+                    # Use element_key for deduplication (not just tag/id/text/classes)
+                    if element_key in seen:
                         continue
-                    seen.add(key)
+                    seen.add(element_key)
+                    
+                    # Build CSS selector
+                    css_selector = self._build_specific_selector(
+                        handle, tag, element_id, classes, text, 
+                        aria_label, name_attr, type_attr, href, 
+                        placeholder, data_testid
+                    )
 
                     desc = ElementDescriptor(
                         id=element_id,
@@ -99,8 +129,8 @@ class BrowserDriver:
                         name=name_attr,
                         type=type_attr,
                         css_selector=css_selector,
-                        xpath=self._build_xpath(handle, tag, text, element_id),
-                        attributes={"href": href} if href else {},
+                        xpath=self._build_xpath(handle, tag, text, element_id, name_attr),
+                        attributes=attributes,
                         classes=classes,
                         bounding_box=box,
                     )
@@ -119,91 +149,130 @@ class BrowserDriver:
         classes: List[str], 
         text: str,
         aria_label: str,
-        href: str
+        name_attr: str,
+        type_attr: str,
+        href: str,
+        placeholder: str,
+        data_testid: str
     ) -> str:
         """
         Build a specific, unique CSS selector for an element.
-        Priority: ID > data-testid > aria-label > href > text-based > nth-child
+        Priority: data-testid > ID > name > aria-label > placeholder > type > href > text > nth-child
         """
-        # 1. ID is most reliable
-        if element_id:
-            return f"{tag}#{element_id}"
-        
-        # 2. Check for data-testid
-        data_testid = handle.get_attribute("data-testid")
+        # 1. data-testid (best for testing)
         if data_testid:
-            return f'{tag}[data-testid="{data_testid}"]'
+            return f'[data-testid="{data_testid}"]'
         
-        # 3. Check for data-test or data-cy (common testing attributes)
-        for attr in ["data-test", "data-cy", "data-automation"]:
-            value = handle.get_attribute(attr)
-            if value:
-                return f'{tag}[{attr}="{value}"]'
+        # 2. ID (if not auto-generated)
+        if element_id and not self._is_generated_id(element_id):
+            return f"#{element_id}"
         
-        # 4. Aria-label for accessibility
+        # 3. name attribute for form elements
+        if name_attr and tag in ["input", "select", "textarea"]:
+            return f'{tag}[name="{name_attr}"]'
+        
+        # 4. aria-label
         if aria_label:
             return f'{tag}[aria-label="{aria_label}"]'
         
-        # 5. For links, use href if it's specific enough
-        if tag == "a" and href and not href.startswith("#") and href != "/":
-            # Use partial href match for cleaner selectors
-            if len(href) < 100:
-                return f'{tag}[href="{href}"]'
+        # 5. placeholder for inputs
+        if placeholder and tag == "input":
+            return f'input[placeholder="{placeholder}"]'
         
-        # 6. Specific classes (filter out generic utility classes)
-        specific_classes = [c for c in classes if not self._is_generic_class(c)]
-        if specific_classes:
-            class_selector = "".join(f".{c}" for c in specific_classes[:3])
-            return f"{tag}{class_selector}"
+        # 6. type attribute for inputs (email, password, etc.)
+        if type_attr and tag == "input" and type_attr in ["email", "password", "search", "tel", "url"]:
+            return f'input[type="{type_attr}"]'
         
-        # 7. For buttons/links with text, use :has-text or combine with parent
-        if text and len(text) < 50:
-            clean_text = text.replace('"', '\\"').replace('\n', ' ').strip()
+        # 7. href for links
+        if tag == "a" and href and not href.startswith(("#", "javascript:")):
+            if len(href) < 80:
+                return f'a[href="{href}"]'
+        
+        # 8. Text-based selector for buttons/links
+        if text and len(text) < 50 and tag in ["a", "button"]:
+            clean_text = text.replace('"', '\\"').replace('\n', ' ').strip()[:30]
             if clean_text:
-                # Try to get a unique selector using text
-                return f'{tag}:has-text("{clean_text[:30]}")'
+                return f'{tag}:has-text("{clean_text}")'
         
-        # 8. Fallback: try to get nth-child position
+        # 9. Specific classes
+        specific_classes = self._get_specific_classes(classes)
+        if specific_classes:
+            return f"{tag}.{'.'.join(specific_classes[:2])}"
+        
+        # 10. Fallback: nth-child with parent context
         try:
-            nth = handle.evaluate("""e => {
-                const siblings = Array.from(e.parentElement.children).filter(
+            nth_info = handle.evaluate("""e => {
+                const parent = e.parentElement;
+                if (!parent) return null;
+                const siblings = Array.from(parent.children).filter(
                     c => c.tagName === e.tagName
                 );
-                return siblings.indexOf(e) + 1;
+                const index = siblings.indexOf(e) + 1;
+                const parentTag = parent.tagName.toLowerCase();
+                const parentClass = parent.className.split(' ')[0] || '';
+                return { index, parentTag, parentClass };
             }""")
-            parent_tag = handle.evaluate("e => e.parentElement?.tagName?.toLowerCase() || ''")
-            if parent_tag and nth:
-                return f"{parent_tag} > {tag}:nth-child({nth})"
+            
+            if nth_info:
+                parent_selector = nth_info["parentTag"]
+                if nth_info["parentClass"]:
+                    parent_selector += f".{nth_info['parentClass']}"
+                return f"{parent_selector} > {tag}:nth-child({nth_info['index']})"
         except Exception:
             pass
         
-        # 9. Last resort with all classes
-        if classes:
-            return f"{tag}.{'.'.join(classes[:2])}"
-        
+        # Last resort
         return tag
 
-    def _is_generic_class(self, class_name: str) -> bool:
-        """Check if a class name is too generic to be useful for selection."""
-        generic_patterns = [
-            "btn", "button", "link", "nav", "menu", "item", "list",
-            "container", "wrapper", "row", "col", "flex", "grid",
-            "text", "icon", "img", "active", "disabled", "hidden",
-            "show", "fade", "in", "out", "left", "right", "center"
+    def _is_generated_id(self, id_value: str) -> bool:
+        """Check if an ID looks auto-generated."""
+        import re
+        if not id_value:
+            return True
+        
+        patterns = [
+            r'^[a-f0-9]{8,}$',
+            r'^\d+$',
+            r'^:r\d+:$',
+            r'^ember\d+$',
+            r'^react-',
         ]
-        lower = class_name.lower()
-        # Keep class if it has specific naming (e.g., "products-link", "cart-button")
-        if "-" in class_name or "_" in class_name:
-            return False
-        return lower in generic_patterns or len(lower) < 3
+        return any(re.match(p, id_value, re.IGNORECASE) for p in patterns)
 
-    def _build_xpath(self, handle, tag: str, text: str, element_id: str) -> str:
+    def _get_specific_classes(self, classes: List[str]) -> List[str]:
+        """Filter to keep only specific, meaningful classes."""
+        generic = {
+            "btn", "button", "link", "input", "form-control", "form-group",
+            "container", "wrapper", "row", "col", "flex", "grid", "block",
+            "active", "disabled", "hidden", "show", "fade",
+            "nav", "navbar", "dropdown", "modal", "card",
+        }
+        
+        specific = []
+        for cls in classes:
+            if cls.lower() in generic:
+                continue
+            if len(cls) < 3:
+                continue
+            # Prefer semantic classes with dashes/underscores
+            if "-" in cls or "_" in cls:
+                specific.insert(0, cls)
+            else:
+                specific.append(cls)
+        
+        return specific[:2]
+
+    def _build_xpath(
+        self, handle, tag: str, text: str, element_id: str, name_attr: str
+    ) -> str:
         """Build an XPath selector as fallback."""
         if element_id:
             return f'//{tag}[@id="{element_id}"]'
+        if name_attr:
+            return f'//{tag}[@name="{name_attr}"]'
         if text and len(text) < 50:
-            clean_text = text.replace("'", "\\'").replace('\n', ' ').strip()[:30]
-            return f'//{tag}[contains(text(), "{clean_text}")]'
+            clean = text.replace("'", "\\'").replace('\n', ' ').strip()[:30]
+            return f"//{tag}[contains(text(), '{clean}')]"
         return f"//{tag}"
 
     def get_html(self) -> str:
