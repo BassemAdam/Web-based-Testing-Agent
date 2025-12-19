@@ -1,37 +1,26 @@
-from playwright.sync_api import Page, expect
 from .base_page import BasePage
+from playwright.sync_api import Page, Locator
+
 
 class Page_1Page(BasePage):
-    URL = "https://www.iana.org/help/example-domains"
-    
-    def __init__(self, page: Page):
-        super().__init__(page)
-        self._Domains_link = page.get_by_role('link', name='Domains').nth(0)
-        self._Protocols_link = page.get_by_role('link', name='Protocols').nth(0)
-        self._Numbers_link = page.get_by_role('link', name='Numbers').nth(0)
-        self._About_link = page.get_by_role('link', name='About').nth(0)
-        self._RFC2606_link = page.get_by_role('link', name='RFC 2606').nth(0)
-    
-    def navigate_to_domains(self):
-        self._Domains_link.click()
-        expect(self.page).to_have_url("https://www.iana.org/domains")
-    
-    def navigate_to_protocols(self):
-        self._Protocols_link.click()
-        expect(self.page).to_have_url("https://www.iana.org/protocols")
-    
-    def navigate_to_numbers(self):
-        self._Numbers_link.click()
-        expect(self.page).to_have_url("https://www.iana.org/numbers")
-    
-    def navigate_to_about(self):
-        self._About_link.click()
-        expect(self.page).to_have_url("https://www.iana.org/about")
-    
-    def verify_links_present(self):
-        expect(self._Domains_link).to_be_visible()
-        expect(self._Protocols_link).to_be_visible()
-        expect(self._Numbers_link).to_be_visible()
-        expect(self._About_link).to_be_visible()
-        expect(self._RFC2606_link).to_be_visible()
-        
+    URL = "https://automationexercise.com/products"
+
+    def __init__(self, page: Page) -> None:
+        self._page: Page = page
+        self._polo_brand_link: Locator = page.locator("a[href=\"/brand_products/Polo\"]")
+        self._view_product_link: Locator = page.locator("a[href=\"/product_details/1\"]")
+
+    def click_polo_brand(self) -> None:
+        """Click on the 'POLO' link under brand categories."""
+        self._polo_brand_link.click()
+
+    def assert_on_page(self) -> None:
+        """Verify that the URL and page title match the expected values."""
+        assert self._page.url == self.URL, f"Expected URL '{self.URL}', got '{self._page.url}'"
+        assert self._page.title() == "Automation Exercise - All Products", (
+            f"Expected title 'Automation Exercise - All Products', got '{self._page.title()}'"
+        )
+
+    def click_view_product(self) -> None:
+        """Click on the 'View Product' link for a specific product."""
+        self._view_product_link.click()

@@ -40,3 +40,5 @@ screenshots/
 logs/
 test_reports/
 test_results/
+artifacts/generated_tests
+
