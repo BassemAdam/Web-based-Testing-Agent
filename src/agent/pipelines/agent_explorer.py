@@ -148,15 +148,16 @@ Respond ONLY with the JSON array, no other text."""
         Use an AI agent to intelligently explore the site.
         """
         from ..pipelines.exploration_pipeline import ExplorationPipeline
-        
         graph = SiteGraph()
         visited_urls: Set[str] = set()
+        queued_urls: Set[str] = set()  # Track URLs already queued or visited
         exploration = ExplorationPipeline(use_llm_summary=True)
         
         # Queue: (url, depth, from_page_id, via_key, via_reason)
         queue: List[Tuple[str, int, Optional[str], Optional[str], Optional[str]]] = [
             (start_url, 0, None, None, "Starting point")
         ]
+        queued_urls.add(self._normalize_url(start_url))  # Add start_url to queued
         
         page_counter = 0
 
@@ -187,6 +188,7 @@ Respond ONLY with the JSON array, no other text."""
                 # Track actual URL after redirects
                 actual_url = self._normalize_url(browser.current_url())
                 visited_urls.add(actual_url)
+                queued_urls.add(actual_url)
                 
                 # Create page node
                 page_id = f"page_{page_counter}"
@@ -241,7 +243,7 @@ Respond ONLY with the JSON array, no other text."""
                         
                         if new_url:
                             normalized_new = self._normalize_url(new_url)
-                            if normalized_new not in visited_urls:
+                            if normalized_new not in visited_urls and normalized_new not in queued_urls:
                                 queue.append((
                                     new_url, 
                                     depth + 1, 
@@ -249,6 +251,7 @@ Respond ONLY with the JSON array, no other text."""
                                     key,
                                     reason
                                 ))
+                                queued_urls.add(normalized_new)
                                 print(f"  [+] Queued: {new_url}")
                             
                             # Go back to explore other elements
