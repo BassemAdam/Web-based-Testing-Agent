@@ -322,6 +322,7 @@ class MultiPageTestDesignPipeline:
     def _validate_and_fix_plan(self, json_plan: Dict, graph: SiteGraph) -> Dict:
         """
         Enforce page coherence and element validity against the graph.
+        Ensures all steps reference valid elements on the correct page.
         """
         element_lookup = self._build_element_lookup(graph)
         page_keys = self._build_page_key_map(element_lookup)
@@ -330,6 +331,8 @@ class MultiPageTestDesignPipeline:
         edge_map = self._merge_edge_maps(explicit_edges, inferred_edges)
         key_frequency = self._build_key_frequency(page_keys)
         page_markers = self._build_page_markers(graph, element_lookup, page_keys, key_frequency)
+        
+        # Build email inputs map for validation
         email_inputs: Dict[str, List[str]] = {}
         for info in element_lookup.values():
             elem = info.get("element")
@@ -338,18 +341,28 @@ class MultiPageTestDesignPipeline:
                 continue
             if elem.tag == "input" and elem.type == "email":
                 email_inputs.setdefault(page_id, []).append(info.get("element_key"))
+        
         start_page_id = self._find_start_page_id(graph, json_plan.get("start_url"))
+        
+        # If no start_url, default to first page
+        if not start_page_id and graph.pages:
+            start_page_id = list(graph.pages.keys())[0]
+            if not json_plan.get("start_url"):
+                json_plan["start_url"] = graph.pages[start_page_id].snapshot.url
 
         for tc_json in json_plan.get("test_cases", []):
             current_page = start_page_id
             new_steps: List[Dict] = []
             covered_map: Dict[str, Dict] = {}
             typed_email_pages = set()
+            step_number = 0
 
             tc_text = f"{tc_json.get('name', '')} {tc_json.get('description', '')}".lower()
             needs_invalid_email = "invalid" in tc_text and "email" in tc_text and "empty" not in tc_text
 
             def add_step(step: Dict) -> None:
+                nonlocal step_number
+                # Prevent duplicate consecutive assertions on same element
                 if (
                     step.get("action") == "assert"
                     and new_steps
@@ -357,97 +370,134 @@ class MultiPageTestDesignPipeline:
                     and new_steps[-1].get("target_element_key") == step.get("target_element_key")
                 ):
                     return
+                step_number += 1
+                step["step_number"] = step_number
+                
+                # Add URL context for the page
+                if step.get("page_id") and step["page_id"] in graph.pages:
+                    step["page_url"] = graph.pages[step["page_id"]].snapshot.url
+                
                 new_steps.append(step)
 
             def add_page_assert(page_id: str) -> None:
                 for step in self._page_assertion_steps(graph, page_id, page_markers):
+                    step["expected_result"] = f"Page '{graph.pages[page_id].snapshot.title}' is loaded and visible"
                     add_step(step)
 
+            # Start with assertion on the initial page
             if current_page:
                 add_page_assert(current_page)
 
             for st in tc_json.get("steps", []):
                 action = st.get("action", "")
-                page_id = st.get("page_id") or current_page
+                step_page_id = st.get("page_id") or current_page
                 raw_target = st.get("target_element_key")
                 details = st.get("details")
+                input_value = st.get("input_value")
+                expected_result = st.get("expected_result")
 
-                if page_id not in graph.pages:
-                    page_id = current_page
+                # CRITICAL: Validate page_id exists
+                if step_page_id not in graph.pages:
+                    # Try to use current page instead
+                    step_page_id = current_page
+                    if not step_page_id or step_page_id not in graph.pages:
+                        print(f"  [validation] Skipping step with invalid page: {st}")
+                        continue
 
+                # Handle navigate action (going to a URL directly)
                 if action == "navigate":
-                    if page_id and page_id in graph.pages:
-                        current_page = page_id
-                        add_step(
-                            {
-                                "page_id": page_id,
-                                "action": action,
-                                "target_element_key": None,
-                                "details": details,
-                            }
-                        )
-                        add_page_assert(page_id)
+                    if step_page_id and step_page_id in graph.pages:
+                        current_page = step_page_id
+                        add_step({
+                            "page_id": step_page_id,
+                            "action": action,
+                            "target_element_key": None,
+                            "details": details or f"Navigate to {graph.pages[step_page_id].snapshot.url}",
+                            "expected_result": expected_result or f"Browser navigates to {graph.pages[step_page_id].snapshot.title}",
+                        })
+                        add_page_assert(step_page_id)
                     continue
 
-                if current_page and page_id and page_id != current_page:
-                    nav_path = self._find_navigation_path(current_page, page_id, edge_map)
+                # CRITICAL: If step targets a different page, we need navigation
+                if current_page and step_page_id and step_page_id != current_page:
+                    nav_path = self._find_navigation_path(current_page, step_page_id, edge_map)
                     if not nav_path:
+                        print(f"  [validation] No navigation path from {current_page} to {step_page_id}, skipping step")
                         continue
+                    
+                    # Add navigation steps
                     for nav_step in nav_path:
-                        add_step(
-                            {
-                                "page_id": nav_step["from"],
-                                "action": "click",
-                                "target_element_key": nav_step["key"],
-                                "details": f"Navigate to {nav_step['dest']}",
-                            }
-                        )
+                        add_step({
+                            "page_id": nav_step["from"],
+                            "action": "click",
+                            "target_element_key": nav_step["key"],
+                            "details": f"Click to navigate to {nav_step['dest']}",
+                            "expected_result": f"Browser navigates to {graph.pages[nav_step['dest']].snapshot.title if nav_step['dest'] in graph.pages else nav_step['dest']}",
+                        })
                         current_page = nav_step["dest"]
                         add_page_assert(current_page)
 
-                resolved_key = self._resolve_key(page_id, raw_target, page_keys) if raw_target else None
-                if raw_target and not resolved_key:
-                    elem_info = self._fuzzy_find_element(element_lookup, page_id, raw_target)
-                    if elem_info:
-                        resolved_key = elem_info.get("element_key")
+                # Now we should be on the correct page
+                # CRITICAL: Verify target element exists on CURRENT page
+                resolved_key = None
+                if raw_target:
+                    # First try exact resolution on current page (not step_page_id which might differ)
+                    resolved_key = self._resolve_key(current_page, raw_target, page_keys)
+                    if not resolved_key:
+                        elem_info = self._fuzzy_find_element(element_lookup, current_page, raw_target)
+                        if elem_info:
+                            resolved_key = elem_info.get("element_key")
+                        else:
+                            print(f"  [validation] Element '{raw_target}' not found on {current_page}, skipping")
+                            continue
 
+                # Handle assertions
                 if action == "assert":
-                    if not resolved_key or self._is_weak_assert(page_id, resolved_key, key_frequency, element_lookup):
-                        resolved_key = page_markers.get(page_id) or resolved_key
+                    if not resolved_key or self._is_weak_assert(current_page, resolved_key, key_frequency, element_lookup):
+                        resolved_key = page_markers.get(current_page) or resolved_key
                     if not resolved_key:
                         continue
 
+                # Skip if we needed a target but couldn't resolve it
                 if raw_target and not resolved_key:
                     continue
 
+                # Track email typing
                 if action == "type" and resolved_key:
-                    if resolved_key in (email_inputs.get(page_id) or []):
-                        typed_email_pages.add(page_id)
+                    if resolved_key in (email_inputs.get(current_page) or []):
+                        typed_email_pages.add(current_page)
 
+                # For invalid email tests, inject email typing before submit
                 if action == "click" and resolved_key and needs_invalid_email:
-                    if page_id in email_inputs and page_id not in typed_email_pages:
-                        info = element_lookup.get(f"{page_id}::{resolved_key}")
+                    if current_page in email_inputs and current_page not in typed_email_pages:
+                        info = element_lookup.get(f"{current_page}::{resolved_key}")
                         if info and self._is_submit_like(info.get("element")):
-                            email_key = email_inputs[page_id][0]
-                            add_step(
-                                {
-                                    "page_id": page_id,
-                                    "action": "type",
-                                    "target_element_key": email_key,
-                                    "details": "Enter invalid email value: invalid-email",
-                                }
-                            )
-                            typed_email_pages.add(page_id)
+                            email_key = email_inputs[current_page][0]
+                            add_step({
+                                "page_id": current_page,
+                                "action": "type",
+                                "target_element_key": email_key,
+                                "input_value": "invalid-email",
+                                "details": "Enter invalid email value",
+                                "expected_result": "Invalid email is entered in the field",
+                            })
+                            typed_email_pages.add(current_page)
 
-                add_step(
-                    {
-                        "page_id": page_id,
-                        "action": action,
-                        "target_element_key": resolved_key,
-                        "details": details,
-                    }
-                )
+                # Build the validated step
+                validated_step = {
+                    "page_id": current_page,  # Use current_page, not step_page_id
+                    "action": action,
+                    "target_element_key": resolved_key,
+                    "details": details,
+                    "expected_result": expected_result or self._infer_expected_result(action, resolved_key, current_page, graph),
+                }
+                
+                if input_value:
+                    validated_step["input_value"] = input_value
+                
+                add_step(validated_step)
 
+                # Update current page if clicking a navigation element
                 if action == "click" and resolved_key and current_page:
                     edge_info = edge_map.get(current_page, {}).get(canonicalize_key(resolved_key))
                     if edge_info:
@@ -455,11 +505,14 @@ class MultiPageTestDesignPipeline:
                         if current_page:
                             add_page_assert(current_page)
 
+            # End with a final assertion if not already present
             if current_page and (not new_steps or new_steps[-1].get("action") != "assert"):
                 add_page_assert(current_page)
 
             tc_json["steps"] = new_steps
+            tc_json["final_page"] = current_page
 
+            # Validate and fix covered_elements
             for ce in tc_json.get("covered_elements", []):
                 pid = ce.get("page_id")
                 raw_key = ce.get("key")
@@ -467,10 +520,15 @@ class MultiPageTestDesignPipeline:
                     continue
                 resolved = self._resolve_key(pid, raw_key, page_keys)
                 if not resolved:
+                    elem_info = self._fuzzy_find_element(element_lookup, pid, raw_key)
+                    if elem_info:
+                        resolved = elem_info.get("element_key")
+                if not resolved:
                     continue
                 ce["key"] = resolved
                 covered_map[f"{pid}::{resolved}"] = ce
 
+            # Add elements from steps to covered_elements
             for step in new_steps:
                 step_key = step.get("target_element_key")
                 step_page = step.get("page_id")
@@ -482,12 +540,33 @@ class MultiPageTestDesignPipeline:
                 covered_map[map_key] = {
                     "page_id": step_page,
                     "key": step_key,
+                    "interaction_type": step.get("action"),
                     "description": f"Used for {step.get('action')} step",
                 }
 
             tc_json["covered_elements"] = list(covered_map.values())
 
         return json_plan
+
+    def _infer_expected_result(self, action: str, element_key: Optional[str], page_id: str, graph: SiteGraph) -> str:
+        """Infer a reasonable expected result based on action type."""
+        if action == "click":
+            return "Element is clicked successfully"
+        elif action == "type":
+            return "Text is entered into the field"
+        elif action == "assert":
+            return "Element is visible and matches expected state"
+        elif action == "clear":
+            return "Field is cleared"
+        elif action == "select":
+            return "Option is selected from dropdown"
+        elif action == "hover":
+            return "Mouse hovers over element"
+        elif action == "wait":
+            return "Wait completed"
+        else:
+            return "Action completed successfully"
+
     def _recommend_playwright_locator(self, element) -> str:
         """
         Recommend the best Playwright locator strategy for an element.
@@ -770,6 +849,123 @@ class MultiPageTestDesignPipeline:
         print(f"  [fuzzy] No match found for '{raw_key}' in {page_id}")
         return None
 
+    def _build_page_elements_summary(self, graph: SiteGraph) -> str:
+        """
+        Build a detailed, categorized summary of elements per page.
+        This helps the LLM understand what's available on each page.
+        """
+        lines: List[str] = []
+        
+        for page_id, node in graph.pages.items():
+            snap = node.snapshot
+            lines.append(f"\n### {page_id}: {snap.title}")
+            lines.append(f"URL: {snap.url}")
+            
+            # Categorize elements
+            forms = []
+            inputs = []
+            buttons = []
+            links = []
+            headings = []
+            other_interactive = []
+            
+            for e in snap.elements:
+                key = build_element_key(
+                    e.tag, 
+                    e.text, 
+                    e.id,
+                    name=e.name if e.tag in ["input", "select", "textarea"] else None,
+                    input_type=e.type if e.tag in ["input", "select", "textarea"] else None
+                )
+                
+                elem_desc = {
+                    "key": key,
+                    "text": (e.text or "")[:50],
+                    "id": e.id,
+                    "name": e.name,
+                    "type": e.type,
+                    "css": e.css_selector,
+                }
+                
+                if e.tag == "form":
+                    forms.append(elem_desc)
+                elif e.tag == "input":
+                    inputs.append(elem_desc)
+                elif e.tag == "button":
+                    buttons.append(elem_desc)
+                elif e.tag == "a":
+                    links.append(elem_desc)
+                elif e.tag in ["h1", "h2", "h3", "h4", "h5", "h6"]:
+                    headings.append(elem_desc)
+                elif e.tag in ["select", "textarea"]:
+                    other_interactive.append(elem_desc)
+            
+            # Output categorized elements with clear labels
+            if inputs:
+                lines.append("\n**INPUT FIELDS** (for typing data):")
+                for inp in inputs[:10]:
+                    lines.append(f"  - KEY: \"{inp['key']}\"")
+                    lines.append(f"    name={inp['name']!r} type={inp['type']!r} id={inp['id']!r}")
+            
+            if buttons:
+                lines.append("\n**BUTTONS** (for clicking/submitting):")
+                for btn in buttons[:8]:
+                    lines.append(f"  - KEY: \"{btn['key']}\"")
+                    lines.append(f"    text={btn['text']!r} id={btn['id']!r}")
+            
+            if links:
+                lines.append("\n**LINKS** (for navigation):")
+                for lnk in links[:10]:
+                    lines.append(f"  - KEY: \"{lnk['key']}\"")
+                    lines.append(f"    text={lnk['text']!r}")
+            
+            if headings:
+                lines.append("\n**HEADINGS** (for page identification/assertions):")
+                for hdg in headings[:5]:
+                    lines.append(f"  - KEY: \"{hdg['key']}\"")
+                    lines.append(f"    text={hdg['text']!r}")
+            
+            if other_interactive:
+                lines.append("\n**OTHER FORM ELEMENTS**:")
+                for elem in other_interactive[:5]:
+                    lines.append(f"  - KEY: \"{elem['key']}\"")
+                    lines.append(f"    name={elem['name']!r} type={elem['type']!r}")
+        
+        return "\n".join(lines)
+
+    def _build_navigation_guide(self, graph: SiteGraph) -> str:
+        """
+        Build a clear navigation guide showing how pages connect.
+        This helps the LLM understand valid navigation paths.
+        """
+        lines: List[str] = []
+        
+        # Build adjacency info
+        nav_from: Dict[str, List[Dict]] = {}
+        for edge in graph.edges:
+            nav_from.setdefault(edge.from_page_id, []).append({
+                "dest": edge.to_page_id,
+                "element_key": edge.element_key,
+                "dest_url": graph.pages[edge.to_page_id].snapshot.url if edge.to_page_id in graph.pages else "unknown"
+            })
+        
+        lines.append("From each page, you can navigate to:")
+        
+        for page_id, node in graph.pages.items():
+            edges = nav_from.get(page_id, [])
+            lines.append(f"\n{page_id} ({node.snapshot.title}):")
+            if edges:
+                for edge in edges:
+                    lines.append(f"  → Click \"{edge['element_key']}\" to go to {edge['dest']}")
+            else:
+                lines.append(f"  (No outgoing navigation edges discovered)")
+        
+        # Add a note about page tracking
+        lines.append("\n**IMPORTANT**: After clicking a navigation element, your current_page changes to the destination.")
+        lines.append("You can then ONLY interact with elements on the new page.")
+        
+        return "\n".join(lines)
+
     def _build_graph_preview(self, graph: SiteGraph) -> str:
         lines: List[str] = []
 
@@ -810,66 +1006,109 @@ class MultiPageTestDesignPipeline:
         feedback = human_feedback or "No feedback yet. Propose 3-8 good tests."
 
         system_msg = """
-You are a senior QA engineer collaborating with a human tester.
-You design HIGH-LEVEL logical test cases that may span MULTIPLE PAGES.
+You are a senior QA automation engineer designing executable test cases.
+You create PRECISE, PAGE-COHERENT test cases that can be directly converted to Playwright/Selenium code.
 
-Rules:
-- You DO NOT browse. You only know the site from the given pages and navigation edges.
-- Focus on realistic user flows (e.g., sign in, basic navigation, search).
-- Include both happy-path and negative/edge tests.
-- Keep steps in a coherent order; do not jump between pages without navigation.
-- Prefer assertions on elements that are specific to the target page (avoid global header links).
+CRITICAL RULES:
+1. PAGE COHERENCE: Every step MUST specify which page it executes on. You can ONLY interact with elements on your CURRENT page.
+2. NAVIGATION: To change pages, you MUST click a navigation element (link/button) that has an edge to the target page. After clicking, update your current page.
+3. ASSERTIONS: ONLY assert on elements that exist on the CURRENT page. Never assert on elements from a previous page.
+4. ELEMENT KEYS: Copy element keys EXACTLY as shown (including trailing |). These are used for selector lookup.
+5. STEP ORDER: Steps must be executable in sequence. Each step's page_id must match where you currently are.
+6. EXPLICIT NAVIGATION: Include explicit "navigate" steps when going to a URL, or "click" steps when using links.
+7. PRECONDITIONS: Each test should start from the start_url and explicitly navigate to where it needs to be.
+8. EXPECTED RESULTS: Each assertion must have a clear expected outcome in the details field.
+
+OUTPUT FORMAT:
 - Output STRICTLY valid JSON in the requested schema.
 - Do NOT add meta commentary; only output JSON.
 """.strip()
 
-        user_msg = f"""
-We have explored a small part of a website. Here is the graph:
+        # Build page-to-elements mapping for clarity
+        page_elements_summary = self._build_page_elements_summary(graph)
+        navigation_guide = self._build_navigation_guide(graph)
 
+        user_msg = f"""
+=== WEBSITE STRUCTURE ===
 {graph_preview}
 
-The human feedback is:
-\"\"\"feedback
+=== PAGE ELEMENTS SUMMARY ===
+{page_elements_summary}
+
+=== NAVIGATION PATHS ===
+{navigation_guide}
+
+=== HUMAN FEEDBACK ===
 {feedback}
-\"\"\"
 
-Using this information, design a set of MULTI-PAGE test cases.
+=== YOUR TASK ===
+Design EXECUTABLE test cases that a test automation framework can run.
 
-Output JSON in this shape:
+Output JSON in this EXACT shape:
 
 {{
+  "start_url": "the URL where tests should begin (usually page_0's URL)",
   "test_cases": [
     {{
-      "id": "string (e.g., TC_SIGNIN_VALID_01)",
-      "name": "short descriptive name",
-      "description": "what this scenario covers",
-      "tags": ["functional", "happy_path", "..."],
+      "id": "TC_<FEATURE>_<SCENARIO>_<NUMBER> (e.g., TC_LOGIN_VALID_01)",
+      "name": "Short descriptive name",
+      "description": "What user flow this tests and expected outcome",
+      "preconditions": ["List of conditions that must be true before test starts"],
+      "tags": ["functional", "happy_path|negative|edge_case", "priority_high|medium|low"],
+      "current_page": "page_id where test starts (after navigation)",
       "steps": [
         {{
-          "page_id": "page_0 or page_1 etc.",
-          "action": "click|type|assert|navigate|other",
-          "target_element_key": "one of the keys from the page's elements, or null",
-          "details": "explanation, input value, or assertion text"
+          "step_number": 1,
+          "page_id": "MUST be your current page - the page you are on when executing this step",
+          "action": "navigate|click|type|clear|select|assert|wait|hover|scroll",
+          "target_element_key": "EXACT key from the page's element list, or null for navigate/wait",
+          "input_value": "For type/select actions: the value to enter. For assert: expected value.",
+          "expected_result": "What should happen after this step (e.g., 'Page navigates to login', 'Error message appears')",
+          "details": "Additional context for code generation"
         }}
       ],
+      "expected_final_state": "Description of the expected state after all steps complete",
       "covered_elements": [
         {{
           "page_id": "page_x",
-          "key": "element key from that page - MUST match exactly one of the keys listed above",
-          "description": "short description of what this element does in the test"
+          "key": "EXACT element key from that page's list",
+          "interaction_type": "click|type|assert|hover",
+          "description": "What this element does in the test"
         }}
       ]
     }}
   ],
-  "coverage_summary": "short paragraph explaining which flows/pages are covered and notable gaps"
+  "coverage_summary": "Paragraph explaining test coverage and any gaps"
 }}
 
-Constraints:
-- Create 3-8 test cases.
-- When referencing an element, ALWAYS copy the key EXACTLY from the list above (including the trailing |).
-- If a step is conceptual (no specific element), set target_element_key to null.
-- For each covered_element, provide a short description of what it does in the test context.
-- Do not reference elements from other pages; only move pages by clicking an edge element or using navigate.
+=== CRITICAL CONSTRAINTS ===
+1. Create 5-10 comprehensive test cases covering:
+   - Happy path flows (valid inputs, successful navigation)
+   - Negative tests (invalid inputs, error handling)
+   - Boundary/edge cases (empty fields, special characters)
+   - Navigation tests (verify links work correctly)
+
+2. PAGE TRACKING:
+   - Track your "current_page" as you design steps
+   - After a click on a navigation edge, your current_page CHANGES to the destination
+   - You can ONLY use elements from your current_page
+   - NEVER assert on elements from a page you're not on
+
+3. ELEMENT KEYS:
+   - Copy keys EXACTLY from the element lists (including trailing |)
+   - For inputs: use the key that includes name and type (e.g., "input|||email|email|")
+   - Match the full key format shown in the page elements
+
+4. STEP COMPLETENESS:
+   - Each step must have: step_number, page_id, action, expected_result
+   - For type actions: include input_value
+   - For assertions: include what you're verifying in expected_result
+   - Include wait steps after navigation for page loads
+
+5. ASSERTIONS:
+   - Assert on page-specific elements (forms, headings, unique content)
+   - Avoid asserting on global navigation elements (they exist on all pages)
+   - Use assert to verify: page loaded, element visible, text content, form state
 """
 
         raw = self.llm.chat(
@@ -898,6 +1137,7 @@ Constraints:
 
         test_cases: List[TestCase] = []
         coverage: Dict[str, List[str]] = {}
+        start_url = json_plan.get("start_url")
 
         for tc_json in json_plan.get("test_cases", []):
             steps: List[TestStep] = []
@@ -907,6 +1147,9 @@ Constraints:
                 
                 # Resolve the target element to get actual selectors
                 resolved_target = None
+                css_selector = None
+                playwright_locator = None
+                
                 if raw_target and page_id:
                     elem_info = self._fuzzy_find_element(element_lookup, page_id, raw_target)
                     if elem_info:
@@ -918,6 +1161,8 @@ Constraints:
                                 f"name={elem.name!r} type={elem.type!r} | "
                                 f"css='{elem.css_selector}'"
                             )
+                            css_selector = elem.css_selector
+                            playwright_locator = elem_info.get("playwright_locator")
                         else:
                             resolved_target = raw_target
                     else:
@@ -929,6 +1174,12 @@ Constraints:
                         page_id=page_id,
                         target=resolved_target,
                         details=st.get("details"),
+                        step_number=st.get("step_number"),
+                        page_url=st.get("page_url"),
+                        input_value=st.get("input_value"),
+                        expected_result=st.get("expected_result"),
+                        css_selector=css_selector,
+                        playwright_locator=playwright_locator,
                     )
                 )
 
@@ -1001,6 +1252,10 @@ Constraints:
                 steps=steps,
                 covered_element_keys=[f"{pid}::{key}" for pid, key in covered_pairs],
                 selectors=selectors,
+                preconditions=tc_json.get("preconditions", []),
+                expected_final_state=tc_json.get("expected_final_state"),
+                start_url=start_url,
+                final_page_id=tc_json.get("final_page"),
             )
             test_cases.append(tc)
 
@@ -1014,5 +1269,6 @@ Constraints:
             "test_cases": test_cases,
             "coverage": coverage,
             "pages": pages,
+            "start_url": start_url,
             "coverage_summary": json_plan.get("coverage_summary"),
         }
