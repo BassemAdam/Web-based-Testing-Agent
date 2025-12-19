@@ -108,13 +108,14 @@ class TestRunner:
             return
         
         for result in test_results:
-            test_name = result["test_name"]
-            screenshot_dir = screenshot_base / test_name
+            # Use test_id instead of test_name - directories are named by test ID (e.g., tc_signin_valid_01)
+            test_id = result["test_id"]
+            screenshot_dir = screenshot_base / test_id
             
-            # If exact match doesn't exist, try to find a directory that starts with the test name
+            # If exact match doesn't exist, try to find a directory that starts with the test ID
             # This handles cases where the directory might have a suffix like 'chromium'
             if not screenshot_dir.exists():
-                candidates = list(screenshot_base.glob(f"{test_name}*"))
+                candidates = list(screenshot_base.glob(f"{test_id}*"))
                 if candidates:
                     screenshot_dir = candidates[0]
             
@@ -122,7 +123,7 @@ class TestRunner:
                 screenshots = sorted(screenshot_dir.glob("*.png"))
                 result["screenshots"] = [str(s) for s in screenshots]
                 result["screenshot_count"] = len(screenshots)
-                print(f"[DEBUG] Found {len(screenshots)} screenshots for {test_name}")
+                print(f"[DEBUG] Found {len(screenshots)} screenshots for {test_id}")
             else:
                 result["screenshots"] = []
                 result["screenshot_count"] = 0
