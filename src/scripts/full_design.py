@@ -74,11 +74,25 @@ def main() -> None:
         action="store_true",
         help="Use AI agent for intelligent exploration instead of rule-based (default: False)",
     )
+    parser.add_argument(
+        "--exploration-feedback",
+        type=str,
+        default=None,
+        help="Optional guidance for the agent during exploration.",
+    )
+    parser.add_argument(
+        "--plan-feedback",
+        type=str,
+        default=None,
+        help="Optional feedback to guide test plan generation.",
+    )
 
     args = parser.parse_args()
 
     start_url = args.url
     exploration_mode = "Agent-based" if args.use_agent else "Rule-based"
+    exploration_feedback = args.exploration_feedback.strip() if args.exploration_feedback else None
+    plan_feedback = args.plan_feedback.strip() if args.plan_feedback else None
     
     print(f"[+] Starting multi-page exploration at: {start_url}")
     print(f"    Mode: {exploration_mode}")
@@ -97,6 +111,7 @@ def main() -> None:
             max_depth=args.max_depth,
             max_pages=args.max_pages,
             max_actions_per_page=args.max_links_per_page,
+            human_feedback=exploration_feedback,
         )
     else:
         print("\n[+] Using rule-based exploration...")
@@ -125,9 +140,12 @@ def main() -> None:
     print("\n[+] Generating multi-page test plan from site graph...")
     designer = MultiPageTestDesignPipeline(model_name=args.model)
     if args.use_agent:
-        plan_dict = designer.build_plan_from_paths(graph, start_url=start_url)
+        if plan_feedback:
+            plan_dict = designer.build_plan(graph, human_feedback=plan_feedback)
+        else:
+            plan_dict = designer.build_plan_from_paths(graph, start_url=start_url)
     else:
-        plan_dict = designer.build_plan(graph, human_feedback=None)
+        plan_dict = designer.build_plan(graph, human_feedback=plan_feedback)
 
     test_cases = plan_dict["test_cases"]
     coverage = plan_dict["coverage"]

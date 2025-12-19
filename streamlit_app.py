@@ -231,12 +231,21 @@ def get_designer(model_name: str | None):
     return MultiPageTestDesignPipeline(model_name=model_name)
 
 
-def run_exploration(start_url: str, max_depth: int, max_pages: int, max_links: int, use_agent: bool = False):
+def run_exploration(
+    start_url: str,
+    max_depth: int,
+    max_pages: int,
+    max_links: int,
+    use_agent: bool = False,
+    exploration_feedback: str | None = None,
+):
     if use_agent:
+        feedback = exploration_feedback.strip() if exploration_feedback else None
         explorer = AgentSiteExplorer(
             max_depth=max_depth,
             max_pages=max_pages,
             max_actions_per_page=max_links,
+            human_feedback=feedback,
         )
     else:
         explorer = SiteExplorer(
@@ -298,6 +307,16 @@ def main():
             value=False,
             help="Use AI agent for intelligent exploration instead of rule-based",
         )
+
+        exploration_feedback = None
+        if use_agent:
+            exploration_feedback = st.text_area(
+                "Agent exploration feedback",
+                value="",
+                placeholder="e.g., Prioritize signup/login and checkout flows; skip blog pages.",
+                height=90,
+                help="Guidance for what the agent should prioritize while exploring.",
+            )
         
         st.markdown("---")
         st.subheader("🤖 Model Selection")
@@ -501,12 +520,32 @@ def main():
     # --- Run full pipeline ------------------------------------------------
     if run_btn:
         with st.spinner("Exploring site and generating initial test plan..."):
-            graph = run_exploration(start_url, max_depth, max_pages, max_links, use_agent)
+            plan_feedback = None
+            if feedback_type == "Test Plan":
+                fb = feedback.strip()
+                if fb:
+                    if target_test_case:
+                        plan_feedback = f"[FOCUS ON TEST CASE: {target_test_case}] {fb}"
+                    else:
+                        plan_feedback = f"[TEST PLAN FEEDBACK] {fb}"
+
+            feedback_text = exploration_feedback.strip() if exploration_feedback else None
+            graph = run_exploration(
+                start_url,
+                max_depth,
+                max_pages,
+                max_links,
+                use_agent,
+                exploration_feedback=feedback_text,
+            )
             designer = get_designer(model_name or None)
             if use_agent:
-                plan_dict = designer.build_plan_from_paths(graph, start_url=start_url)
+                if plan_feedback:
+                    plan_dict = designer.build_plan(graph, human_feedback=plan_feedback)
+                else:
+                    plan_dict = designer.build_plan_from_paths(graph, start_url=start_url)
             else:
-                plan_dict = designer.build_plan(graph, human_feedback=None)
+                plan_dict = designer.build_plan(graph, human_feedback=plan_feedback)
             
             # Add start_url to plan for code generation
             plan_dict["start_url"] = start_url
@@ -522,12 +561,15 @@ def main():
             st.session_state.overlays = overlays
             
             # Auto-save snapshot and plan to files
-            save_snapshot_to_file(graph, start_url, meta={
+            meta = {
                 "max_depth": max_depth,
                 "max_pages": max_pages,
                 "max_links_per_page": max_links,
                 "use_agent": use_agent,
-            })
+            }
+            if use_agent and feedback_text:
+                meta["exploration_feedback"] = feedback_text
+            save_snapshot_to_file(graph, start_url, meta=meta)
             save_plan_to_file(plan_dict)
 
         st.success(f"✅ Exploration complete! Saved snapshot ({len(graph.pages)} pages) and test plan to files.")
@@ -552,12 +594,8 @@ def main():
                     else:
                         structured_feedback = f"[TEST PLAN FEEDBACK] {fb}"
                     
-                    if use_agent:
-                        st.info("Agent path-based plans ignore feedback and follow observed navigation.")
-                        plan_dict = designer.build_plan_from_paths(graph, start_url=st.session_state.start_url)
-                    else:
-                        # Rebuild plan with feedback
-                        plan_dict = designer.build_plan(graph, human_feedback=structured_feedback)
+                    # Rebuild plan with feedback
+                    plan_dict = designer.build_plan(graph, human_feedback=structured_feedback)
                     plan_dict["start_url"] = st.session_state.start_url
                     st.session_state.plan = plan_dict
 

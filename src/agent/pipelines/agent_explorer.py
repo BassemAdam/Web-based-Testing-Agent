@@ -33,6 +33,8 @@ You should avoid:
 - Terms/Privacy policy pages (unless specifically testing those)
 - Duplicate or very similar pages
 - Links that look like they'll download files
+
+If the human provides exploration feedback, treat it as high-priority guidance.
 """
 
     def __init__(
@@ -40,14 +42,22 @@ You should avoid:
         max_depth: int = 2,
         max_pages: int = 10,
         max_actions_per_page: int = 5,
+        human_feedback: Optional[str] = None,
     ):
         self.max_depth = max_depth
         self.max_pages = max_pages
         self.max_actions_per_page = max_actions_per_page
+        self.human_feedback = self._normalize_feedback(human_feedback)
         self.llm = CopilotClient(
             model="gpt-4o",
             config={"temperature": 0.3, "max_tokens": 2000}
         )
+
+    def _normalize_feedback(self, feedback: Optional[str]) -> Optional[str]:
+        if feedback is None:
+            return None
+        cleaned = feedback.strip()
+        return cleaned if cleaned else None
 
     def _build_page_context(self, snapshot: PageSnapshot, visited_urls: Set[str]) -> str:
         """Build a context string describing the current page for the agent."""
@@ -84,10 +94,13 @@ You should avoid:
         Returns a list of elements to interact with.
         """
         context = self._build_page_context(snapshot, visited_urls)
+        feedback_block = ""
+        if self.human_feedback:
+            feedback_block = f"\nHuman exploration feedback (prioritize this guidance):\n{self.human_feedback}\n"
         
         prompt = f"""Current exploration state:
 - Current depth: {depth}/{self.max_depth}
-- Pages visited: {len(visited_urls)}/{self.max_pages}
+- Pages visited: {len(visited_urls)}/{self.max_pages}{feedback_block}
 
 Page context:
 {context}
@@ -143,10 +156,12 @@ Respond ONLY with the JSON array, no other text."""
         # Could add more sophisticated agent-based decisions here
         return True, "Continue exploration"
 
-    def explore(self, start_url: str) -> SiteGraph:
+    def explore(self, start_url: str, human_feedback: Optional[str] = None) -> SiteGraph:
         """
         Use an AI agent to intelligently explore the site.
         """
+        if human_feedback is not None:
+            self.human_feedback = self._normalize_feedback(human_feedback)
         from ..pipelines.exploration_pipeline import ExplorationPipeline
         graph = SiteGraph()
         visited_urls: Set[str] = set()

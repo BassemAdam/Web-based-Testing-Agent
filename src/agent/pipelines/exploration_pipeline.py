@@ -62,15 +62,40 @@ class ExplorationPipeline:
         Small prompt to get a high-level description of page & main interactive areas.
         This will be useful in Phase 2 when proposing coverage.
         """
+        def format_element(element) -> str:
+            parts = [element.tag]
+            if element.id:
+                parts.append(f"id={element.id!r}")
+            if element.text:
+                parts.append(f"text={element.text[:60]!r}")
+            if element.name:
+                parts.append(f"name={element.name!r}")
+            if element.type:
+                parts.append(f"type={element.type!r}")
+            if element.aria_label:
+                parts.append(f"aria_label={element.aria_label[:60]!r}")
+            attrs = element.attributes or {}
+            placeholder = attrs.get("placeholder")
+            if placeholder:
+                parts.append(f"placeholder={placeholder[:60]!r}")
+            data_testid = attrs.get("data-testid")
+            if data_testid:
+                parts.append(f"data-testid={data_testid!r}")
+            return " ".join(parts)
+
         elements_preview = "\n".join(
-            f"- {e.short_description()}" for e in snapshot.elements[:30]
+            f"- {format_element(e)}" for e in snapshot.elements[:30]
         )
+        visible_text = self._extract_visible_text(snapshot.raw_html)
 
         prompt = f"""
-You are a QA testing assistant. You are analyzing a web page (you are already give its elements, no need to browse yourself) to design test cases later.
+You are a QA testing assistant. You are analyzing a web page (you are already given its elements, no need to browse yourself) to design test cases later.
 
 Page title: {snapshot.title}
 URL: {snapshot.url}
+
+Visible text snippet (labels, helper text, error messages):
+{visible_text}
 
 Here are some of the key interactive elements detected:
 {elements_preview}
@@ -78,9 +103,10 @@ Here are some of the key interactive elements detected:
 Give a concise summary of:
 - The main purpose of the page.
 - The main user flows (e.g., login, search, navigation).
+- Input hints and constraints (labels, placeholders, aria-labels, input types, required/optional cues, examples, validation rules).
 - Important edge cases a tester should keep in mind.
 
-Be concrete and concise (max 10 lines).
+Only use information present in the elements or visible text. Be concrete and concise (max 10 lines).
 """
 
         content = self.llm.chat(
