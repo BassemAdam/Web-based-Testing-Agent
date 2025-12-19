@@ -1,388 +1,278 @@
 {
-  "start_url": "https://automationplayground.com/back-office/pages/login.html",
-  "snapshot_file": "C:\\Users\\Ali\\Desktop\\Web-based-Testing-Agent\\src\\artifacts\\snapshots\\site_snapshot.json",
   "test_cases": [
     {
-      "id": "TC_SIGNIN_VALID_01",
-      "name": "Valid sign-in navigates to dashboard",
-      "description": "Covers the happy path of entering valid credentials on the login page and navigating to the index/dashboard page.",
+      "id": "TC_LOGIN_VALID_01",
+      "name": "Valid Login",
+      "description": "Tests the login functionality with valid credentials.",
       "tags": [
         "functional",
         "happy_path",
-        "login",
-        "navigation"
-      ],
-      "steps": [
-        {
-          "action": "navigate",
-          "page_id": "page_0",
-          "target": null,
-          "details": "Open the login page URL"
-        },
-        {
-          "action": "assert",
-          "page_id": "page_0",
-          "target": "input|||email|email name='email' type='email' | css='input[name=\"email\"]'",
-          "details": "Email input is present and enabled"
-        },
-        {
-          "action": "type",
-          "page_id": "page_0",
-          "target": "input|||email|email name='email' type='email' | css='input[name=\"email\"]'",
-          "details": "user@example.com"
-        },
-        {
-          "action": "type",
-          "page_id": "page_0",
-          "target": "input|||password|password name='password' type='password' | css='input[name=\"password\"]'",
-          "details": "CorrectHorseBatteryStaple!"
-        },
-        {
-          "action": "click",
-          "page_id": "page_0",
-          "target": "a|Login| | css='a[href=\"index.html\"]'",
-          "details": "Click the Login anchor to submit and navigate"
-        },
-        {
-          "action": "assert",
-          "page_id": "page_1",
-          "target": "a|RobotFrameworkTutorial.com Demo Admin Site| | css='a[href=\"index.html\"]'",
-          "details": "Dashboard header/link is visible indicating successful navigation"
-        }
-      ],
-      "covered_element_keys": [
-        "page_0::input||",
-        "page_0::input||",
-        "page_0::a|Login| ",
-        "page_1::a|RobotFrameworkTutorial.com Demo Admin Site| "
-      ],
-      "selectors": [
-        {
-          "element_key": "input|||email|email",
-          "page_id": "page_0",
-          "css_selector": "input[name=\"email\"]",
-          "xpath": "//input[@name=\"email\"]",
-          "description": "Email input used to enter the user's email"
-        },
-        {
-          "element_key": "input|||email|email",
-          "page_id": "page_0",
-          "css_selector": "input[name=\"email\"]",
-          "xpath": "//input[@name=\"email\"]",
-          "description": "Password input used to enter the user's password"
-        },
-        {
-          "element_key": "a|Login|",
-          "page_id": "page_0",
-          "css_selector": "a[href=\"index.html\"]",
-          "xpath": "//a[contains(text(), 'Login')]",
-          "description": "Login link used to submit credentials and navigate to the dashboard"
-        },
-        {
-          "element_key": "a|RobotFrameworkTutorial.com Demo Admin Site|",
-          "page_id": "page_1",
-          "css_selector": "a[href=\"index.html\"]",
-          "xpath": "//a[contains(text(), 'RobotFrameworkTutorial.com Dem')]",
-          "description": "Dashboard header checked to confirm arrival on index page"
-        }
-      ],
-      "meta": {}
-    },
-    {
-      "id": "TC_SIGNIN_INVALID_EMAIL_02",
-      "name": "Invalid email format prevents navigation",
-      "description": "Negative test: entering an invalid email format and attempting to log in should not navigate to the dashboard (client-side validation or failure to proceed).",
-      "tags": [
-        "functional",
-        "negative",
-        "validation",
         "login"
       ],
       "steps": [
         {
-          "action": "navigate",
+          "action": "click",
           "page_id": "page_0",
-          "target": null,
-          "details": "Open the login page URL"
+          "target": "login-portal |",
+          "details": "User clicks on the Login Portal link."
         },
         {
           "action": "type",
+          "page_id": "page_1",
+          "target": null,
+          "details": "User enters valid username and password."
+        },
+        {
+          "action": "click",
+          "page_id": "page_1",
+          "target": null,
+          "details": "User clicks the submit button."
+        },
+        {
+          "action": "assert",
+          "page_id": "page_2",
+          "target": null,
+          "details": "User is redirected to the dashboard page."
+        }
+      ],
+      "covered_element_keys": [
+        "page_0::login-portal ||"
+      ],
+      "selectors": [
+        {
+          "element_key": "login-portal ||",
           "page_id": "page_0",
-          "target": "input|||email|email name='email' type='email' | css='input[name=\"email\"]'",
-          "details": "not-an-email"
+          "css_selector": "#login-portal",
+          "xpath": "",
+          "description": "Link to access the login portal."
+        }
+      ],
+      "meta": {}
+    },
+    {
+      "id": "TC_LOGIN_INVALID_01",
+      "name": "Invalid Login",
+      "description": "Tests the login functionality with invalid credentials.",
+      "tags": [
+        "functional",
+        "negative",
+        "login"
+      ],
+      "steps": [
+        {
+          "action": "click",
+          "page_id": "page_0",
+          "target": "login-portal |",
+          "details": "User clicks on the Login Portal link."
         },
         {
           "action": "type",
-          "page_id": "page_0",
-          "target": "input|||password|password name='password' type='password' | css='input[name=\"password\"]'",
-          "details": "anyPassword"
+          "page_id": "page_1",
+          "target": null,
+          "details": "User enters invalid username and password."
         },
         {
           "action": "click",
-          "page_id": "page_0",
-          "target": "a|Login| | css='a[href=\"index.html\"]'",
-          "details": "Attempt to submit with invalid email"
+          "page_id": "page_1",
+          "target": null,
+          "details": "User clicks the submit button."
         },
         {
           "action": "assert",
-          "page_id": "page_0",
-          "target": "input|||email|email name='email' type='email' | css='input[name=\"email\"]'",
-          "details": "Email input remains present (login should not have navigated away); client-side validation expected"
+          "page_id": "page_1",
+          "target": null,
+          "details": "Error message is displayed indicating invalid credentials."
         }
       ],
       "covered_element_keys": [
-        "page_0::input||",
-        "page_0::input||",
-        "page_0::a|Login| "
+        "page_0::login-portal ||"
       ],
       "selectors": [
         {
-          "element_key": "input|||email|email",
+          "element_key": "login-portal ||",
           "page_id": "page_0",
-          "css_selector": "input[name=\"email\"]",
-          "xpath": "//input[@name=\"email\"]",
-          "description": "Email input used to supply an invalid email"
-        },
-        {
-          "element_key": "input|||email|email",
-          "page_id": "page_0",
-          "css_selector": "input[name=\"email\"]",
-          "xpath": "//input[@name=\"email\"]",
-          "description": "Password input used along with invalid email"
-        },
-        {
-          "element_key": "a|Login|",
-          "page_id": "page_0",
-          "css_selector": "a[href=\"index.html\"]",
-          "xpath": "//a[contains(text(), 'Login')]",
-          "description": "Login link clicked to attempt submission with invalid data"
+          "css_selector": "a:has-text(\"\")",
+          "xpath": "",
+          "description": "Link to access the login portal."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_REMEMBER_CHECKBOX_03",
-      "name": "Remember checkbox toggles and is clickable before login",
-      "description": "Verify the 'remember' checkbox can be checked and unchecked on the login page and remains interactive when attempting to login.",
+      "id": "TC_NAVIGATION_COURSES_01",
+      "name": "Navigate to Courses",
+      "description": "Tests navigation to various testing courses.",
       "tags": [
         "functional",
-        "ui",
-        "login",
-        "edge_case"
+        "happy_path",
+        "navigation"
       ],
       "steps": [
         {
-          "action": "navigate",
+          "action": "click",
           "page_id": "page_0",
+          "target": "Master Generative AI for Software Testing|",
+          "details": "User clicks on the Master Generative AI course link."
+        },
+        {
+          "action": "assert",
+          "page_id": "page_3",
           "target": null,
-          "details": "Open the login page URL"
-        },
-        {
-          "action": "assert",
-          "page_id": "page_0",
-          "target": "input|||remember|checkbox name='remember' type='checkbox' | css='input[name=\"remember\"]'",
-          "details": "Remember checkbox is present"
+          "details": "User is taken to the Master Generative AI course page."
         },
         {
           "action": "click",
           "page_id": "page_0",
-          "target": "input|||remember|checkbox name='remember' type='checkbox' | css='input[name=\"remember\"]'",
-          "details": "Check the remember checkbox"
+          "target": "API Testing with Postman|",
+          "details": "User clicks on the API Testing with Postman course link."
         },
         {
           "action": "assert",
-          "page_id": "page_0",
-          "target": "input|||remember|checkbox name='remember' type='checkbox' | css='input[name=\"remember\"]'",
-          "details": "Checkbox should be checked"
-        },
-        {
-          "action": "click",
-          "page_id": "page_0",
-          "target": "input|||remember|checkbox name='remember' type='checkbox' | css='input[name=\"remember\"]'",
-          "details": "Uncheck the remember checkbox"
-        },
-        {
-          "action": "assert",
-          "page_id": "page_0",
-          "target": "input|||remember|checkbox name='remember' type='checkbox' | css='input[name=\"remember\"]'",
-          "details": "Checkbox should be unchecked"
-        },
-        {
-          "action": "click",
-          "page_id": "page_0",
-          "target": "a|Login| | css='a[href=\"index.html\"]'",
-          "details": "Click Login to ensure control remains functional when navigating"
+          "page_id": "page_4",
+          "target": null,
+          "details": "User is taken to the API Testing with Postman course page."
         }
       ],
       "covered_element_keys": [
-        "page_0::input||",
-        "page_0::a|Login| "
+        "page_0::Master Generative AI for Software Testing||",
+        "page_0::API Testing with Postman||"
       ],
       "selectors": [
         {
-          "element_key": "input|||email|email",
+          "element_key": "Master Generative AI for Software Testing||",
           "page_id": "page_0",
-          "css_selector": "input[name=\"email\"]",
-          "xpath": "//input[@name=\"email\"]",
-          "description": "Remember checkbox toggled and asserted for state"
+          "css_selector": "a:has-text(\"\")",
+          "xpath": "",
+          "description": "Link to the Master Generative AI course."
         },
         {
-          "element_key": "a|Login|",
+          "element_key": "API Testing with Postman||",
           "page_id": "page_0",
-          "css_selector": "a[href=\"index.html\"]",
-          "xpath": "//a[contains(text(), 'Login')]",
-          "description": "Login link used to confirm toggling does not block navigation"
+          "css_selector": "a:has-text(\"\")",
+          "xpath": "",
+          "description": "Link to the API Testing with Postman course."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_NAV_DROPDOWN_MESSAGES_04",
-      "name": "Open user dropdown and access messages",
-      "description": "From the dashboard, open the user/dropdown toggle and verify the 'Read All Messages' action is available and clickable.",
+      "id": "TC_CONTACT_US_01",
+      "name": "Contact Us Form Submission",
+      "description": "Tests the functionality of the contact us form.",
       "tags": [
         "functional",
-        "navigation",
-        "dashboard"
+        "happy_path",
+        "form"
       ],
       "steps": [
         {
-          "action": "navigate",
-          "page_id": "page_1",
+          "action": "click",
+          "page_id": "page_0",
+          "target": "contact-us |",
+          "details": "User clicks on the Contact Us link."
+        },
+        {
+          "action": "type",
+          "page_id": "page_5",
           "target": null,
-          "details": "Assume user is on the dashboard/index page"
-        },
-        {
-          "action": "assert",
-          "page_id": "page_1",
-          "target": "a|| | css='a.dropdown-toggle'",
-          "details": "Dropdown toggle is present"
+          "details": "User fills out the contact form with valid information."
         },
         {
           "action": "click",
-          "page_id": "page_1",
-          "target": "a|| | css='a.dropdown-toggle'",
-          "details": "Open the dropdown"
+          "page_id": "page_5",
+          "target": null,
+          "details": "User submits the contact form."
         },
         {
           "action": "assert",
-          "page_id": "page_1",
-          "target": "a|Read All Messages| | css='a:has-text(\"Read All Messages\")'",
-          "details": "'Read All Messages' option is visible in the dropdown"
-        },
-        {
-          "action": "click",
-          "page_id": "page_1",
-          "target": "a|Read All Messages| | css='a:has-text(\"Read All Messages\")'",
-          "details": "Click to view/read all messages"
+          "page_id": "page_5",
+          "target": null,
+          "details": "Success message is displayed after form submission."
         }
       ],
       "covered_element_keys": [
-        "page_1::a|| ",
-        "page_1::a|Read All Messages| "
+        "page_0::contact-us ||"
       ],
       "selectors": [
         {
-          "element_key": "a||",
-          "page_id": "page_1",
-          "css_selector": "a.dropdown-toggle",
-          "xpath": "//a",
-          "description": "Dropdown toggle used to reveal message-related actions"
-        },
-        {
-          "element_key": "a|Read All Messages|",
-          "page_id": "page_1",
-          "css_selector": "a:has-text(\"Read All Messages\")",
-          "xpath": "//a[contains(text(), 'Read All Messages')]",
-          "description": "Message list entry used to navigate to the messages area"
+          "element_key": "contact-us ||",
+          "page_id": "page_0",
+          "css_selector": "a:has-text(\"\")",
+          "xpath": "",
+          "description": "Link to access the contact us form."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_TASKS_OVERVIEW_05",
-      "name": "Access tasks area from dashboard",
-      "description": "Verify the 'See All Tasks' link is present on the dashboard and can be clicked to view the tasks overview.",
+      "id": "TC_BUTTON_CLICKS_01",
+      "name": "Button Clicks Functionality",
+      "description": "Tests various button click functionalities.",
       "tags": [
         "functional",
-        "navigation",
-        "dashboard"
+        "happy_path",
+        "button"
       ],
       "steps": [
         {
-          "action": "navigate",
-          "page_id": "page_1",
-          "target": null,
-          "details": "Start on the dashboard/index page"
-        },
-        {
-          "action": "assert",
-          "page_id": "page_1",
-          "target": "a|See All Tasks| | css='a:has-text(\"See All Tasks\")'",
-          "details": "'See All Tasks' link is present in the tasks summary area"
+          "action": "click",
+          "page_id": "page_0",
+          "target": "button-clicks |",
+          "details": "User clicks on the Button Clicks link."
         },
         {
           "action": "click",
-          "page_id": "page_1",
-          "target": "a|See All Tasks| | css='a:has-text(\"See All Tasks\")'",
-          "details": "Click the link to view all tasks"
+          "page_id": "page_6",
+          "target": null,
+          "details": "User clicks on a specific button to test its functionality."
         },
         {
           "action": "assert",
-          "page_id": "page_1",
-          "target": "a|RobotFrameworkTutorial.com Demo Admin Site| | css='a[href=\"index.html\"]'",
-          "details": "Assert still on dashboard or navigated within admin area by checking dashboard header presence"
+          "page_id": "page_6",
+          "target": null,
+          "details": "User verifies the expected outcome of the button click."
         }
       ],
       "covered_element_keys": [
-        "page_1::a|See All Tasks| ",
-        "page_1::a|RobotFrameworkTutorial.com Demo Admin Site| "
+        "page_0::button-clicks ||"
       ],
       "selectors": [
         {
-          "element_key": "a|See All Tasks|",
-          "page_id": "page_1",
-          "css_selector": "a:has-text(\"See All Tasks\")",
-          "xpath": "//a[contains(text(), 'See All Tasks')]",
-          "description": "Link to access the full tasks view"
-        },
-        {
-          "element_key": "a|RobotFrameworkTutorial.com Demo Admin Site|",
-          "page_id": "page_1",
-          "css_selector": "a[href=\"index.html\"]",
-          "xpath": "//a[contains(text(), 'RobotFrameworkTutorial.com Dem')]",
-          "description": "Used to assert the presence of the dashboard identity after navigation"
+          "element_key": "button-clicks ||",
+          "page_id": "page_0",
+          "css_selector": "a:has-text(\"\")",
+          "xpath": "",
+          "description": "Link to access button click functionalities."
         }
       ],
       "meta": {}
     }
   ],
-  "element_coverage": {
-    "page_0::input||": [
-      "TC_SIGNIN_VALID_01",
-      "TC_SIGNIN_VALID_01",
-      "TC_SIGNIN_INVALID_EMAIL_02",
-      "TC_SIGNIN_INVALID_EMAIL_02",
-      "TC_REMEMBER_CHECKBOX_03"
+  "coverage": {
+    "page_0::login-portal ||": [
+      "TC_LOGIN_VALID_01",
+      "TC_LOGIN_INVALID_01"
     ],
-    "page_0::a|Login| ": [
-      "TC_SIGNIN_VALID_01",
-      "TC_SIGNIN_INVALID_EMAIL_02",
-      "TC_REMEMBER_CHECKBOX_03"
+    "page_0::Master Generative AI for Software Testing||": [
+      "TC_NAVIGATION_COURSES_01"
     ],
-    "page_1::a|RobotFrameworkTutorial.com Demo Admin Site| ": [
-      "TC_SIGNIN_VALID_01",
-      "TC_TASKS_OVERVIEW_05"
+    "page_0::API Testing with Postman||": [
+      "TC_NAVIGATION_COURSES_01"
     ],
-    "page_1::a|| ": [
-      "TC_NAV_DROPDOWN_MESSAGES_04"
+    "page_0::contact-us ||": [
+      "TC_CONTACT_US_01"
     ],
-    "page_1::a|Read All Messages| ": [
-      "TC_NAV_DROPDOWN_MESSAGES_04"
-    ],
-    "page_1::a|See All Tasks| ": [
-      "TC_TASKS_OVERVIEW_05"
+    "page_0::button-clicks ||": [
+      "TC_BUTTON_CLICKS_01"
     ]
   },
-  "coverage_summary": "The suite covers login flows (valid, invalid, and remember checkbox interactions) starting on the login page (page_0) and primary dashboard/navigation actions on the index page (page_1). It verifies navigation to the dashboard, interactions with the user dropdown and message link, and access to the tasks overview. Notable gaps: there are no explicit tests for each individual task or message item with multiline keys (Task 1..4, New Comment entries, or user-specific links that include complex formatting), no backend/error message content checks, and persistence of the 'remember' state across sessions is not covered because session persistence was not represented in the explored pages."
+  "pages": {
+    "page_0": {
+      "url": "https://www.webdriveruniversity.com/",
+      "title": "Automation & AI Testing Courses by Gianni Bruno | WebDriver University"
+    }
+  },
+  "coverage_summary": "The test cases cover login functionality (both valid and invalid), navigation to various courses, contact form submission, and button click functionalities. Notable gaps include testing for edge cases in form inputs and navigation errors.",
+  "start_url": "https://www.webdriveruniversity.com/",
+  "snapshot_file": "E:\\02_Learn\\01_University\\Senior - Fall\\Current\\GenAi\\Project - GenAi\\src\\artifacts\\snapshots\\site_snapshot.json"
 }
