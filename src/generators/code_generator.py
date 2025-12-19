@@ -179,14 +179,13 @@ import traceback
     def _generate_conftest(self):
         """
         Generates 'conftest.py' for pytest configuration.
-        Sets up the browser viewport and screenshot directory.
+        Sets up the browser viewport.
         """
         if os.path.exists(os.path.join(self.tests_dir, "conftest.py")):
             logger.info("⏭️  Skipping conftest.py (already exists)")
             return
             
         content = """import pytest
-        import os
         from pathlib import Path
 
         @pytest.fixture(scope="session")
@@ -198,14 +197,6 @@ import traceback
                     "height": 720,
                 }
             }
-
-        @pytest.fixture(autouse=True)
-        def setup_screenshot_dir(request):
-            \"\"\"Create screenshot directory for each test.\"\"\"
-            test_name = request.node.name
-            screenshot_dir = Path(__file__).parent.parent / "screenshots" / test_name
-            screenshot_dir.mkdir(parents=True, exist_ok=True)
-            request.node.screenshot_dir = screenshot_dir
         """
         self._save_file(self.tests_dir, "conftest.py", content)
 
