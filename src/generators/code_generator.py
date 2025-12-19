@@ -46,14 +46,57 @@ class CodeGenerator:
         with open(self.test_plan_path, 'r', encoding='utf-8') as f:
             return json.load(f)
 
-    def generate(self):
+    def _delete_existing_tests(self):
+        """Delete all existing test files before generating new ones."""
+        if os.path.exists(self.tests_dir):
+            test_files = [f for f in os.listdir(self.tests_dir) if f.startswith('test_') and f.endswith('.py')]
+            for test_file in test_files:
+                file_path = os.path.join(self.tests_dir, test_file)
+                os.remove(file_path)
+                logger.info(f"🗑️  Deleted {test_file}")
+            if test_files:
+                logger.info(f"✅ Deleted {len(test_files)} existing test files")
+    
+    def generate(self, feedback: str = None, test_filename: str = None):
         """
         Main execution method.
         Orchestrates the entire code generation process.
+        
+        Args:
+            feedback: Optional feedback to guide code generation. 
+                     If provided, overrides the feedback from __init__.
+            test_filename: Optional specific test filename to regenerate.
+                          If provided, only that test will be regenerated with feedback.
+                          If None/empty, all tests will be regenerated with feedback.
         """
+        # Update feedback if provided
+        if feedback is not None:
+            self.feedback = feedback if feedback.strip() else "No specific feedback provided."
+            logger.info(f"📝 Updated feedback: {self.feedback[:100]}...")
+        
         logger.info("🚀 Starting code generation...")
         
-        self.generate_test_files()
+        # Check if a specific test filename is provided
+        if test_filename and test_filename.strip():
+            # Regenerate only the specific test
+            target_test = test_filename.strip()
+            # Ensure it starts with "test_" and ends with ".py"
+            if not target_test.startswith('test_'):
+                target_test = 'test_' + target_test
+            if not target_test.endswith('.py'):
+                target_test = target_test.replace('.py', '') + '.py'
+            
+            # Remove .py for processing
+            target_test_name = target_test.replace('.py', '')
+            
+            logger.info(f"🎯 Regenerating specific test: {target_test_name}")
+            self.generate_specific_test(target_test_name)
+        else:
+            # Delete existing tests and regenerate all
+            logger.info("📝 Applying feedback to all tests")
+            self._delete_existing_tests()
+            self.generate_test_files()
+        
         self._generate_conftest()
         
         logger.info(f"✅ Code generation complete! Check folder: {self.output_dir}")
@@ -66,6 +109,35 @@ class CodeGenerator:
         
         for test_case in test_cases:
             self._generate_single_test_file(test_case)
+    
+    def generate_specific_test(self, test_name: str):
+        """Regenerate a specific test file based on test name."""
+        # Extract test ID from test name (e.g., "test_tc_navigate_course_01" -> "TC_NAV_COURSE_01" or similar)
+        # Try to match with test cases in the plan
+        test_cases = self.test_plan.get("test_cases", [])
+        
+        # Normalize test name for comparison
+        normalized_target = test_name.lower().replace('test_', '')
+        
+        found = False
+        for test_case in test_cases:
+            test_id = test_case.get("id", "").lower()
+            if test_id == normalized_target or f"test_{test_id}" == test_name.lower():
+                logger.info(f"✅ Found matching test case: {test_case.get('id')}")
+                # Delete the old test file if it exists
+                old_file = os.path.join(self.tests_dir, f"test_{test_id}.py")
+                if os.path.exists(old_file):
+                    os.remove(old_file)
+                    logger.info(f"🗑️  Deleted old version: test_{test_id}.py")
+                
+                # Generate the new version with feedback
+                self._generate_single_test_file(test_case)
+                found = True
+                break
+        
+        if not found:
+            logger.warning(f"⚠️  Could not find test case matching '{test_name}' in test plan")
+            logger.warning(f"Available test IDs: {[tc.get('id') for tc in test_cases]}")
 
     def _select_best_locator(
         self, 
