@@ -34,7 +34,7 @@ class CodeGenerator:
         # Initialize the AI client (using DeepSeek Coder for code generation)
         # Use generator-specific settings so other phases using LLMClient aren't affected.
         self.llm = CopilotClient(
-            model="gpt-4o",  # or "claude-3.5-sonnet"
+            model="gpt-5-mini",  # or "claude-3.5-sonnet"
             config={
                 "temperature": 0.2,
                 # Allow larger outputs for full files.
