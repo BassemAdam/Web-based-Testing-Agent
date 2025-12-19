@@ -48,17 +48,14 @@ class BrowserDriver:
     def extract_elements(self, max_elements: int = 200) -> List[ElementDescriptor]:
         """
         Extract candidate elements (buttons, inputs, links) with their locators.
-        Keep it small for Phase 1; we can refine heuristics later.
         """
         assert self.page is not None
 
         elements: List[ElementDescriptor] = []
-
-        # Simple heuristic: query some interactive elements
         selector_groups = [
             "a",
             "button",
-            "input",
+            "input",          # All input types
             "select",
             "textarea",
             "[role=button]",
@@ -75,46 +72,208 @@ class BrowserDriver:
                 try:
                     box = handle.bounding_box()
                     tag = handle.evaluate("e => e.tagName.toLowerCase()")
-                    text = handle.inner_text().strip()[:200] if tag != "input" else ""
+                    text = handle.inner_text().strip()[:200] if tag not in ["input", "select", "textarea"] else ""
                     element_id = handle.get_attribute("id") or ""
                     classes = (handle.get_attribute("class") or "").split()
                     aria_label = handle.get_attribute("aria-label")
                     name_attr = handle.get_attribute("name")
                     type_attr = handle.get_attribute("type")
-
-                    # create simple CSS locator
-                    css_locator_parts = [tag]
-                    if element_id:
-                        css_locator_parts.append(f"#{element_id}")
-                    if classes:
-                        css_locator_parts.extend(f".{c}" for c in classes)
-                    css_selector = "".join(css_locator_parts)
-
-                    key = (tag, element_id, text, tuple(classes))
-                    if key in seen:
+                    href = handle.get_attribute("href") if tag == "a" else None
+                    placeholder = handle.get_attribute("placeholder")
+                    
+                    # Get testing-specific attributes
+                    data_testid = (
+                        handle.get_attribute("data-testid") or
+                        handle.get_attribute("data-test") or
+                        handle.get_attribute("data-cy") or
+                        handle.get_attribute("data-test-id")
+                    )
+                    
+                    # Build attributes dict
+                    attributes = {}
+                    if href:
+                        attributes["href"] = href
+                    if placeholder:
+                        attributes["placeholder"] = placeholder
+                    if data_testid:
+                        attributes["data-testid"] = data_testid
+                    
+                    # Build unique key - INCLUDE name and type for inputs
+                    from ..utils.keys import build_element_key
+                    element_key = build_element_key(
+                        tag=tag,
+                        text=text,
+                        id=element_id,
+                        name=name_attr,
+                        input_type=type_attr
+                    )
+                    
+                    # Use element_key for deduplication (not just tag/id/text/classes)
+                    if element_key in seen:
                         continue
-                    seen.add(key)
+                    seen.add(element_key)
+                    
+                    # Build CSS selector
+                    css_selector = self._build_specific_selector(
+                        handle, tag, element_id, classes, text, 
+                        aria_label, name_attr, type_attr, href, 
+                        placeholder, data_testid
+                    )
 
                     desc = ElementDescriptor(
                         id=element_id,
                         tag=tag,
                         text=text,
-                        role=None,  # can be enriched later via LLM
+                        role=None,
                         aria_label=aria_label,
                         name=name_attr,
                         type=type_attr,
                         css_selector=css_selector,
-                        xpath=None,  # optional future
-                        attributes={},  # could add filtered attributes here
+                        xpath=self._build_xpath(handle, tag, text, element_id, name_attr),
+                        attributes=attributes,
                         classes=classes,
                         bounding_box=box,
                     )
                     elements.append(desc)
+
                 except Exception:
-                    # For now, ignore elements that explode on us
                     continue
 
         return elements
+
+    def _build_specific_selector(
+        self, 
+        handle, 
+        tag: str, 
+        element_id: str, 
+        classes: List[str], 
+        text: str,
+        aria_label: str,
+        name_attr: str,
+        type_attr: str,
+        href: str,
+        placeholder: str,
+        data_testid: str
+    ) -> str:
+        """
+        Build a specific, unique CSS selector for an element.
+        Priority: data-testid > ID > name > aria-label > placeholder > type > href > text > nth-child
+        """
+        # 1. data-testid (best for testing)
+        if data_testid:
+            return f'[data-testid="{data_testid}"]'
+        
+        # 2. ID (if not auto-generated)
+        if element_id and not self._is_generated_id(element_id):
+            return f"#{element_id}"
+        
+        # 3. name attribute for form elements
+        if name_attr and tag in ["input", "select", "textarea"]:
+            return f'{tag}[name="{name_attr}"]'
+        
+        # 4. aria-label
+        if aria_label:
+            return f'{tag}[aria-label="{aria_label}"]'
+        
+        # 5. placeholder for inputs
+        if placeholder and tag == "input":
+            return f'input[placeholder="{placeholder}"]'
+        
+        # 6. type attribute for inputs (email, password, etc.)
+        if type_attr and tag == "input" and type_attr in ["email", "password", "search", "tel", "url"]:
+            return f'input[type="{type_attr}"]'
+        
+        # 7. href for links
+        if tag == "a" and href and not href.startswith(("#", "javascript:")):
+            if len(href) < 80:
+                return f'a[href="{href}"]'
+        
+        # 8. Text-based selector for buttons/links
+        if text and len(text) < 50 and tag in ["a", "button"]:
+            clean_text = text.replace('"', '\\"').replace('\n', ' ').strip()[:30]
+            if clean_text:
+                return f'{tag}:has-text("{clean_text}")'
+        
+        # 9. Specific classes
+        specific_classes = self._get_specific_classes(classes)
+        if specific_classes:
+            return f"{tag}.{'.'.join(specific_classes[:2])}"
+        
+        # 10. Fallback: nth-child with parent context
+        try:
+            nth_info = handle.evaluate("""e => {
+                const parent = e.parentElement;
+                if (!parent) return null;
+                const siblings = Array.from(parent.children).filter(
+                    c => c.tagName === e.tagName
+                );
+                const index = siblings.indexOf(e) + 1;
+                const parentTag = parent.tagName.toLowerCase();
+                const parentClass = parent.className.split(' ')[0] || '';
+                return { index, parentTag, parentClass };
+            }""")
+            
+            if nth_info:
+                parent_selector = nth_info["parentTag"]
+                if nth_info["parentClass"]:
+                    parent_selector += f".{nth_info['parentClass']}"
+                return f"{parent_selector} > {tag}:nth-child({nth_info['index']})"
+        except Exception:
+            pass
+        
+        # Last resort
+        return tag
+
+    def _is_generated_id(self, id_value: str) -> bool:
+        """Check if an ID looks auto-generated."""
+        import re
+        if not id_value:
+            return True
+        
+        patterns = [
+            r'^[a-f0-9]{8,}$',
+            r'^\d+$',
+            r'^:r\d+:$',
+            r'^ember\d+$',
+            r'^react-',
+        ]
+        return any(re.match(p, id_value, re.IGNORECASE) for p in patterns)
+
+    def _get_specific_classes(self, classes: List[str]) -> List[str]:
+        """Filter to keep only specific, meaningful classes."""
+        generic = {
+            "btn", "button", "link", "input", "form-control", "form-group",
+            "container", "wrapper", "row", "col", "flex", "grid", "block",
+            "active", "disabled", "hidden", "show", "fade",
+            "nav", "navbar", "dropdown", "modal", "card",
+        }
+        
+        specific = []
+        for cls in classes:
+            if cls.lower() in generic:
+                continue
+            if len(cls) < 3:
+                continue
+            # Prefer semantic classes with dashes/underscores
+            if "-" in cls or "_" in cls:
+                specific.insert(0, cls)
+            else:
+                specific.append(cls)
+        
+        return specific[:2]
+
+    def _build_xpath(
+        self, handle, tag: str, text: str, element_id: str, name_attr: str
+    ) -> str:
+        """Build an XPath selector as fallback."""
+        if element_id:
+            return f'//{tag}[@id="{element_id}"]'
+        if name_attr:
+            return f'//{tag}[@name="{name_attr}"]'
+        if text and len(text) < 50:
+            clean = text.replace("'", "\\'").replace('\n', ' ').strip()[:30]
+            return f"//{tag}[contains(text(), '{clean}')]"
+        return f"//{tag}"
 
     def get_html(self) -> str:
         assert self.page is not None

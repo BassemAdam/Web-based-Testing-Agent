@@ -8,7 +8,7 @@ from dataclasses import asdict
 # ---------------------------------------------------------------------
 # Make `src/` importable as a package root (when running from project root)
 # ---------------------------------------------------------------------
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent.parent  # Go up to project root
 SRC = ROOT / "src"
 if SRC.exists() and str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
@@ -17,6 +17,7 @@ if SRC.exists() and str(SRC) not in sys.path:
 # Imports from your agent code
 # ---------------------------------------------------------------------
 from agent.pipelines.site_explorer import SiteExplorer
+from agent.pipelines.agent_explorer import AgentSiteExplorer  # New import
 from agent.pipelines.multi_page_test_design_pipeline import MultiPageTestDesignPipeline
 from agent.visualization.coverage_overlay import create_page_coverage_overlay
 
@@ -60,7 +61,7 @@ def main() -> None:
         "--model",
         type=str,
         default=None,
-        help="Override LLM model name for test design (e.g., deepseek-coder-v2:16b).",
+        help="Override LLM model name for test design (e.g., gpt-4o).",
     )
     parser.add_argument(
         "--out-dir",
@@ -68,11 +69,19 @@ def main() -> None:
         default="artifacts",
         help="Directory to save output files (default: artifacts)",
     )
+    parser.add_argument(
+        "--use-agent",
+        action="store_true",
+        help="Use AI agent for intelligent exploration instead of rule-based (default: False)",
+    )
 
     args = parser.parse_args()
 
     start_url = args.url
+    exploration_mode = "Agent-based" if args.use_agent else "Rule-based"
+    
     print(f"[+] Starting multi-page exploration at: {start_url}")
+    print(f"    Mode: {exploration_mode}")
     print(
         f"    max_depth={args.max_depth}, "
         f"max_pages={args.max_pages}, "
@@ -82,11 +91,21 @@ def main() -> None:
     # -----------------------------------------------------------------
     # 2) Phase 1 – explore & build SiteGraph
     # -----------------------------------------------------------------
-    explorer = SiteExplorer(
-        max_depth=args.max_depth,
-        max_pages=args.max_pages,
-        max_links_per_page=args.max_links_per_page,
-    )
+    if args.use_agent:
+        print("\n[+] Using AI agent for intelligent exploration...")
+        explorer = AgentSiteExplorer(
+            max_depth=args.max_depth,
+            max_pages=args.max_pages,
+            max_actions_per_page=args.max_links_per_page,
+        )
+    else:
+        print("\n[+] Using rule-based exploration...")
+        explorer = SiteExplorer(
+            max_depth=args.max_depth,
+            max_pages=args.max_pages,
+            max_links_per_page=args.max_links_per_page,
+        )
+    
     graph = explorer.explore(start_url)
 
     print("\n=== Pages visited ===")
@@ -209,6 +228,7 @@ def main() -> None:
             "max_depth": args.max_depth,
             "max_pages": args.max_pages,
             "max_links_per_page": args.max_links_per_page,
+            "exploration_mode": exploration_mode,
         },
     }
 
@@ -254,9 +274,33 @@ def main() -> None:
         }
         serializable_tcs.append(tc_dict)
 
+    # Build pages object for the test plan
+    pages_info = {}
+    for pid, node in graph.pages.items():
+        pages_info[pid] = {
+            "url": node.snapshot.url,
+            "title": node.snapshot.title,
+            "summary": node.snapshot.summary,
+            "screenshot_path": node.snapshot.screenshot_path,
+            "element_count": len(node.snapshot.elements),
+        }
+
+    # Build edges info for the test plan
+    edges_info = [
+        {
+            "from_page_id": e.from_page_id,
+            "to_page_id": e.to_page_id,
+            "element_key": e.element_key,
+            "description": e.description,
+        }
+        for e in graph.edges
+    ]
+
     test_plan_data = {
         "start_url": start_url,
         "snapshot_file": str(snapshot_path),
+        "pages": pages_info,
+        "edges": edges_info,
         "test_cases": serializable_tcs,
         "element_coverage": coverage,
         "coverage_summary": coverage_summary,
@@ -265,12 +309,26 @@ def main() -> None:
             "max_depth": args.max_depth,
             "max_pages": args.max_pages,
             "max_links_per_page": args.max_links_per_page,
+            "exploration_mode": exploration_mode,
         },
     }
 
     test_plan_path = test_plans_dir / "test_plan.json"
     test_plan_path.write_text(json.dumps(test_plan_data, indent=2), encoding="utf-8")
     print(f"[+] Test plan saved to: {test_plan_path}")
+
+    # -----------------------------------------------------------------
+    # 6) Final summary
+    # -----------------------------------------------------------------
+    print("\n" + "=" * 60)
+    print("EXPLORATION COMPLETE")
+    print("=" * 60)
+    print(f"  Mode:        {exploration_mode}")
+    print(f"  Pages:       {len(graph.pages)}")
+    print(f"  Edges:       {len(graph.edges)}")
+    print(f"  Test Cases:  {len(test_cases)}")
+    print(f"  Time:        {elapsed:.2f}s")
+    print("=" * 60)
 
 
 if __name__ == "__main__":

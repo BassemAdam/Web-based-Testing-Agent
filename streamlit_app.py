@@ -18,25 +18,232 @@ if SRC.exists() and str(SRC) not in sys.path:
     sys.path.insert(0, str(SRC))
 
 from agent.pipelines.site_explorer import SiteExplorer
+from agent.pipelines.agent_explorer import AgentSiteExplorer
 from agent.pipelines.multi_page_test_design_pipeline import MultiPageTestDesignPipeline
 from agent.visualization.coverage_overlay import create_page_coverage_overlay
+from agent.models.site_graph import SiteGraph, PageNode, NavEdge
+from agent.models.page_snapshot import PageSnapshot
+from agent.models.element_descriptor import ElementDescriptor
 from test_runner import TestRunner
+from dataclasses import asdict
+
+
+# ---------------------------------------------------------------------
+# JSON File Paths
+# ---------------------------------------------------------------------
+SNAPSHOT_PATH = ROOT / "src" / "artifacts" / "snapshots" / "site_snapshot.json"
+TEST_PLAN_PATH = ROOT / "src" / "artifacts" / "test_plans" / "test_plan.json"
+GENERATED_TESTS_DIR = ROOT / "artifacts" / "generated_tests" / "tests"
+
+# Available models
+AVAILABLE_MODELS = [
+    "gpt-4o",
+    "gpt-4o-mini",
+    "gpt-4.1-mini",
+    "gpt-5-mini",
+    "deepseek-coder-v2:16b",
+    "llama3.1:8b",
+    "codellama:13b",
+]
+
+
+# ---------------------------------------------------------------------
+# Helpers to load/save from JSON files
+# ---------------------------------------------------------------------
+def load_snapshot_from_file() -> tuple[SiteGraph | None, dict | None]:
+    """Load site graph from snapshot JSON file."""
+    if not SNAPSHOT_PATH.exists():
+        return None, None
+    
+    try:
+        with open(SNAPSHOT_PATH, "r", encoding="utf-8") as f:
+            data = json.load(f)
+        
+        graph = SiteGraph()
+        
+        for page_id, page_data in data.get("pages", {}).items():
+            snapshot_data = page_data.get("snapshot", {})
+            
+            # Rebuild elements
+            elements = []
+            for elem_data in snapshot_data.get("elements", []):
+                elem = ElementDescriptor(
+                    id=elem_data.get("id", ""),
+                    tag=elem_data.get("tag", ""),
+                    text=elem_data.get("text", ""),
+                    role=elem_data.get("role"),
+                    aria_label=elem_data.get("aria_label"),
+                    name=elem_data.get("name"),
+                    type=elem_data.get("type"),
+                    css_selector=elem_data.get("css_selector", ""),
+                    xpath=elem_data.get("xpath", ""),
+                    attributes=elem_data.get("attributes", {}),
+                    classes=elem_data.get("classes", []),
+                    bounding_box=elem_data.get("bounding_box"),
+                )
+                elements.append(elem)
+            
+            snapshot = PageSnapshot(
+                url=snapshot_data.get("url", ""),
+                title=snapshot_data.get("title", ""),
+                raw_html=snapshot_data.get("raw_html", ""),
+                elements=elements,
+                screenshot_path=snapshot_data.get("screenshot_path"),
+                summary=snapshot_data.get("summary"),
+                meta=snapshot_data.get("meta"),
+            )
+            
+            node = PageNode(id=page_id, snapshot=snapshot)
+            graph.pages[page_id] = node
+        
+        # Rebuild edges
+        for edge_data in data.get("edges", []):
+            edge = NavEdge(
+                from_page_id=edge_data.get("from_page_id", ""),
+                to_page_id=edge_data.get("to_page_id", ""),
+                element_key=edge_data.get("element_key", ""),
+                description=edge_data.get("description", ""),
+            )
+            graph.edges.append(edge)
+            # Set incoming edge on target node
+            if edge.to_page_id in graph.pages:
+                graph.pages[edge.to_page_id].incoming_edge = edge
+        
+        return graph, data
+    except Exception as e:
+        st.error(f"Failed to load snapshot: {e}")
+        return None, None
+
+
+def load_plan_from_file() -> dict | None:
+    """Load test plan from JSON file."""
+    if not TEST_PLAN_PATH.exists():
+        return None
+    
+    try:
+        with open(TEST_PLAN_PATH, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception as e:
+        st.error(f"Failed to load test plan: {e}")
+        return None
+
+
+def get_generated_test_files() -> list[Path]:
+    """Get list of generated test files."""
+    if not GENERATED_TESTS_DIR.exists():
+        return []
+    return sorted(GENERATED_TESTS_DIR.glob("test_*.py"))
+
+
+def save_snapshot_to_file(graph: SiteGraph, start_url: str, meta: dict = None):
+    """Save site graph to snapshot JSON file."""
+    SNAPSHOT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    
+    pages_data = {}
+    for pid, node in graph.pages.items():
+        pages_data[pid] = {
+            "snapshot": {
+                "url": node.snapshot.url,
+                "title": node.snapshot.title,
+                "raw_html": node.snapshot.raw_html,
+                "elements": [asdict(e) for e in node.snapshot.elements],
+                "screenshot_path": node.snapshot.screenshot_path,
+                "summary": node.snapshot.summary,
+                "meta": node.snapshot.meta or {},
+            },
+        }
+    
+    data = {
+        "start_url": start_url,
+        "pages": pages_data,
+        "edges": [
+            {
+                "from_page_id": e.from_page_id,
+                "to_page_id": e.to_page_id,
+                "element_key": e.element_key,
+                "description": e.description,
+            }
+            for e in graph.edges
+        ],
+        "meta": meta or {},
+    }
+    
+    with open(SNAPSHOT_PATH, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2)
+
+
+def save_plan_to_file(plan: dict):
+    """Save test plan to JSON file."""
+    TEST_PLAN_PATH.parent.mkdir(parents=True, exist_ok=True)
+    
+    # Convert TestCase objects to dicts if needed
+    test_cases = plan.get("test_cases", [])
+    serializable_tcs = []
+    for tc in test_cases:
+        if hasattr(tc, "id"):  # It's a TestCase object
+            tc_dict = {
+                "id": tc.id,
+                "name": tc.name,
+                "description": tc.description,
+                "tags": tc.tags,
+                "steps": [
+                    {
+                        "action": s.action,
+                        "page_id": s.page_id,
+                        "target": s.target,
+                        "details": s.details,
+                    }
+                    for s in tc.steps
+                ],
+                "covered_element_keys": tc.covered_element_keys,
+                "selectors": [
+                    {
+                        "element_key": sel.element_key,
+                        "page_id": sel.page_id,
+                        "css_selector": sel.css_selector,
+                        "xpath": sel.xpath,
+                        "description": sel.description,
+                    }
+                    for sel in tc.selectors
+                ],
+                "meta": tc.meta,
+            }
+            serializable_tcs.append(tc_dict)
+        else:
+            serializable_tcs.append(tc)
+    
+    plan_data = {
+        "start_url": plan.get("start_url", ""),
+        "snapshot_file": str(SNAPSHOT_PATH),
+        "test_cases": serializable_tcs,
+        "element_coverage": plan.get("coverage", {}),
+        "coverage_summary": plan.get("coverage_summary", ""),
+    }
+    
+    with open(TEST_PLAN_PATH, "w", encoding="utf-8") as f:
+        json.dump(plan_data, f, indent=2)
 
 
 # ---------------------------------------------------------------------
 # Helpers to cache / store state
 # ---------------------------------------------------------------------
 def get_designer(model_name: str | None):
-    # You can extend this later to switch models via UI
     return MultiPageTestDesignPipeline(model_name=model_name)
 
 
-def run_exploration(start_url: str, max_depth: int, max_pages: int, max_links: int):
-    explorer = SiteExplorer(
-        max_depth=max_depth,
-        max_pages=max_pages,
-        max_links_per_page=max_links,
-    )
+def run_exploration(start_url: str, max_depth: int, max_pages: int, max_links: int, use_agent: bool = False):
+    if use_agent:
+        explorer = AgentSiteExplorer(
+            max_depth=max_depth,
+            max_pages=max_pages,
+            max_actions_per_page=max_links,
+        )
+    else:
+        explorer = SiteExplorer(
+            max_depth=max_depth,
+            max_pages=max_pages,
+            max_links_per_page=max_links,
+        )
     graph = explorer.explore(start_url)
     return graph
 
@@ -86,43 +293,150 @@ def main():
         max_depth = st.slider("Max depth", 0, 3, 1)
         max_pages = st.slider("Max pages", 1, 10, 3)
         max_links = st.slider("Max links per page", 1, 10, 3)
-
-        model_name = st.text_input(
-            "LLM model (Ollama)",
-            value="deepseek-coder-v2:16b",
-            help="Model passed to MultiPageTestDesignPipeline",
+        use_agent = st.checkbox(
+            "🤖 Use AI Agent Explorer",
+            value=False,
+            help="Use AI agent for intelligent exploration instead of rule-based",
         )
+        
+        st.markdown("---")
+        st.subheader("🤖 Model Selection")
+        
+        # Model provider selection
+        model_provider = st.selectbox(
+            "LLM Provider",
+            options=["Copilot (GitHub)", "Ollama (Local)", "Custom"],
+            index=0,
+            help="Choose your LLM provider",
+        )
+        
+        if model_provider == "Copilot (GitHub)":
+            model_name = st.selectbox(
+                "Model",
+                options=["gpt-4o", "gpt-4o-mini","gpt-5-mini", "gpt-4.1-mini", "claude-3.5-sonnet", "claude-3-haiku"],
+                index=0,
+                help="Select Copilot model",
+            )
+        elif model_provider == "Ollama (Local)":
+            model_name = st.selectbox(
+                "Model",
+                options=["deepseek-coder-v2:16b", "llama3.1:8b", "codellama:13b", "mistral:7b"],
+                index=0,
+                help="Select Ollama model",
+            )
+        else:
+            model_name = st.text_input(
+                "Custom Model Name",
+                value="gpt-4o",
+                help="Enter custom model name",
+            )
 
         st.markdown("---")
-        feedback_default = (
-            "Add at least one negative/edge test and cover important navigation."
+        st.subheader("💬 Feedback & Refinement")
+        
+        # Main feedback type selection
+        feedback_type = st.radio(
+            "Feedback Target",
+            options=["Test Plan", "Code Generation"],
+            index=0,
+            help="Choose what to provide feedback on",
         )
+        
+        # Initialize variables
+        target_test_case = None
+        code_feedback_scope = None
+        target_test_file = None
+        
+        if feedback_type == "Test Plan":
+            st.info("📋 Feedback will be applied to the test plan (test_plan.json)")
+            
+            # Load existing test cases for reference
+            existing_plan = load_plan_from_file()
+            if existing_plan and existing_plan.get("test_cases"):
+                tc_options = ["All Test Cases"] + [tc.get("id", "Unknown") for tc in existing_plan["test_cases"]]
+                target_test_case = st.selectbox(
+                    "Target Test Case",
+                    options=tc_options,
+                    index=0,
+                    help="Choose which test case to focus feedback on (or all)",
+                )
+                if target_test_case == "All Test Cases":
+                    target_test_case = None
+            
+            feedback_placeholder = "e.g., Add more edge cases for login, include negative tests for form validation..."
+            
+        else:  # Code Generation
+            st.info("🔧 Feedback will be applied to generated test files")
+            
+            code_feedback_scope = st.radio(
+                "Scope",
+                options=["All Test Files", "Specific File"],
+                index=0,
+                help="Apply feedback to all test files or a specific one",
+            )
+            
+            if code_feedback_scope == "Specific File":
+                test_files = get_generated_test_files()
+                if test_files:
+                    file_options = [f.name for f in test_files]
+                    target_test_file = st.selectbox(
+                        "Select Test File",
+                        options=file_options,
+                        help="Choose which test file to modify",
+                    )
+                    
+                    # Show file preview
+                    if target_test_file:
+                        selected_file = GENERATED_TESTS_DIR / target_test_file
+                        if selected_file.exists():
+                            with st.expander(f"📄 Preview: {target_test_file}", expanded=False):
+                                st.code(selected_file.read_text(encoding="utf-8"), language="python")
+                else:
+                    st.warning("No test files found. Generate tests first.")
+            
+            feedback_placeholder = "e.g., Add explicit waits before assertions, use page.wait_for_selector()..."
+        
         feedback = st.text_area(
-            "Human feedback (optional)",
+            "Your Feedback",
             value="",
-            placeholder=feedback_default,
-            height=100,
-            help="Describe how you want the plan to change or what to focus on.",
+            placeholder=feedback_placeholder,
+            height=120,
+            help="Describe the changes or improvements you want",
+        )
+        
+        # Refine button in feedback section
+        refine_btn = st.button(
+            "🔁 Apply Feedback",
+            use_container_width=True,
+            type="primary",
+            help=f"Apply feedback to {'test plan' if feedback_type == 'Test Plan' else 'code generation'}",
         )
 
-        col_run, col_refine = st.columns(2)
+        st.markdown("---")
+        st.subheader("🔄 Actions")
+        
+        col_load, col_run = st.columns(2)
+        load_btn = col_load.button("📂 Load from Files", use_container_width=True)
         run_btn = col_run.button("🚀 Explore + Generate", use_container_width=True)
-        refine_btn = col_refine.button("🔁 Refine with feedback", use_container_width=True)
+        
+        save_btn = st.button("💾 Save to Files", use_container_width=True)
         
         st.markdown("---")
-        st.subheader("Test Execution")
+        st.subheader("🧪 Test Execution")
         
-        test_gen_feedback = st.text_area(
-            "Test Generation Feedback (optional)",
-            value="",
-            placeholder="E.g., Use specific assertions for login, handle dynamic popups...",
-            height=100,
-            help="Provide instructions to the code generator to refine the test code."
-        )
-        
-        col_gen, col_run = st.columns(2)
+        col_gen, col_run_tests = st.columns(2)
         generate_tests_btn = col_gen.button("🔧 Generate Tests", use_container_width=True)
-        run_tests_btn = col_run.button("▶️ Run Tests", use_container_width=True, type="primary")
+        run_tests_btn = col_run_tests.button("▶️ Run Tests", use_container_width=True, type="primary")
+        
+        # Show file status
+        st.markdown("---")
+        st.subheader("📁 File Status")
+        snapshot_exists = SNAPSHOT_PATH.exists()
+        plan_exists = TEST_PLAN_PATH.exists()
+        test_files = get_generated_test_files()
+        st.markdown(f"- Snapshot: {'✅' if snapshot_exists else '❌'} `{SNAPSHOT_PATH.name}`")
+        st.markdown(f"- Test Plan: {'✅' if plan_exists else '❌'} `{TEST_PLAN_PATH.name}`")
+        st.markdown(f"- Test Files: {'✅' if test_files else '❌'} `{len(test_files)} files`")
 
     # Use Streamlit session_state to persist data across reruns
     if "graph" not in st.session_state:
@@ -140,10 +454,54 @@ def main():
     if "show_exploration" not in st.session_state:
         st.session_state.show_exploration = True
 
+    # --- Load from files --------------------------------------------------
+    if load_btn:
+        with st.spinner("Loading from JSON files..."):
+            graph, snapshot_data = load_snapshot_from_file()
+            plan = load_plan_from_file()
+            
+            if graph:
+                st.session_state.graph = graph
+                st.session_state.start_url = snapshot_data.get("start_url", "") if snapshot_data else ""
+                st.success(f"✅ Loaded snapshot with {len(graph.pages)} pages")
+            else:
+                st.warning("No snapshot file found. Run exploration first.")
+            
+            if plan:
+                # Convert plan to expected format
+                st.session_state.plan = {
+                    "test_cases": plan.get("test_cases", []),
+                    "coverage": plan.get("element_coverage", {}),
+                    "coverage_summary": plan.get("coverage_summary", ""),
+                    "start_url": plan.get("start_url", ""),
+                }
+                st.success(f"✅ Loaded test plan with {len(plan.get('test_cases', []))} test cases")
+            else:
+                st.warning("No test plan file found.")
+            
+            st.session_state.show_exploration = True
+
+    # --- Save to files ----------------------------------------------------
+    if save_btn:
+        with st.spinner("Saving to JSON files..."):
+            if st.session_state.graph and st.session_state.start_url:
+                save_snapshot_to_file(st.session_state.graph, st.session_state.start_url)
+                st.success(f"✅ Saved snapshot to {SNAPSHOT_PATH}")
+            else:
+                st.warning("No graph in memory to save.")
+            
+            if st.session_state.plan:
+                plan_to_save = st.session_state.plan.copy()
+                plan_to_save["start_url"] = st.session_state.start_url
+                save_plan_to_file(plan_to_save)
+                st.success(f"✅ Saved test plan to {TEST_PLAN_PATH}")
+            else:
+                st.warning("No plan in memory to save.")
+
     # --- Run full pipeline ------------------------------------------------
     if run_btn:
         with st.spinner("Exploring site and generating initial test plan..."):
-            graph = run_exploration(start_url, max_depth, max_pages, max_links)
+            graph = run_exploration(start_url, max_depth, max_pages, max_links, use_agent)
             designer = get_designer(model_name or None)
             plan_dict = designer.build_plan(graph, human_feedback=None)
             
@@ -159,53 +517,103 @@ def main():
             # Generate overlays
             overlays = generate_overlays(graph, plan_dict["coverage"])
             st.session_state.overlays = overlays
+            
+            # Auto-save snapshot and plan to files
+            save_snapshot_to_file(graph, start_url, meta={
+                "max_depth": max_depth,
+                "max_pages": max_pages,
+                "max_links_per_page": max_links,
+                "use_agent": use_agent,
+            })
+            save_plan_to_file(plan_dict)
 
-        st.success("Initial exploration + test plan ready!")
+        st.success(f"✅ Exploration complete! Saved snapshot ({len(graph.pages)} pages) and test plan to files.")
 
     # --- Refinement with feedback ----------------------------------------
     if refine_btn:
-        if not st.session_state.graph or not st.session_state.plan:
-            st.warning("Run an initial exploration first.")
-        else:
-            fb = feedback.strip()
-            if not fb:
-                st.warning("Please type some feedback before refining.")
+        fb = feedback.strip()
+        if not fb:
+            st.warning("Please type some feedback before applying.")
+        elif feedback_type == "Test Plan":
+            # Test Plan Feedback
+            if not st.session_state.graph:
+                st.warning("Load or run exploration first to refine the test plan.")
             else:
-                with st.spinner("Refining test plan using human feedback..."):
+                with st.spinner("Refining test plan with your feedback..."):
                     graph = st.session_state.graph
                     designer = get_designer(model_name or None)
-                    # Rebuild plan with feedback (you can change build_plan to use prior plan if you want)
-                    plan_dict = designer.build_plan(graph, human_feedback=fb)
                     
-                    # Preserve start_url in refined plan
+                    # Build structured feedback
+                    if target_test_case:
+                        structured_feedback = f"[FOCUS ON TEST CASE: {target_test_case}] {fb}"
+                    else:
+                        structured_feedback = f"[TEST PLAN FEEDBACK] {fb}"
+                    
+                    # Rebuild plan with feedback
+                    plan_dict = designer.build_plan(graph, human_feedback=structured_feedback)
                     plan_dict["start_url"] = st.session_state.start_url
                     st.session_state.plan = plan_dict
 
                     # Regenerate overlays based on new coverage
                     overlays = generate_overlays(graph, plan_dict["coverage"])
                     st.session_state.overlays = overlays
+                    
+                    # Auto-save to file
+                    save_plan_to_file(plan_dict)
 
-                st.success("Plan refined using your feedback!")
+                st.success("✅ Test plan refined and saved!")
+                
+        else:  # Code Generation Feedback
+            test_files = get_generated_test_files()
+            if not test_files:
+                st.warning("No test files found. Generate tests first.")
+            else:
+                with st.spinner("Applying feedback to test code..."):
+                    plan_path = str(TEST_PLAN_PATH)
+                    
+                    if code_feedback_scope == "Specific File" and target_test_file:
+                        # Regenerate specific test file
+                        success = test_runner.generate_tests(
+                            plan_path=plan_path,
+                            feedback=fb,
+                            test_filename=target_test_file
+                        )
+                        if success:
+                            st.success(f"✅ Regenerated {target_test_file} with feedback!")
+                        else:
+                            st.error(f"❌ Failed to regenerate {target_test_file}")
+                    else:
+                        # Regenerate all test files
+                        success = test_runner.generate_tests(
+                            plan_path=plan_path,
+                            feedback=fb,
+                            test_filename=None
+                        )
+                        if success:
+                            st.success("✅ Regenerated all test files with feedback!")
+                        else:
+                            st.error("❌ Failed to regenerate test files")
     
     # --- Generate Tests ---------------------------------------------------
     if generate_tests_btn:
         plan_path = None
         
         # Priority: Check session first, then disk
-        possible_plan = ROOT / "src" / "artifacts" / "test_plans" / "test_plan.json"
         if st.session_state.plan:
-            plan_path = test_runner.save_plan(st.session_state.plan)
-        elif possible_plan.exists():
-            plan_path = str(possible_plan)
+            # Save current plan to file first
+            plan_to_save = st.session_state.plan.copy()
+            plan_to_save["start_url"] = st.session_state.start_url
+            save_plan_to_file(plan_to_save)
+            plan_path = str(TEST_PLAN_PATH)
+        elif TEST_PLAN_PATH.exists():
+            plan_path = str(TEST_PLAN_PATH)
             st.info("Using existing test plan from disk.")
-
         else:
             st.warning("Please generate a test plan first.")
         
         if plan_path:
             with st.spinner("Generating test code..."):
-                # Pass the feedback from the sidebar
-                success = test_runner.generate_tests(plan_path, feedback=test_gen_feedback)
+                success = test_runner.generate_tests(plan_path)
                 
                 if success:
                     st.session_state.tests_generated = True
@@ -385,21 +793,35 @@ def main():
 
         # List test cases in an expander
         for tc in test_cases:
-            with st.expander(f"{tc.id} – {tc.name}"):
-                st.write(tc.description)
-                if tc.tags:
-                    st.write("**Tags:**", ", ".join(tc.tags))
+            # Handle both dict and object formats
+            tc_id = tc.get("id", "") if isinstance(tc, dict) else tc.id
+            tc_name = tc.get("name", "") if isinstance(tc, dict) else tc.name
+            tc_desc = tc.get("description", "") if isinstance(tc, dict) else tc.description
+            tc_tags = tc.get("tags", []) if isinstance(tc, dict) else tc.tags
+            tc_steps = tc.get("steps", []) if isinstance(tc, dict) else tc.steps
+            tc_covered = tc.get("covered_element_keys", []) if isinstance(tc, dict) else tc.covered_element_keys
+            
+            with st.expander(f"{tc_id} – {tc_name}"):
+                st.write(tc_desc)
+                if tc_tags:
+                    st.write("**Tags:**", ", ".join(tc_tags))
 
                 st.markdown("**Steps:**")
-                for s in tc.steps:
-                    st.write(
-                        f"- `[ {s.page_id} ]` **{s.action}** "
-                        f"target=`{s.target}` – {s.details}"
-                    )
+                for s in tc_steps:
+                    if isinstance(s, dict):
+                        st.write(
+                            f"- `[ {s.get('page_id', '')} ]` **{s.get('action', '')}** "
+                            f"target=`{s.get('target', '')}` – {s.get('details', '')}"
+                        )
+                    else:
+                        st.write(
+                            f"- `[ {s.page_id} ]` **{s.action}** "
+                            f"target=`{s.target}` – {s.details}"
+                        )
 
-                if tc.covered_element_keys:
+                if tc_covered:
                     st.markdown("**Covered element keys:**")
-                    for k in tc.covered_element_keys:
+                    for k in tc_covered:
                         st.code(k)
 
         st.markdown("#### Coverage summary")
