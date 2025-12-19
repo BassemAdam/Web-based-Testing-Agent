@@ -1,139 +1,21 @@
 {
-  "start_url": "https://automationexercise.com/",
+  "start_url": "https://www.webdriveruniversity.com/",
   "snapshot_file": "artifacts\\snapshots\\site_snapshot.json",
   "pages": {
     "page_0": {
-      "url": "https://automationexercise.com/",
-      "title": "Automation Exercise",
-      "summary": "- Main purpose: an e-commerce demo site for functional and automation practice (browse products, filter by category/brand, manage cart, signup/login, and try sample APIs/tutorials).\n- Main user flows: navigate top menu (Home, Products, Cart, Signup/Login, Test Cases, Contact us, API Testing, Video Tutorials), browse category tree (WOMEN/MEN/KIDS and subcategories), filter by brands, view/add products to cart, and user authentication/checkout flows.\n- Secondary flows: access \"APIs list for practice\" and \"Test Cases\"/tutorial pages for learning and API testing.\n- Key UI actions to test: menu navigation, category/brand filtering, product listing/detail pages, add/remove items in cart, signup/login form behavior, contact form submission, link/button responsiveness.\n- Data/state edge cases: empty cart, cart persistence across sessions, product quantity limits, out-of-stock items, and mismatched brand counts (numbers next to brands).\n- Input validation edge cases: signup/login with invalid emails, weak passwords, SQL/HTML/JS injection, very long strings, and special/unicode characters (e.g., \"\ue8f8 Products\" encoding).\n- Navigation/links edge cases: duplicated nav items (two \"Test Cases\"), hidden or duplicate anchor elements, broken links, and incorrect redirects.\n- Concurrency/security edge cases: simultaneous cart updates, session timeout, CSRF/auth token handling, and unauthorized access to restricted pages.\n- Accessibility/responsiveness: keyboard navigation, ARIA/alt text presence, screen-reader flow, and layouts on mobile/tablet breakpoints.",
-      "screenshot_path": "artifacts\\screenshots\\automationexercise.com.png",
-      "element_count": 42
-    },
-    "page_1": {
-      "url": "https://automationexercise.com/products",
-      "title": "Automation Exercise - All Products",
-      "summary": "- Main purpose: list all products so users can browse by category/brand, view product details, and add items to the shopping cart.\n- Main user flows: navigate site via header (Home, Products, Cart, Signup/Login, Contact); filter/browse by category (WOMEN/MEN/KIDS) and brand; open \"View Product\" for details; \"Add to cart\" then \"View Cart\"; use #scrollUp to return to top.\n- Authentication flow: separate Signup / Login page \u2014 verify behavior for actions when user is logged out vs logged in.\n- Filters & counts: brand items show counts (e.g., POLO (6)) \u2014 expect filters to update visible products.\n- Cart interactions: adding items, repeated adds (quantity aggregation), viewing cart and persistence across page reloads/sessions.\n- UI/behavior edge cases: broken/missing images or links, \"View Product\" modal vs page navigation differences, stale or incorrect product counts.\n- Concurrency & data integrity: stock changes between view and add-to-cart, race conditions when multiple adds/checkout attempts occur.\n- Performance & error handling: slow network/timeouts, pagination or lazy-load behavior, and empty-result states when filters return no products.",
-      "screenshot_path": "artifacts\\screenshots\\automationexercise.com_products.png",
-      "element_count": 36
-    },
-    "page_2": {
-      "url": "https://automationexercise.com/view_cart",
-      "title": "Automation Exercise - Checkout",
-      "summary": "- Main purpose: display the shopping cart/checkout view so users can review items and proceed to purchase or navigate elsewhere on the site.\n- Primary user flows: view/edit cart contents (quantities, remove items), navigate to Home/Products/Cart/Signup-Login/Test Cases/API Testing/Video Tutorials/Contact via top links, proceed to checkout, and subscribe to newsletter (input #susbscribe_email + button #subscribe).  \n- Secondary flows: use the \"here\" link (contextual redirection) and use the #scrollUp control to return to top.\n- Important state flows: guest vs. logged-in checkout (different redirects or prompts), cart persistence across page reloads/sessions, and concurrent updates from multiple tabs/devices.\n- Input validation: newsletter email format validation, handling duplicate subscriptions, and proper success/error messaging.\n- Quantity/contents edge cases: zero, negative, extremely large quantities, removing last item (empty cart), and applying changes without page refresh.\n- Navigation/link edge cases: broken links, wrong redirects for \"here\" or signup/login, and keyboard/ARIA accessibility for anchors and buttons.\n- Robustness/network edge cases: server timeouts, slow responses, partial failures when updating cart or subscribing, and retry/error states.\n- UI/interaction edge cases: unclickable elements due to overlays, misplaced z-index, race conditions between rapid clicks, and responsive layout issues on small screens.",
-      "screenshot_path": "artifacts\\screenshots\\automationexercise.com_view_cart.png",
-      "element_count": 14
-    },
-    "page_3": {
-      "url": "https://automationexercise.com/login",
-      "title": "Automation Exercise - Signup / Login",
-      "summary": "- Main purpose: allow users to sign up or log in, subscribe to a newsletter, and navigate to site sections (Products, Cart, Contact, Test Cases, API Testing, Video Tutorials).\n- Main user flows: user login, user signup/registration, newsletter subscription (email input + subscribe), site navigation via header links, access Cart/Products, and use scrollUp.\n- Expected controls: Login and Signup buttons, subscribe button, email input for subscription, various nav anchors.\n- Important functional checks: successful and failed login (valid/invalid creds), signup with valid/invalid/duplicate data, email validation for subscription, required-field/empty-input behavior.\n- Input edge cases: very long strings, leading/trailing whitespace, special characters, SQL/XSS payloads, Unicode/emoji in fields.\n- State/session edge cases: authentication persistence, logout behavior, redirect to protected pages when unauthenticated, concurrent sessions.\n- UI/UX edge cases: buttons disabled/enabled states, error/success message visibility and content, layout/responsiveness, scrollUp behavior.\n- Robustness/performance: behavior on slow network, rapid repeated submissions (rate limiting), retry after server errors.\n- Security/validation: client-side vs server-side validation mismatch, CSRF token absence, improper error information leakage.",
-      "screenshot_path": "artifacts\\screenshots\\automationexercise.com_login.png",
-      "element_count": 15
-    },
-    "page_4": {
-      "url": "https://automationexercise.com/api_list",
-      "title": "Automation Practice for API Testing",
-      "summary": "- Main purpose: a practice catalog page listing API endpoints (GET/POST/PUT/DELETE) for learners to test and exercise API requests against Automation Exercise.\n- Main user flows: site navigation (Home, Products, Cart, Signup/Login, Test Cases, API Testing, Video Tutorials, Contact us); selecting an API entry to view endpoint details; executing requests for endpoints like Get All Products, Search Product, Verify Login, Create/Register, Update/Delete user.\n- Typical tester actions: click each API link, submit/inspect GET/POST/PUT/DELETE calls, follow base URLs, and exercise signup/login flows tied to APIs.\n- Important functional checks: correct HTTP method enforcement, correct status codes and response bodies for valid vs invalid input, and that endpoint links resolve to the documented URL.\n- Auth/side\u2011effect edge cases: endpoints requiring authentication (login/register), idempotency and state cleanup for POST/DELETE/PUT, repeated deletes or updates on non\u2011existent resources.\n- Input validation edge cases: empty fields, malformed JSON, extremely long strings, special characters, SQL/JS injection payloads, and incorrect content\u2011type headers.\n- Resilience/network edge cases: slow responses/timeouts, partial responses, 4xx/5xx error handling, and unexpected HTML or redirect responses from the listed https://automationexercise.com links.\n- UI/content edge cases: truncated/garbled API labels (seen in elements), broken/mislinked API entries, missing descriptions, and accessibility of each navigation item.",
-      "screenshot_path": "artifacts\\screenshots\\automationexercise.com_api_list.png",
-      "element_count": 37
-    },
-    "page_5": {
-      "url": "https://automationexercise.com/contact_us",
-      "title": "Automation Exercise - Contact Us",
-      "summary": "- Main purpose: a Contact Us page to let users send messages to the site team and to subscribe to the newsletter/contact list.\n- Main user flows: submit contact form (populate inputs + textarea #message \u2192 submit \u2192 expect success/error feedback); subscribe by entering email in input #susbscribe_email and clicking button #subscribe; navigate to other site areas via top links (Home, Products, Cart, Signup / Login, Test Cases, API Testing, Video Tutorials, Contact us); click feedback@automationexercise.co to open mail client; use #scrollUp to jump to top.\n- Form validation flows to test: required-field enforcement, client- and server-side email validation, success and error response messages, and clearing/re-population after submit.\n- Edge: invalid email formats, empty or whitespace-only fields, overly long inputs (subject/message), non\u2011ASCII/unicode/emojis, HTML/JS injection attempts in inputs, and malformed input characters.\n- Edge: duplicate subscription attempts and idempotency (already-subscribed handling).\n- Edge: rapid double-click or repeated form submissions (debounce/rate-limit), and partial network failures (timeouts, 5xx responses).\n- Edge: JavaScript disabled or blocked \u2014 ensure graceful degradation (links and mailto still work, form may fail).\n- Edge: accessibility and focus/keyboard navigation for inputs, subscribe button, and #scrollUp.\n- Edge: expected UI messages missing or ambiguous (no confirmation, silent failure) and inconsistent element IDs (#susbscribe_email typo).",
-      "screenshot_path": "artifacts\\screenshots\\automationexercise.com_contact_us.png",
-      "element_count": 17
-    },
-    "page_6": {
-      "url": "https://automationexercise.com/brand_products/Polo",
-      "title": "Automation Exercise - Polo Products",
-      "summary": "- Main purpose: a brand-specific product listing (Polo) for browsing items, viewing product details, and adding products to the shopping cart.  \n- Primary navigation flows: header links (Home, Products, Cart, Signup/Login, Contact), category filters (WOMEN/MEN/KIDS and subcategories), brand sidebar filter (POLO, H&M, etc.), product actions (View Product, Add to cart), and View Cart.  \n- Product-detail flow: click \"View Product\" \u2192 view details page \u2192 add to cart from detail page.  \n- Quick-add flow: \"Add to cart\" from listing \u2192 expects immediate cart update/UI confirmation and option to \"View Cart\".  \n- Account flow: Signup/Login accessible from header (affects checkout/cart persistence).  \n- Important edge cases: adding same item repeatedly/double-clicking Add to cart (quantity/duplicates), out-of-stock or unavailable products, inconsistent brand counts vs displayed items, cart persistence after logout/session expiry or across devices.  \n- UI/async edge cases: network failures or slow responses when adding to cart, missing/failed modals or confirmations, buttons not actionable on mobile/responsive layouts.  \n- Navigation/link edge cases: broken links (Products/Test Cases/API Testing/Video Tutorials), pagination or lazy-load issues when many items, and mismatches between listing and product-detail data (price, SKU, images).",
-      "screenshot_path": "artifacts\\screenshots\\automationexercise.com_brand_products_Polo.png",
-      "element_count": 35
-    },
-    "page_7": {
-      "url": "https://automationexercise.com/product_details/1",
-      "title": "Automation Exercise - Product Details",
-      "summary": "- Main purpose: display detailed information for a single product (product_details/1) and let the user review the product and manage shopping-cart-related actions (View Cart, Continue Shopping) while navigating site categories/brands.\n\n- Main user flows: navigate via top menu (Home, Products, Cart, Signup/Login, Test Cases, API Testing, Video Tutorials, Contact us), browse category/brand filters (WOMEN/MEN/KIDS and brand counts), read/write product review (WRITE YOUR REVIEW), and perform cart actions (View Cart, Continue Shopping, possibly add quantity/checkout).\n\n- Important edge cases to test: submitting review while logged out or with malicious/special-character input (XSS/validation), submitting empty/invalid review fields, adding invalid or very large quantities to cart, out-of-stock or variant-not-available states, broken/incorrect navigation links or counts (brand numbers), cart/session persistence across tabs and after logout, responsiveness/scrollUp behavior on small screens and slow network/timeouts.",
-      "screenshot_path": "artifacts\\screenshots\\automationexercise.com_product_details_1.png",
-      "element_count": 40
-    },
-    "page_8": {
-      "url": "https://automationexercise.com/test_cases",
-      "title": "Automation Practice Website for UI Testing - Test Cases",
-      "summary": "1) Purpose: A catalog page that lists/links individual UI test cases for the Automation Exercise demo site \u2014 intended for testers to open and run specific scenarios (register, login, cart, orders, search, etc.).  \n2) Primary navigation: top nav (Home, Products, Cart, Signup/Login, Test Cases, API Testing, Video Tutorials, Contact us) to move across site sections.  \n3) Primary user flows exposed by links: open specific test-case pages (Test Case 1\u201320), user registration, login/logout, contact-us form, product search, view categories/brands, add/remove products to cart, place orders, newsletter subscription, verify product details/quantity.  \n4) Secondary flows: opening external/internal resources (API Testing), watching tutorials, and returning to Home.  \n5) Important edge cases \u2014 broken/truncated/duplicate items: many test-case labels appear truncated or duplicated (e.g., Test Case 10/11, clipped titles) so verify link targets and uniqueness.  \n6) Edge cases \u2014 link behavior: links may be missing hrefs, lead to wrong pages, open in new tab unexpectedly, or be anchor-only; check 404s and redirect loops.  \n7) Edge cases \u2014 auth/state: flows that require login should enforce auth, preserve/clear cart on logout, handle session expiry and browser back/forward.  \n8) Edge cases \u2014 forms and inputs: validate empty/invalid inputs, large payloads, punctuation/HTML (XSS), duplicate accounts, CAPTCHA/ratelimit handling, and email validation.  \n9) Edge cases \u2014 UI/responsiveness/accessibility: truncated text visibility, keyboard navigation, ARIA labels, and mobile viewport/cross-browser rendering.",
-      "screenshot_path": "artifacts\\screenshots\\automationexercise.com_test_cases.png",
-      "element_count": 42
-    },
-    "page_9": {
-      "url": "https://www.youtube.com/c/AutomationExercise",
-      "title": "AutomationExercise - YouTube",
-      "summary": "- Main purpose: A YouTube channel page for AutomationExercise that showcases the channel brand, links (automationexercise.com), and a list/grid of video thumbnails and titles for browsing and playback.\n- Main user flows: navigate back to YouTube via logo, open channel/website via endpoint link, browse and paginate/infinite-scroll video list, click a thumbnail/title to open/play a video, and sign in or subscribe using the \"Sign in\" control.\n- Key interactive elements to validate: #logo, #endpoint (external site), #channel-thumbnail, video thumbnails (with duration/Now playing overlay), and video titles.\n- Playback flow specifics: open video detail page, ensure correct title/thumbnail maps to selected video, verify player loads and plays.\n- Authorization flows: behavior when signed out vs signed in (subscribe/comment/watch history behavior).\n- Loading and pagination: lazy-load/infinite scroll, placeholders, and ordering (newest first).\n- Edge cases: missing/failed thumbnails or titles, truncated titles, broken external link (automationexercise.com), slow network/timeouts, blocked third-party scripts (player fail), and restricted videos (age/region/content).\n- Responsive/accessibility: layout changes on small screens, keyboard navigation, ARIA labels, and screen-reader readability.\n- State/consistency: inconsistent metadata between listing and video page, duplicated items, and intermittent 404s on click.",
-      "screenshot_path": "artifacts\\screenshots\\www.youtube.com_c_AutomationExercise.png",
-      "element_count": 86
+      "url": "https://www.webdriveruniversity.com/",
+      "title": "Automation & AI Testing Courses by Gianni Bruno | WebDriver University",
+      "summary": "- Main purpose: a hub/catalog for Automation & AI testing courses and interactive demo pages (practice modules) hosted by WebDriver University.\n- Main user flows: browse/select course or demo tiles via navigation/toggle, open interactive modules (e.g., BUTTON CLICKS, TO DO LIST, IFRAME, FILE UPLOAD, DATEPICKER), use CONTACT US form, and use LOGIN PORTAL.\n- Key interactive targets: demo pages with IDs (#button-clicks, #to-do-list, #iframe, #file-upload, #ajax-loader, #datepicker, #hidden-elements, #popup-alerts, #dropdown-checkboxes-radiobuttons, etc.).\n- Typical actions: click/toggle nav items, submit login/contact forms, upload files, pick dates, interact with alerts/iframes, wait for AJAX, scroll and perform action sequences.\n- Important edge cases: asynchronous loads and timing (AJAX loader, delayed elements), iframe cross-origin and focus/selector scope, hidden/disabled elements and reveal behaviors, file upload size/type errors, datepicker bounds/formatting, modal/alert interrupting flows, stale element references after DOM updates.\n- Other considerations: navigation toggle responsiveness, stateful flows (session/login persistence), accessibility and keyboard interactions for interactive widgets.",
+      "screenshot_path": "artifacts\\screenshots\\www.webdriveruniversity.com.png",
+      "element_count": 30
     }
   },
-  "edges": [
-    {
-      "from_page_id": "page_0",
-      "to_page_id": "page_1",
-      "element_key": "a|\ue8f8 Products|",
-      "description": "Main navigation to Products section, core functionality for browsing items"
-    },
-    {
-      "from_page_id": "page_0",
-      "to_page_id": "page_2",
-      "element_key": "a|Cart|",
-      "description": "Cart functionality is critical to test for e-commerce flows"
-    },
-    {
-      "from_page_id": "page_0",
-      "to_page_id": "page_3",
-      "element_key": "a|Signup / Login|",
-      "description": "Login/Signup functionality is essential for user authentication testing"
-    },
-    {
-      "from_page_id": "page_0",
-      "to_page_id": "page_4",
-      "element_key": "a|API Testing|",
-      "description": "API Testing section could provide insights into additional testing capabilities"
-    },
-    {
-      "from_page_id": "page_0",
-      "to_page_id": "page_5",
-      "element_key": "a|Contact us|",
-      "description": "Contact Us page is important for testing user communication and form submission"
-    },
-    {
-      "from_page_id": "page_1",
-      "to_page_id": "page_6",
-      "element_key": "a|(6)\nPOLO|",
-      "description": "Brand filtering (POLO) is important to test product filtering by brand."
-    },
-    {
-      "from_page_id": "page_1",
-      "to_page_id": "page_7",
-      "element_key": "a|View Product|",
-      "description": "View Product allows exploration of product details and related actions."
-    },
-    {
-      "from_page_id": "page_2",
-      "to_page_id": "page_8",
-      "element_key": "a|Test Cases|",
-      "description": "Test Cases page may provide insights into the site's testing or demo features."
-    },
-    {
-      "from_page_id": "page_5",
-      "to_page_id": "page_9",
-      "element_key": "a|Video Tutorials|",
-      "description": "API Testing section could reveal developer-focused features or documentation"
-    }
-  ],
+  "edges": [],
   "test_cases": [
     {
-      "id": "TC_NAV_PRODUCTS_01",
-      "name": "Navigate to Products Page",
-      "description": "Verify that the user can navigate to the Products page from the Home page.",
+      "id": "TC_NAVIGATE_COURSE_01",
+      "name": "Navigate to Master Generative AI for Software Testing",
+      "description": "Validates navigation to the 'Master Generative AI for Software Testing' course page.",
       "tags": [
         "functional",
         "happy_path",
@@ -143,34 +25,28 @@
         {
           "action": "click",
           "page_id": "page_0",
-          "target": "a|\ue8f8 Products|",
-          "details": "Click on the 'Products' link."
-        },
-        {
-          "action": "assert",
-          "page_id": "page_1",
-          "target": null,
-          "details": "Verify that the URL is 'https://automationexercise.com/products' and the page title is 'Automation Exercise - All Products'."
+          "target": "a|Master Generative AI for Software Testing|",
+          "details": "Click on the 'Master Generative AI for Software Testing' link."
         }
       ],
       "covered_element_keys": [
-        "page_0::a|\ue8f8 Products|"
+        "page_0::a|Master Generative AI for Software Testing|"
       ],
       "selectors": [
         {
-          "element_key": "a|\ue8f8 Products|",
+          "element_key": "a|Master Generative AI for Software Testing|",
           "page_id": "page_0",
-          "css_selector": "a[href=\"/products\"]",
-          "xpath": "//a[contains(text(), \"\ue8f8 Products\")]",
-          "description": "Link to navigate to the Products page."
+          "css_selector": "a.btn-promo.btn-block",
+          "xpath": "//a[contains(text(), \"Master Generative AI for Softw\")]",
+          "description": "Link to navigate to the 'Master Generative AI for Software Testing' course page."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_NAV_CART_02",
-      "name": "Navigate to Cart Page",
-      "description": "Verify that the user can navigate to the Cart page from the Home page.",
+      "id": "TC_NAVIGATE_COURSE_02",
+      "name": "Navigate to API Testing with Postman",
+      "description": "Validates navigation to the 'API Testing with Postman' course page.",
       "tags": [
         "functional",
         "happy_path",
@@ -180,34 +56,28 @@
         {
           "action": "click",
           "page_id": "page_0",
-          "target": "a|Cart|",
-          "details": "Click on the 'Cart' link."
-        },
-        {
-          "action": "assert",
-          "page_id": "page_2",
-          "target": null,
-          "details": "Verify that the URL is 'https://automationexercise.com/view_cart' and the page title is 'Automation Exercise - Checkout'."
+          "target": "a|API Testing with Postman|",
+          "details": "Click on the 'API Testing with Postman' link."
         }
       ],
       "covered_element_keys": [
-        "page_0::a|Cart|"
+        "page_0::a|API Testing with Postman|"
       ],
       "selectors": [
         {
-          "element_key": "a|Cart|",
+          "element_key": "a|API Testing with Postman|",
           "page_id": "page_0",
-          "css_selector": "a[href=\"/view_cart\"]",
-          "xpath": "//a[contains(text(), \"Cart\")]",
-          "description": "Link to navigate to the Cart page."
+          "css_selector": "a.btn-promo.btn-block",
+          "xpath": "//a[contains(text(), \"API Testing with Postman\")]",
+          "description": "Link to navigate to the 'API Testing with Postman' course page."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_NAV_SIGNUP_LOGIN_03",
-      "name": "Navigate to Signup/Login Page",
-      "description": "Verify that the user can navigate to the Signup/Login page from the Home page.",
+      "id": "TC_NAVIGATE_COURSE_03",
+      "name": "Navigate to Complete Cypress v13 Course",
+      "description": "Validates navigation to the 'Complete Cypress v13 Course' page.",
       "tags": [
         "functional",
         "happy_path",
@@ -217,34 +87,28 @@
         {
           "action": "click",
           "page_id": "page_0",
-          "target": "a|Signup / Login|",
-          "details": "Click on the 'Signup / Login' link."
-        },
-        {
-          "action": "assert",
-          "page_id": "page_3",
-          "target": null,
-          "details": "Verify that the URL is 'https://automationexercise.com/login' and the page title is 'Automation Exercise - Signup / Login'."
+          "target": "a|Complete Cypress v13 Course|",
+          "details": "Click on the 'Complete Cypress v13 Course' link."
         }
       ],
       "covered_element_keys": [
-        "page_0::a|Signup / Login|"
+        "page_0::a|Complete Cypress v13 Course|"
       ],
       "selectors": [
         {
-          "element_key": "a|Signup / Login|",
+          "element_key": "a|Complete Cypress v13 Course|",
           "page_id": "page_0",
-          "css_selector": "a[href=\"/login\"]",
-          "xpath": "//a[contains(text(), \"Signup / Login\")]",
-          "description": "Link to navigate to the Signup/Login page."
+          "css_selector": "a[href=\"https://www.udemy.com/course/cypress-io-master-class/?couponCode=4841C490538E26385B2D8\"]",
+          "xpath": "//a[contains(text(), \"Complete Cypress v13 Course\")]",
+          "description": "Link to navigate to the 'Complete Cypress v13 Course' page."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_NAV_API_TESTING_04",
-      "name": "Navigate to API Testing Page",
-      "description": "Verify that the user can navigate to the API Testing page from the Home page.",
+      "id": "TC_NAVIGATE_COURSE_04",
+      "name": "Navigate to Playwright with TypeScript",
+      "description": "Validates navigation to the 'Playwright with TypeScript' course page.",
       "tags": [
         "functional",
         "happy_path",
@@ -254,34 +118,28 @@
         {
           "action": "click",
           "page_id": "page_0",
-          "target": "a|API Testing|",
-          "details": "Click on the 'API Testing' link."
-        },
-        {
-          "action": "assert",
-          "page_id": "page_4",
-          "target": null,
-          "details": "Verify that the URL is 'https://automationexercise.com/api_list' and the page title is 'Automation Practice for API Testing'."
+          "target": "a|Playwright with TypeScript|",
+          "details": "Click on the 'Playwright with TypeScript' link."
         }
       ],
       "covered_element_keys": [
-        "page_0::a|API Testing|"
+        "page_0::a|Playwright with TypeScript|"
       ],
       "selectors": [
         {
-          "element_key": "a|API Testing|",
+          "element_key": "a|Playwright with TypeScript|",
           "page_id": "page_0",
-          "css_selector": "a[href=\"/api_list\"]",
-          "xpath": "//a[contains(text(), \"API Testing\")]",
-          "description": "Link to navigate to the API Testing page."
+          "css_selector": "a.btn-promo.btn-block",
+          "xpath": "//a[contains(text(), \"Playwright with TypeScript\")]",
+          "description": "Link to navigate to the 'Playwright with TypeScript' course page."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_NAV_VIDEO_TUTORIALS_05",
-      "name": "Navigate to Video Tutorials Page",
-      "description": "Verify that the user can navigate to the Video Tutorials page from the Contact Us page.",
+      "id": "TC_NAVIGATE_COURSE_05",
+      "name": "Navigate to Playwright with Java",
+      "description": "Validates navigation to the 'Playwright with Java' course page.",
       "tags": [
         "functional",
         "happy_path",
@@ -290,35 +148,29 @@
       "steps": [
         {
           "action": "click",
-          "page_id": "page_5",
-          "target": "a|Video Tutorials|",
-          "details": "Click on the 'Video Tutorials' link."
-        },
-        {
-          "action": "assert",
-          "page_id": "page_9",
-          "target": null,
-          "details": "Verify that the URL is 'https://www.youtube.com/c/AutomationExercise' and the page title contains 'AutomationExercise - YouTube'."
+          "page_id": "page_0",
+          "target": "a|Playwright with Java|",
+          "details": "Click on the 'Playwright with Java' link."
         }
       ],
       "covered_element_keys": [
-        "page_5::a|Video Tutorials|"
+        "page_0::a|Playwright with Java|"
       ],
       "selectors": [
         {
-          "element_key": "a|Video Tutorials|",
-          "page_id": "page_5",
-          "css_selector": "a[href=\"https://www.youtube.com/c/AutomationExercise\"]",
-          "xpath": "//a[contains(text(), \"Video Tutorials\")]",
-          "description": "Link to navigate to the Video Tutorials page."
+          "element_key": "a|Playwright with Java|",
+          "page_id": "page_0",
+          "css_selector": "a.btn-promo.btn-block",
+          "xpath": "//a[contains(text(), \"Playwright with Java\")]",
+          "description": "Link to navigate to the 'Playwright with Java' course page."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_NAV_POLO_PRODUCTS_06",
-      "name": "Navigate to Polo Products Page",
-      "description": "Verify that the user can navigate to the Polo Products page from the Products page.",
+      "id": "TC_NAVIGATE_COURSE_06",
+      "name": "Navigate to Complete WebdriverIO Course",
+      "description": "Validates navigation to the 'Complete WebdriverIO Course' page.",
       "tags": [
         "functional",
         "happy_path",
@@ -327,35 +179,29 @@
       "steps": [
         {
           "action": "click",
-          "page_id": "page_1",
-          "target": "a|(6)\nPOLO|",
-          "details": "Click on the 'POLO' link under brand categories."
-        },
-        {
-          "action": "assert",
-          "page_id": "page_6",
-          "target": null,
-          "details": "Verify that the URL is 'https://automationexercise.com/brand_products/Polo' and the page title is 'Automation Exercise - Polo Products'."
+          "page_id": "page_0",
+          "target": "a|Complete WebdriverIO Course|",
+          "details": "Click on the 'Complete WebdriverIO Course' link."
         }
       ],
       "covered_element_keys": [
-        "page_1::a|(6)\nPOLO|"
+        "page_0::a|Complete WebdriverIO Course|"
       ],
       "selectors": [
         {
-          "element_key": "a|(6)\nPOLO|",
-          "page_id": "page_1",
-          "css_selector": "a[href=\"/brand_products/Polo\"]",
-          "xpath": "//a[contains(text(), \"(6) POLO\")]",
-          "description": "Link to navigate to the Polo Products page."
+          "element_key": "a|Complete WebdriverIO Course|",
+          "page_id": "page_0",
+          "css_selector": "a.btn-promo.btn-block",
+          "xpath": "//a[contains(text(), \"Complete WebdriverIO Course\")]",
+          "description": "Link to navigate to the 'Complete WebdriverIO Course' page."
         }
       ],
       "meta": {}
     },
     {
-      "id": "TC_NAV_PRODUCT_DETAILS_07",
-      "name": "Navigate to Product Details Page",
-      "description": "Verify that the user can navigate to a Product Details page from the Products page.",
+      "id": "TC_NAVIGATE_COURSE_07",
+      "name": "Navigate to Cypress with Cucumber BDD",
+      "description": "Validates navigation to the 'Cypress with Cucumber BDD' course page.",
       "tags": [
         "functional",
         "happy_path",
@@ -364,58 +210,52 @@
       "steps": [
         {
           "action": "click",
-          "page_id": "page_1",
-          "target": "a|View Product|",
-          "details": "Click on the 'View Product' link for a specific product."
-        },
-        {
-          "action": "assert",
-          "page_id": "page_7",
-          "target": null,
-          "details": "Verify that the URL is 'https://automationexercise.com/product_details/1' and the page title is 'Automation Exercise - Product Details'."
+          "page_id": "page_0",
+          "target": "a|Cypress with Cucumber BDD|",
+          "details": "Click on the 'Cypress with Cucumber BDD' link."
         }
       ],
       "covered_element_keys": [
-        "page_1::a|View Product|"
+        "page_0::a|Cypress with Cucumber BDD|"
       ],
       "selectors": [
         {
-          "element_key": "a|View Product|",
-          "page_id": "page_1",
-          "css_selector": "a[href=\"/product_details/1\"]",
-          "xpath": "//a[contains(text(), \"View Product\")]",
-          "description": "Link to navigate to the Product Details page."
+          "element_key": "a|Cypress with Cucumber BDD|",
+          "page_id": "page_0",
+          "css_selector": "a.btn-promo.btn-block",
+          "xpath": "//a[contains(text(), \"Cypress with Cucumber BDD\")]",
+          "description": "Link to navigate to the 'Cypress with Cucumber BDD' course page."
         }
       ],
       "meta": {}
     }
   ],
   "element_coverage": {
-    "page_0::a|\ue8f8 Products|": [
-      "TC_NAV_PRODUCTS_01"
+    "page_0::a|Master Generative AI for Software Testing|": [
+      "TC_NAVIGATE_COURSE_01"
     ],
-    "page_0::a|Cart|": [
-      "TC_NAV_CART_02"
+    "page_0::a|API Testing with Postman|": [
+      "TC_NAVIGATE_COURSE_02"
     ],
-    "page_0::a|Signup / Login|": [
-      "TC_NAV_SIGNUP_LOGIN_03"
+    "page_0::a|Complete Cypress v13 Course|": [
+      "TC_NAVIGATE_COURSE_03"
     ],
-    "page_0::a|API Testing|": [
-      "TC_NAV_API_TESTING_04"
+    "page_0::a|Playwright with TypeScript|": [
+      "TC_NAVIGATE_COURSE_04"
     ],
-    "page_5::a|Video Tutorials|": [
-      "TC_NAV_VIDEO_TUTORIALS_05"
+    "page_0::a|Playwright with Java|": [
+      "TC_NAVIGATE_COURSE_05"
     ],
-    "page_1::a|(6)\nPOLO|": [
-      "TC_NAV_POLO_PRODUCTS_06"
+    "page_0::a|Complete WebdriverIO Course|": [
+      "TC_NAVIGATE_COURSE_06"
     ],
-    "page_1::a|View Product|": [
-      "TC_NAV_PRODUCT_DETAILS_07"
+    "page_0::a|Cypress with Cucumber BDD|": [
+      "TC_NAVIGATE_COURSE_07"
     ]
   },
-  "coverage_summary": "The test cases cover navigation flows from the Home page to key pages such as Products, Cart, Signup/Login, API Testing, and Contact Us. Additionally, navigation from the Products page to specific brand and product details pages is tested. The Video Tutorials page is also covered via the Contact Us page. Notable gaps include testing form submissions, user authentication, and interactions with dynamic content.",
+  "coverage_summary": "The test cases cover navigation to all course links available on page_0. Each test validates that clicking on a course link leads to the respective course page. Notable gaps include the absence of tests for verifying the content of the destination pages or handling invalid scenarios, such as broken links or missing pages.",
   "meta": {
-    "elapsed_seconds": "390.998",
+    "elapsed_seconds": "36.637",
     "max_depth": 2,
     "max_pages": 10,
     "max_links_per_page": 5,

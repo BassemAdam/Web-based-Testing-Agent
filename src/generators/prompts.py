@@ -1,29 +1,79 @@
 
-PAGE_OBJECT_PROMPT = """
+"""Prompts for test code generation using AI."""
+
+TEST_GENERATION_PROMPT = """
 You are an expert Test Automation Engineer using Playwright and Python.
-Your task is to generate a Page Object Model (POM) class for a specific web page.
+Your task is to generate a standalone Pytest test function for the following test case.
 
-Page Name: {page_name}
-Page ID: {page_id}
-Page URL: {page_url}
+**IMPORTANT RULES:**
+1. Use ONLY the locators provided in the "Available Selectors" section below
+2. Do NOT create Page Object classes - write the test directly using page.locator()
+3. Use the EXACT locator syntax provided (e.g., page.get_by_role(), page.locator())
+4. Add appropriate assertions using expect() from playwright.sync_api
+5. **SCREENSHOT REQUIREMENTS (CRITICAL):**
+   - Take a screenshot IMMEDIATELY after navigating to start_url (before any other action)
+   - Take a screenshot AFTER EVERY SINGLE ACTION (click, fill, select, etc.)
+   - Use descriptive filenames: page.screenshot(path="screenshots/{test_id}/01_initial_page.png")
+   - Number screenshots sequentially: 01_, 02_, 03_, etc.
+6. **ERROR HANDLING (CRITICAL):**
+   - Wrap the ENTIRE test in try-except block
+   - In except block: print the full exception with traceback using `import traceback; traceback.print_exc()`
+   - Take a screenshot in the except block before re-raising: page.screenshot(path="screenshots/{test_id}/error.png")
+   - Always re-raise the exception after logging
+7. Handle navigation between pages using page.goto() or clicks
+8. Use descriptive variable names and comments
+9. Output ONLY the test function code (no imports, they will be added automatically)
 
-The following elements are interacted with on this page. Use the `best_locator` field directly:
-{elements_info}
+Start URL: {start_url}
 
-The following actions are performed on this page in the test scenarios:
-{actions_info}
+Test Case Information:
+{test_case_info}
 
-Requirements:
-1.  **Class Structure**: Create a Python class named `{class_name}` inheriting from `BasePage`.
-2.  **URL Property**: If a page_url is provided, add a class variable `URL = "{page_url}"` at the top of the class.
-3.  **Locators**: Define locators as private attributes in `__init__`. 
-    **CRITICAL**: Use the EXACT `best_locator` value from the elements_info JSON above.
-    Example: If best_locator is `page.locator("a[href='/products']")`, use exactly:
-    `self._products_link = page.locator("a[href='/products']")`
-4.  **Methods**: Create methods for each logical action (e.g., `login(username, password)`).
-5.  **Type Hinting**: Use proper type hints.
-6.  **Imports**: Import `BasePage` from `.base_page`.
-7.  **Output**: Output ONLY the Python code for the class.
+Available Selectors (use best_locator field):
+{selectors_info}
+
+Page Information:
+{pages_info}
+
+User Feedback (CRITICAL - follow this guidance):
+{feedback}
+
+Generate a test function named `test_{test_id}` that:
+1. Wraps the ENTIRE test body in try-except block
+2. Navigates to the start_url
+3. Takes FIRST screenshot immediately after navigation (01_initial_page.png)
+4. Follows the test steps in order
+5. Takes a screenshot AFTER EACH action (02_after_click.png, 03_after_fill.png, etc.)
+6. Adds assertions to verify expected outcomes
+7. Handles any navigation or page transitions
+8. In except block: print full traceback, take error screenshot, re-raise
+
+Example structure:
+```python
+def test_{test_id}(page: Page):
+    import traceback
+    try:
+        # Step 1: Navigate
+        page.goto("{start_url}")
+        page.screenshot(path="screenshots/{test_id}/01_initial_page.png")
+        
+        # Step 2: First action
+        element = page.get_by_role(...)
+        element.click()
+        page.screenshot(path="screenshots/{test_id}/02_after_first_click.png")
+        
+        # Step 3: Next action
+        ...
+        page.screenshot(path="screenshots/{test_id}/03_after_second_action.png")
+        
+    except Exception as e:
+        print(f"ERROR in test_{test_id}: {{e}}")
+        traceback.print_exc()
+        page.screenshot(path="screenshots/{test_id}/error.png")
+        raise
+```
+
+Output ONLY the Python test function code.
 """
 
 FIX_SYNTAX_PROMPT = """
@@ -33,96 +83,5 @@ The following Python code has a syntax error:
 Code:
 {code}
 
-Please fix the syntax error and return the corrected code. Output ONLY the code.
-"""
-
-SINGLE_TEST_FILE_PROMPT = """
-You are an expert Test Automation Engineer using Playwright and Python.
-Your task is to generate a Pytest test file for a SINGLE test case based on the provided Test Case and Page Objects.
-
-Start URL: {start_url}
-Test Case:
-{test_case_info}
-
-Page Objects Available (with their methods):
-{page_objects_info}
-
-User Feedback (CRITICAL - You MUST follow this):
-{feedback}
-
-Requirements:
-0.  **Do Not Invent Page Objects**: You MUST ONLY use the exact Page Object class names provided in `Page Objects Available`.
-    - Do NOT guess names like `LoginPage` / `HomePage`.
-    - When a step references `page_id`, you MUST use the class mapped for that `page_id`.
-1.  **No Imports / No Fixtures**: Do NOT include any `import ...` / `from ... import ...` lines and do NOT define fixtures.
-    - Assume the file will be wrapped with the required imports and a `page` fixture already exists.
-2.  **Test Setup**: The test should start by navigating to the start URL if the test begins on page_0.
-    *   Example: `home_page = Page_0Page(page)` then `home_page.navigate()` (this uses the URL property)
-3.  **Page Object Usage**: Instantiate Page Objects using the `page` fixture.
-    *   Example: `home_page = Page_0Page(page)`
-4.  **Use ONLY Existing Methods**: ONLY call methods that are explicitly listed in the "Page Objects Available" section.
-    *   Do NOT invent method names like `type_credentials()` or `click_next()` if they are not listed.
-    *   If a method doesn't exist, use the closest matching method with appropriate parameters.
-5.  **Separation of Concerns**: Do NOT use `page.locator(...)` or `page.click(...)` inside the test function.
-    *   Correct: `login_page.login("user", "pass")`
-    *   Incorrect: `page.fill("#user", "user")`
-6.  **Assertions**: Use `expect` from `playwright.sync_api` for assertions, or call verification methods on the Page Object.
-7.  **Structure**: Implement the test case as a single function `test_<test_case_id>` (use the ID from the test case).
-8.  **Output**: Output ONLY the Python code.
-"""
-
-VALIDATE_PAGE_OBJECT_PROMPT = """
-You are a code reviewer for Playwright Page Objects.
-
-Page Object Code:
-{page_object_code}
-
-Expected Selectors from Test Plan:
-{expected_selectors}
-
-Your task:
-1. Check if the Page Object has placeholder locators like `"best_locator"` or `"another_best_locator"`
-2. Replace ALL placeholder locators with the actual selectors from the "Expected Selectors" section
-3. Use the `_select_best_locator()` logic:
-   - Prefer `page.get_by_role()` for buttons/links with text
-   - Use the actual CSS selector or XPath provided
-4. Ensure all methods use the correct locators
-5. Output ONLY the corrected Python code
-"""
-
-VALIDATE_TEST_FILE_PROMPT = """
-You are a code reviewer for Playwright tests.
-
-Test File Code:
-{test_code}
-
-Available Page Object Methods:
-{page_objects_methods}
-
-Your task:
-1. Check if the test calls methods that don't exist in the Page Objects
-2. Replace invalid method calls with the correct methods from "Available Page Object Methods"
-3. Ensure parameters match the method signatures
-4. Do NOT add imports or fixtures
-5. Output ONLY the corrected Python code (without imports)
-"""
-
-FIX_PAGE_OBJECT_USAGE_PROMPT = """
-The following Playwright test file uses Page Object classes that are not defined in the project.
-Your task is to replace these invalid class names with the correct ones from the provided list.
-
-Available Page Objects (Map of Page ID -> Class Name):
-{page_objects_map}
-
-Invalid Test File Code:
-{code}
-
-Instructions:
-1.  **Identify Invalid Classes**: Look for Page Object classes instantiated in the test (e.g., `HomePage(page)`, `LoginPage(page)`) that are NOT in the "Available Page Objects" values.
-2.  **Map to Correct Class**:
-    - `HomePage` usually corresponds to the class for `page_0`.
-    - Use the context of the test (e.g., which page_id is being interacted with) to pick the right class.
-3.  **Fix Imports**: Update the `from pages... import ...` lines to import the correct class from the correct module.
-    - The module name is the snake_case version of the class name (e.g., `Page_0Page` -> `pages.page_0_page`).
-4.  **Output**: Return ONLY the fully corrected Python code.
+Please fix the syntax error and return the corrected code. Output ONLY the code, no explanations.
 """
