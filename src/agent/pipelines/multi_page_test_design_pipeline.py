@@ -240,6 +240,61 @@ class MultiPageTestDesignPipeline:
 
         return []
 
+    def _pick_start_page_id(self, graph: SiteGraph) -> Optional[str]:
+        if not graph.pages:
+            return None
+        for page_id, node in graph.pages.items():
+            if node.incoming_edge is None:
+                return page_id
+        return next(iter(graph.pages.keys()), None)
+
+    def _build_path_edges(
+        self,
+        graph: SiteGraph,
+        start_page_id: Optional[str],
+        target_page_id: str,
+    ) -> List:
+        if not target_page_id:
+            return []
+        if start_page_id and target_page_id == start_page_id:
+            return []
+
+        edges = []
+        current = graph.pages.get(target_page_id)
+        visited = set()
+
+        while current and current.incoming_edge:
+            edge = current.incoming_edge
+            edges.append(edge)
+            if start_page_id and edge.from_page_id == start_page_id:
+                break
+            if edge.from_page_id in visited:
+                break
+            visited.add(edge.from_page_id)
+            current = graph.pages.get(edge.from_page_id)
+
+        edges.reverse()
+
+        if start_page_id and edges:
+            if edges[0].from_page_id != start_page_id:
+                return []
+        return edges
+
+    def _resolve_or_fuzzy_key(
+        self,
+        page_id: str,
+        raw_key: str,
+        page_keys: Dict[str, Dict[str, str]],
+        element_lookup: Dict[str, Dict],
+    ) -> Optional[str]:
+        resolved = self._resolve_key(page_id, raw_key, page_keys)
+        if resolved:
+            return resolved
+        elem_info = self._fuzzy_find_element(element_lookup, page_id, raw_key)
+        if elem_info:
+            return elem_info.get("element_key")
+        return None
+
     def _is_weak_assert(
         self,
         page_id: str,
@@ -889,11 +944,7 @@ Constraints:
 
         return json.loads(text)
 
-    def build_plan(
-        self, graph: SiteGraph, human_feedback: Optional[str] = None
-    ) -> Dict:
-        json_plan = self._ask_llm_for_plan(graph, human_feedback)
-        json_plan = self._validate_and_fix_plan(json_plan, graph)
+    def _build_plan_output(self, graph: SiteGraph, json_plan: Dict) -> Dict:
         element_lookup = self._build_element_lookup(graph)
 
         test_cases: List[TestCase] = []
@@ -904,15 +955,13 @@ Constraints:
             for st in tc_json.get("steps", []):
                 page_id = st.get("page_id", "")
                 raw_target = st.get("target_element_key")
-                
-                # Resolve the target element to get actual selectors
+
                 resolved_target = None
                 if raw_target and page_id:
                     elem_info = self._fuzzy_find_element(element_lookup, page_id, raw_target)
                     if elem_info:
                         elem = elem_info.get("element")
                         if elem:
-                            # Build enriched target string with actual CSS selector
                             resolved_target = (
                                 f"{elem_info['element_key']} "
                                 f"name={elem.name!r} type={elem.type!r} | "
@@ -922,7 +971,7 @@ Constraints:
                             resolved_target = raw_target
                     else:
                         resolved_target = raw_target
-                
+
                 steps.append(
                     TestStep(
                         action=st.get("action", ""),
@@ -932,10 +981,9 @@ Constraints:
                     )
                 )
 
-            # Build selectors from covered_elements
             covered_pairs = []
             selectors: List[SelectorInfo] = []
-            seen_selectors = set()  # Prevent duplicates
+            seen_selectors = set()
 
             for ce in tc_json.get("covered_elements", []):
                 pid = ce.get("page_id", "")
@@ -945,27 +993,23 @@ Constraints:
                 if not pid or not raw_key:
                     continue
 
-                # Find the element
                 elem_info = self._fuzzy_find_element(element_lookup, pid, raw_key)
-                
+
                 if elem_info:
                     elem = elem_info.get("element")
                     actual_key = elem_info["element_key"]
-                    
-                    # Use actual key from lookup, not LLM's key
+
                     canon_key = actual_key
-                    
-                    # Track coverage with actual key
+
                     cov_key = f"{pid}::{canon_key}"
                     covered_pairs.append((pid, canon_key))
                     coverage.setdefault(cov_key, []).append(tc_json.get("id", ""))
-                    
-                    # Prevent duplicate selectors
+
                     selector_id = f"{pid}::{actual_key}"
                     if selector_id in seen_selectors:
                         continue
                     seen_selectors.add(selector_id)
-                    
+
                     if elem:
                         selectors.append(
                             SelectorInfo(
@@ -977,12 +1021,11 @@ Constraints:
                             )
                         )
                 else:
-                    # Element not found - use raw key
                     canon_key = canonicalize_key(raw_key)
                     cov_key = f"{pid}::{canon_key}"
                     covered_pairs.append((pid, canon_key))
                     coverage.setdefault(cov_key, []).append(tc_json.get("id", ""))
-                    
+
                     selectors.append(
                         SelectorInfo(
                             element_key=canon_key,
@@ -1004,7 +1047,6 @@ Constraints:
             )
             test_cases.append(tc)
 
-        # Build pages info
         pages: Dict[str, Dict[str, str]] = {}
         for page_id, node in graph.pages.items():
             snap = node.snapshot
@@ -1016,3 +1058,126 @@ Constraints:
             "pages": pages,
             "coverage_summary": json_plan.get("coverage_summary"),
         }
+
+    def build_plan_from_paths(
+        self, graph: SiteGraph, start_url: Optional[str] = None
+    ) -> Dict:
+        element_lookup = self._build_element_lookup(graph)
+        page_keys = self._build_page_key_map(element_lookup)
+        key_frequency = self._build_key_frequency(page_keys)
+        page_markers = self._build_page_markers(graph, element_lookup, page_keys, key_frequency)
+
+        start_page_id = self._find_start_page_id(graph, start_url)
+        if not start_page_id:
+            start_page_id = self._pick_start_page_id(graph)
+
+        test_cases = []
+        index = 1
+
+        for page_id, node in graph.pages.items():
+            if page_id == start_page_id:
+                continue
+
+            path_edges = self._build_path_edges(graph, start_page_id, page_id)
+            if not path_edges:
+                continue
+
+            steps = []
+            covered = []
+
+            start_marker = page_markers.get(start_page_id) if start_page_id else None
+            if start_marker:
+                start_url_text = graph.pages[start_page_id].snapshot.url
+                steps.append(
+                    {
+                        "page_id": start_page_id,
+                        "action": "assert",
+                        "target_element_key": start_marker,
+                        "details": f"Confirm page is loaded: {start_url_text}",
+                    }
+                )
+                covered.append(
+                    {
+                        "page_id": start_page_id,
+                        "key": start_marker,
+                        "description": "Start page marker",
+                    }
+                )
+
+            for edge in path_edges:
+                from_page = edge.from_page_id
+                to_page = edge.to_page_id
+                click_key = self._resolve_or_fuzzy_key(from_page, edge.element_key, page_keys, element_lookup)
+                if not click_key:
+                    continue
+
+                steps.append(
+                    {
+                        "page_id": from_page,
+                        "action": "click",
+                        "target_element_key": click_key,
+                        "details": f"Navigate to {to_page}",
+                    }
+                )
+                covered.append(
+                    {
+                        "page_id": from_page,
+                        "key": click_key,
+                        "description": f"Agent navigation to {to_page}",
+                    }
+                )
+
+                marker = page_markers.get(to_page)
+                if marker:
+                    steps.append(
+                        {
+                            "page_id": to_page,
+                            "action": "assert",
+                            "target_element_key": marker,
+                            "details": f"Confirm page is loaded: {graph.pages[to_page].snapshot.url}",
+                        }
+                    )
+                    covered.append(
+                        {
+                            "page_id": to_page,
+                            "key": marker,
+                            "description": "Page marker for arrival",
+                        }
+                    )
+
+            if not steps:
+                continue
+
+            title = node.snapshot.title or node.snapshot.url
+            tc_id = f"TC_AGENT_PATH_{index:02d}"
+            test_cases.append(
+                {
+                    "id": tc_id,
+                    "name": f"Navigate to {title}",
+                    "description": f"Follow agent-discovered path to reach {node.snapshot.url}",
+                    "tags": ["navigation", "agent_path"],
+                    "steps": steps,
+                    "covered_elements": covered,
+                }
+            )
+            index += 1
+
+        coverage_summary = (
+            f"Path-based plan derived from agent exploration: "
+            f"{len(test_cases)} tests covering {len(graph.pages)} discovered pages. "
+            "Coverage reflects only the agent-chosen navigation paths."
+        )
+
+        json_plan = {
+            "test_cases": test_cases,
+            "coverage_summary": coverage_summary,
+        }
+
+        return self._build_plan_output(graph, json_plan)
+
+    def build_plan(
+        self, graph: SiteGraph, human_feedback: Optional[str] = None
+    ) -> Dict:
+        json_plan = self._ask_llm_for_plan(graph, human_feedback)
+        json_plan = self._validate_and_fix_plan(json_plan, graph)
+        return self._build_plan_output(graph, json_plan)

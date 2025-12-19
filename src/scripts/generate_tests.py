@@ -1,14 +1,16 @@
 import sys
 import os
 
-# Add project root to path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
+# Add src to path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
+src_root = os.path.join(project_root, "src")
+if src_root not in sys.path:
+    sys.path.append(src_root)
 
-from src.generators.code_generator import CodeGenerator
+from generators.code_generator import CodeGenerator
 from loguru import logger
 
 def main():
-    project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
     test_plan_path = os.path.join(project_root, "src", "artifacts", "test_plans", "test_plan.json")
     output_dir = os.path.join(project_root, "artifacts", "generated_tests")
     print(test_plan_path)

@@ -4,8 +4,8 @@ import ast
 import re
 from typing import Dict, List, Any
 from loguru import logger
-from src.agent.llm.ollama_client import CopilotClient
-from src.generators.prompts import TEST_GENERATION_PROMPT, FIX_SYNTAX_PROMPT
+from agent.llm.ollama_client import CopilotClient
+from generators.prompts import TEST_GENERATION_PROMPT, FIX_SYNTAX_PROMPT
 
 class CodeGenerator:
     

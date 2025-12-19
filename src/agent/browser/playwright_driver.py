@@ -31,9 +31,10 @@ class BrowserDriver:
         if self._playwright:
             self._playwright.stop()
 
-    def goto(self, url: str):
+    def goto(self, url: str, wait_until: str = "load", timeout_ms: Optional[int] = None):
         assert self.page is not None, "BrowserDriver not initialized"
-        self.page.goto(url, timeout=browser_config.navigation_timeout_ms)
+        timeout = timeout_ms or browser_config.navigation_timeout_ms
+        self.page.goto(url, timeout=timeout, wait_until=wait_until)
 
     def capture_screenshot(self, url_slug: str) -> Optional[str]:
         if not exploration_config.capture_screenshot or self.page is None:

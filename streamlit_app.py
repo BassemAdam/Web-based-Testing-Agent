@@ -503,7 +503,10 @@ def main():
         with st.spinner("Exploring site and generating initial test plan..."):
             graph = run_exploration(start_url, max_depth, max_pages, max_links, use_agent)
             designer = get_designer(model_name or None)
-            plan_dict = designer.build_plan(graph, human_feedback=None)
+            if use_agent:
+                plan_dict = designer.build_plan_from_paths(graph, start_url=start_url)
+            else:
+                plan_dict = designer.build_plan(graph, human_feedback=None)
             
             # Add start_url to plan for code generation
             plan_dict["start_url"] = start_url
@@ -549,8 +552,12 @@ def main():
                     else:
                         structured_feedback = f"[TEST PLAN FEEDBACK] {fb}"
                     
-                    # Rebuild plan with feedback
-                    plan_dict = designer.build_plan(graph, human_feedback=structured_feedback)
+                    if use_agent:
+                        st.info("Agent path-based plans ignore feedback and follow observed navigation.")
+                        plan_dict = designer.build_plan_from_paths(graph, start_url=st.session_state.start_url)
+                    else:
+                        # Rebuild plan with feedback
+                        plan_dict = designer.build_plan(graph, human_feedback=structured_feedback)
                     plan_dict["start_url"] = st.session_state.start_url
                     st.session_state.plan = plan_dict
 

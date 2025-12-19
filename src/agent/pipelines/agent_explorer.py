@@ -179,7 +179,7 @@ Respond ONLY with the JSON array, no other text."""
                     print(f"      Reason: {via_reason}")
                 
                 try:
-                    browser.goto(url)
+                    browser.goto(url, wait_until="domcontentloaded")
                     snapshot = exploration.snapshot_current_page(browser)
                 except Exception as e:
                     print(f"  [!] Failed to load page: {e}")
@@ -256,9 +256,13 @@ Respond ONLY with the JSON array, no other text."""
                             
                             # Go back to explore other elements
                             try:
-                                browser.go_back()
+                                browser.go_back(wait_for="domcontentloaded")
                             except Exception:
-                                browser.goto(current_page_url)
+                                try:
+                                    browser.goto(current_page_url, wait_until="domcontentloaded")
+                                except Exception as e:
+                                    print(f"  [!] Failed to return to page: {e}")
+                                    continue
         
         # Final agent summary
         self._generate_exploration_summary(graph)

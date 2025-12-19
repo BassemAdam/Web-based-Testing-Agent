@@ -214,7 +214,7 @@ class TestRunner:
             True if successful, False otherwise
         """
         try:
-            from src.agent.llm.ollama_client import CopilotClient
+            from agent.llm.ollama_client import CopilotClient
             
             # Read current file content
             with open(file_path, "r", encoding="utf-8") as f:

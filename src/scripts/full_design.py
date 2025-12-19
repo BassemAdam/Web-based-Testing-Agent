@@ -124,7 +124,10 @@ def main() -> None:
     # -----------------------------------------------------------------
     print("\n[+] Generating multi-page test plan from site graph...")
     designer = MultiPageTestDesignPipeline(model_name=args.model)
-    plan_dict = designer.build_plan(graph, human_feedback=None)
+    if args.use_agent:
+        plan_dict = designer.build_plan_from_paths(graph, start_url=start_url)
+    else:
+        plan_dict = designer.build_plan(graph, human_feedback=None)
 
     test_cases = plan_dict["test_cases"]
     coverage = plan_dict["coverage"]
