@@ -42,3 +42,4 @@ test_reports/
 test_results/
 artifacts/generated_tests
 
+src/artifacts/coverage/page_1_coverage.png
