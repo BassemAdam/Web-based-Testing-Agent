@@ -47,7 +47,7 @@ class CodeGenerator:
             return json.load(f)
 
     def _delete_existing_tests(self):
-        """Delete all existing test files before generating new ones."""
+        """Delete all existing test files and their screenshots before generating new ones."""
         if os.path.exists(self.tests_dir):
             test_files = [f for f in os.listdir(self.tests_dir) if f.startswith('test_') and f.endswith('.py')]
             for test_file in test_files:
@@ -56,6 +56,18 @@ class CodeGenerator:
                 logger.info(f"🗑️  Deleted {test_file}")
             if test_files:
                 logger.info(f"✅ Deleted {len(test_files)} existing test files")
+        
+        # Delete screenshot directories
+        screenshots_dir = os.path.join(self.output_dir, "screenshots")
+        if os.path.exists(screenshots_dir):
+            import shutil
+            screenshot_folders = [f for f in os.listdir(screenshots_dir) if os.path.isdir(os.path.join(screenshots_dir, f))]
+            for folder in screenshot_folders:
+                folder_path = os.path.join(screenshots_dir, folder)
+                shutil.rmtree(folder_path)
+                logger.info(f"🗑️  Deleted screenshots: {folder}/")
+            if screenshot_folders:
+                logger.info(f"✅ Deleted {len(screenshot_folders)} screenshot folders")
     
     def generate(self, feedback: str = None, test_filename: str = None):
         """
@@ -129,6 +141,13 @@ class CodeGenerator:
                 if os.path.exists(old_file):
                     os.remove(old_file)
                     logger.info(f"🗑️  Deleted old version: test_{test_id}.py")
+                
+                # Delete screenshots for this test
+                screenshots_dir = os.path.join(self.output_dir, "screenshots", test_id)
+                if os.path.exists(screenshots_dir):
+                    import shutil
+                    shutil.rmtree(screenshots_dir)
+                    logger.info(f"🗑️  Deleted screenshots: {test_id}/")
                 
                 # Generate the new version with feedback
                 self._generate_single_test_file(test_case)
