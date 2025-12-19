@@ -569,39 +569,30 @@ def main():
                 st.warning("No test files found. Generate tests first.")
             else:
                 with st.spinner("Applying feedback to test code..."):
+                    plan_path = str(TEST_PLAN_PATH)
+                    
                     if code_feedback_scope == "Specific File" and target_test_file:
-                        # Apply to specific file only
-                        target_path = GENERATED_TESTS_DIR / target_test_file
-                        if target_path.exists():
-                            success = test_runner.refine_test_file(
-                                file_path=str(target_path),
-                                feedback=fb,
-                                model_name=model_name,
-                            )
-                            if success:
-                                st.success(f"✅ Updated {target_test_file}")
-                            else:
-                                st.error(f"❌ Failed to update {target_test_file}")
+                        # Regenerate specific test file
+                        success = test_runner.generate_tests(
+                            plan_path=plan_path,
+                            feedback=fb,
+                            test_filename=target_test_file
+                        )
+                        if success:
+                            st.success(f"✅ Regenerated {target_test_file} with feedback!")
                         else:
-                            st.error(f"File not found: {target_test_file}")
+                            st.error(f"❌ Failed to regenerate {target_test_file}")
                     else:
-                        # Apply to all test files
-                        success_count = 0
-                        for test_file in test_files:
-                            result = test_runner.refine_test_file(
-                                file_path=str(test_file),
-                                feedback=fb,
-                                model_name=model_name,
-                            )
-                            if result:
-                                success_count += 1
-                        
-                        if success_count == len(test_files):
-                            st.success(f"✅ Updated all {success_count} test files")
-                        elif success_count > 0:
-                            st.warning(f"⚠️ Updated {success_count}/{len(test_files)} test files")
+                        # Regenerate all test files
+                        success = test_runner.generate_tests(
+                            plan_path=plan_path,
+                            feedback=fb,
+                            test_filename=None
+                        )
+                        if success:
+                            st.success("✅ Regenerated all test files with feedback!")
                         else:
-                            st.error("❌ Failed to update test files")
+                            st.error("❌ Failed to regenerate test files")
     
     # --- Generate Tests ---------------------------------------------------
     if generate_tests_btn:
