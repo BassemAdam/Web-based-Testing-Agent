@@ -8,6 +8,7 @@ from ..llm.ollama_client import LLMClient
 from ..models.site_graph import SiteGraph
 from ..models.test_case import TestCase, TestStep, SelectorInfo
 from ..utils.keys import build_element_key, canonicalize_key
+from ..metrics.metrics_recorder import get_metrics_tracker, PHASE_EXPLORATION
 
 class MultiPageTestDesignPipeline:
     """
@@ -17,6 +18,7 @@ class MultiPageTestDesignPipeline:
 
     def __init__(self, model_name: Optional[str] = None):
         self.llm = LLMClient(model=model_name)
+        self._metrics = get_metrics_tracker()
 
     def _build_element_lookup(self, graph: SiteGraph) -> Dict[str, Dict]:
         """
@@ -1131,6 +1133,8 @@ Output JSON in this EXACT shape:
     def build_plan(
         self, graph: SiteGraph, human_feedback: Optional[str] = None
     ) -> Dict:
+        # Start tracking Phase 1: Exploration & Test Plan Preparation
+        
         json_plan = self._ask_llm_for_plan(graph, human_feedback)
         json_plan = self._validate_and_fix_plan(json_plan, graph)
         element_lookup = self._build_element_lookup(graph)
@@ -1264,6 +1268,9 @@ Output JSON in this EXACT shape:
         for page_id, node in graph.pages.items():
             snap = node.snapshot
             pages[page_id] = {"url": snap.url, "title": snap.title}
+
+        # End Phase 1 tracking
+        self._metrics.end_phase()
 
         return {
             "test_cases": test_cases,

@@ -5,6 +5,7 @@ import re
 from typing import Dict, List, Any
 from loguru import logger
 from src.agent.llm.ollama_client import CopilotClient
+from src.agent.metrics.metrics_recorder import get_metrics_tracker, PHASE_CODE_GENERATION
 from .prompts import TEST_GENERATION_PROMPT, FIX_SYNTAX_PROMPT
 
 class CodeGenerator:
@@ -21,6 +22,7 @@ class CodeGenerator:
         self.test_plan_path = test_plan_path
         self.output_dir = output_dir
         self.feedback = feedback or "No specific feedback provided."
+        self._metrics = get_metrics_tracker()
         
         # Initialize the AI client
         self.llm = CopilotClient(
@@ -81,6 +83,9 @@ class CodeGenerator:
                           If provided, only that test will be regenerated with feedback.
                           If None/empty, all tests will be regenerated with feedback.
         """
+        # Start Phase 2: Code Generation tracking
+        self._metrics.start_phase(PHASE_CODE_GENERATION)
+        
         # Update feedback if provided
         if feedback is not None:
             self.feedback = feedback if feedback.strip() else "No specific feedback provided."
@@ -110,6 +115,9 @@ class CodeGenerator:
             self.generate_test_files()
         
         self._generate_conftest()
+        
+        # End Phase 2 tracking
+        self._metrics.end_phase()
         
         logger.info(f"✅ Code generation complete! Check folder: {self.output_dir}")
 

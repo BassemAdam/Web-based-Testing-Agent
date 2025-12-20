@@ -2,7 +2,10 @@ import os
 from openai import OpenAI
 from typing import List, Dict, Any, Optional
 from ..config import llm_config
+from ..metrics.metrics_recorder import get_metrics_tracker
 from dotenv import load_dotenv
+
+
 class LLMClient:
     def __init__(self, model: str | None = None, config: Optional[Dict[str, Any]] = None):
         self.client = OpenAI(
@@ -10,6 +13,7 @@ class LLMClient:
             api_key=llm_config.api_key
         )
         self.model = model or llm_config.model
+        self._metrics_tracker = get_metrics_tracker()
 
         # Defaults preserve previous behavior unless overridden per-instance.
         self._default_max_tokens: int = 256
@@ -63,8 +67,32 @@ class LLMClient:
         if ollama_options:
             create_kwargs["extra_body"] = {"options": ollama_options}
 
+        # Estimate prompt tokens (approx 4 chars per token)
+        prompt_text = " ".join(m.get("content", "") for m in messages)
+        estimated_prompt_tokens = len(prompt_text) // 4
+
         resp = self.client.chat.completions.create(**create_kwargs)
-        return resp.choices[0].message.content.strip()
+        content = resp.choices[0].message.content.strip()
+
+        # Get token usage from response or estimate
+        usage = getattr(resp, 'usage', None)
+        if usage:
+            prompt_tokens = getattr(usage, 'prompt_tokens', estimated_prompt_tokens)
+            completion_tokens = getattr(usage, 'completion_tokens', len(content) // 4)
+            total_tokens = getattr(usage, 'total_tokens', prompt_tokens + completion_tokens)
+        else:
+            prompt_tokens = estimated_prompt_tokens
+            completion_tokens = len(content) // 4
+            total_tokens = prompt_tokens + completion_tokens
+
+        # Record metrics
+        self._metrics_tracker.record_llm_call(
+            prompt_tokens=prompt_tokens,
+            completion_tokens=completion_tokens,
+            total_tokens=total_tokens
+        )
+
+        return content
 
 class CopilotClient:
     """
@@ -74,6 +102,7 @@ class CopilotClient:
     def __init__(self, model: str = "gpt-4o", config: Dict[str, Any] = None):
         self.model = model
         self.config = config or {}
+        self._metrics_tracker = get_metrics_tracker()
         load_dotenv()
         print("===========================================================")
         print(os.getenv("GITHUB_TOKEN"))
@@ -85,10 +114,34 @@ class CopilotClient:
     
     def chat(self, messages: List[Dict[str, str]]) -> str:
         """Send a chat completion request."""
+        # Estimate prompt tokens (approx 4 chars per token)
+        prompt_text = " ".join(m.get("content", "") for m in messages)
+        estimated_prompt_tokens = len(prompt_text) // 4
+
         response = self.client.chat.completions.create(
             model=self.model,
             messages=messages,
             temperature=self.config.get("temperature", 0.2),
             max_tokens=self.config.get("max_tokens", 4096)
         )
-        return response.choices[0].message.content
+        content = response.choices[0].message.content
+
+        # Get token usage from response or estimate
+        usage = getattr(response, 'usage', None)
+        if usage:
+            prompt_tokens = getattr(usage, 'prompt_tokens', estimated_prompt_tokens)
+            completion_tokens = getattr(usage, 'completion_tokens', len(content) // 4)
+            total_tokens = getattr(usage, 'total_tokens', prompt_tokens + completion_tokens)
+        else:
+            prompt_tokens = estimated_prompt_tokens
+            completion_tokens = len(content) // 4
+            total_tokens = prompt_tokens + completion_tokens
+
+        # Record metrics
+        self._metrics_tracker.record_llm_call(
+            prompt_tokens=prompt_tokens,
+            completion_tokens=completion_tokens,
+            total_tokens=total_tokens
+        )
+
+        return content

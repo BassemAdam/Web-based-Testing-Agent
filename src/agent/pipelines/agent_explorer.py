@@ -1,6 +1,8 @@
 from __future__ import annotations
 import json
 from typing import List, Tuple, Set, Optional
+
+from agent.metrics.metrics_recorder import PHASE_EXPLORATION, get_metrics_tracker
 from ..browser.playwright_driver import BrowserDriver
 from ..models.site_graph import SiteGraph, PageNode, NavEdge
 from ..models.page_snapshot import PageSnapshot
@@ -48,6 +50,7 @@ You should avoid:
             model="gpt-4o",
             config={"temperature": 0.3, "max_tokens": 2000}
         )
+        self._metrics = get_metrics_tracker()
 
     def _build_page_context(self, snapshot: PageSnapshot, visited_urls: Set[str]) -> str:
         """Build a context string describing the current page for the agent."""
@@ -152,7 +155,7 @@ Respond ONLY with the JSON array, no other text."""
         visited_urls: Set[str] = set()
         queued_urls: Set[str] = set()  # Track URLs already queued or visited
         exploration = ExplorationPipeline(use_llm_summary=True)
-        
+        self._metrics.start_phase(PHASE_EXPLORATION)
         # Queue: (url, depth, from_page_id, via_key, via_reason)
         queue: List[Tuple[str, int, Optional[str], Optional[str], Optional[str]]] = [
             (start_url, 0, None, None, "Starting point")
