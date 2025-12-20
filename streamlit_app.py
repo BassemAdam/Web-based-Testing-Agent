@@ -424,6 +424,12 @@ def main():
         st.markdown("---")
         st.subheader("🧪 Test Execution")
         
+        selfheal_enabled = st.checkbox(
+            "🔄 Enable Self-Healing",
+            value=True,
+            help="Automatically regenerate failed tests with error feedback"
+        )
+        
         col_gen, col_run_tests = st.columns(2)
         generate_tests_btn = col_gen.button("🔧 Generate Tests", use_container_width=True)
         run_tests_btn = col_run_tests.button("▶️ Run Tests", use_container_width=True, type="primary")
@@ -628,7 +634,7 @@ def main():
             st.warning("Please generate tests first using the '🔧 Generate Tests' button.")
         else:
             with st.spinner("Running tests..."):
-                test_execution_result = test_runner.run_tests()
+                test_execution_result = test_runner.run_tests(selfheal=selfheal_enabled)
                 st.session_state.test_results = test_execution_result
                 
                 # Clear exploration state to show only test results

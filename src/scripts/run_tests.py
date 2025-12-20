@@ -18,7 +18,6 @@ def run_tests():
         print("Make sure you have run the generator first.")
         return
 
-    print(f"📂 Changing working directory to: {generated_tests_dir}")
     
     # Change the current working directory
     # This fixes the "ModuleNotFoundError" or "Failed to canonicalize" errors
@@ -30,9 +29,6 @@ def run_tests():
     
     # Pass through any extra arguments (like --headed or --slowmo 1000)
     command.extend(sys.argv[1:])
-
-    print(f"🚀 Running command: {' '.join(command)}")
-    print("-" * 60)
 
     # Run the command
     try:
