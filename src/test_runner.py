@@ -29,7 +29,7 @@ class TestRunner:
             print(f"Error generating tests: {e}")
             return False
     
-    def run_tests(self, plan_path: str = None, selfheal: bool = True) -> Dict:
+    def run_tests(self, plan_path: str = None, selfheal: bool = False) -> Dict:
         """
         Run generated tests using pytest.
         
