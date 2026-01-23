@@ -7,10 +7,18 @@ class TestStep:
     A single step in a logical test case, at the UI / scenario level
     (not yet bound to concrete automation code).
     """
-    action: str                    # e.g., "click", "type", "assert"
+    action: str                    # e.g., "click", "type", "assert", "navigate", "wait"
     page_id: str                   # which page we are on in the graph 
     target: Optional[str] = None   # logical target id, or element description
     details: Optional[str] = None  # e.g., input value, expected condition
+    
+    # Enhanced fields for better code generation
+    step_number: Optional[int] = None           # sequential step number
+    page_url: Optional[str] = None              # URL of the page for this step
+    input_value: Optional[str] = None           # value to type/select
+    expected_result: Optional[str] = None       # what should happen after this step
+    css_selector: Optional[str] = None          # resolved CSS selector
+    playwright_locator: Optional[str] = None    # recommended Playwright locator
 
 
 @dataclass
@@ -42,5 +50,11 @@ class TestCase:
 
     # Selectors with descriptions for each element used in this test
     selectors: List[SelectorInfo] = field(default_factory=list)
+
+    # Enhanced fields for comprehensive test definitions
+    preconditions: List[str] = field(default_factory=list)      # conditions before test starts
+    expected_final_state: Optional[str] = None                   # expected state after test
+    start_url: Optional[str] = None                              # URL where test begins
+    final_page_id: Optional[str] = None                          # page where test ends
 
     meta: Dict[str, str] = field(default_factory=dict)

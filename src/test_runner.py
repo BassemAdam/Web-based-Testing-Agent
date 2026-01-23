@@ -29,10 +29,25 @@ class TestRunner:
             print(f"Error generating tests: {e}")
             return False
     
-    def run_tests(self) -> Dict:
-        """Run generated tests using pytest."""
+    def run_tests(self, plan_path: str = None, selfheal: bool = False) -> Dict:
+        """
+        Run generated tests using pytest.
+        
+        Args:
+            plan_path: Path to the test plan JSON file (required for self-healing)
+                      Defaults to src/artifacts/test_plans/test_plan.json
+            selfheal: If True, automatically regenerate failed tests with error feedback
+        
+        Returns:
+            Dictionary containing test results and execution details
+        """
         import os
         original_dir = Path.cwd()
+        
+        # Set default plan path if not provided
+        if plan_path is None:
+            plan_path = str(self.root_path / "src" / "artifacts" / "test_plans" / "test_plan.json")
+            print(f"[DEBUG] Using default plan path: {plan_path}")
         
         # Check if tests directory exists
         tests_dir = self.output_dir / "tests"
@@ -70,6 +85,52 @@ class TestRunner:
             
             # Collect screenshots for each test
             self._collect_screenshots(test_results)
+            
+            # Self-healing: regenerate failed tests with error feedback
+            if selfheal :
+                failed_tests = [t for t in test_results if t["status"] == "FAILED"]
+                if failed_tests:
+                    print(f"\n[SELF-HEAL] Found {len(failed_tests)} failed test(s). Attempting to regenerate with error feedback...")
+                    
+                    for failed_test in failed_tests:
+                        test_filename = failed_test["file"]
+                        failure_reason = failed_test.get("reason", "Test failed - no error details available")
+                        
+                        print(f"\n[SELF-HEAL] Regenerating {test_filename} with feedback:")
+                        print(f"[SELF-HEAL] Error: {failure_reason}...")
+                        
+                        # Build feedback message with error context
+                        feedback = f"""The test failed with the following error:
+
+                        {failure_reason}
+
+                        Please fix the test by:
+                        1. Analyzing the error message carefully
+                        2. If it's a locator issue (strict mode violation, element not found), use more specific locators or add .nth(0) it solves alot of issues as needed
+                        3. If it's a timing issue, add appropriate waits
+                        4. If it's an assertion issue, adjust the expected values or conditions
+                        5. Ensure the test follows Playwright best practices
+
+                        Generate a corrected version of this test."""
+                        
+                        print(f"[SELF-HEAL] test_filename: {test_filename}")
+                        
+                        # Regenerate the specific test file
+                        success = self.generate_tests(
+                            plan_path=plan_path,
+                            feedback=feedback,
+                            test_filename=test_filename
+                        )
+                        
+                        if success:
+                            print(f"[SELF-HEAL] ✓ Successfully regenerated {test_filename}")
+                        else:
+                            print(f"[SELF-HEAL] ✗ Failed to regenerate {test_filename}")
+                    
+                    print(f"\n[SELF-HEAL] Self-healing complete. {len(failed_tests)} test(s) regenerated.")
+                    print("[SELF-HEAL] Run tests again to verify the fixes.")
+            elif selfheal :
+                print("\n[SELF-HEAL] Warning: Self-healing enabled but no plan_path provided. Skipping self-healing.")
             
             return {
                 "success": result.returncode == 0,
@@ -201,74 +262,75 @@ class TestRunner:
             json.dump(plan, f, indent=2, default=lambda o: o.__dict__)
         
         return str(plan_path)
-    def refine_test_file(self, file_path: str, feedback: str, model_name: str = None) -> bool:
-        """
-        Refine a single test file based on feedback.
+  
+    # def refine_test_file(self, file_path: str, feedback: str, model_name: str = None) -> bool:
+    #     """
+    #     Refine a single test file based on feedback.
         
-        Args:
-            file_path: Path to the test file to refine
-            feedback: User feedback to apply
-            model_name: Optional model name override
+    #     Args:
+    #         file_path: Path to the test file to refine
+    #         feedback: User feedback to apply
+    #         model_name: Optional model name override
             
-        Returns:
-            True if successful, False otherwise
-        """
-        try:
-            from src.agent.llm.ollama_client import CopilotClient
+#         Returns:
+#             True if successful, False otherwise
+#         """
+#         try:
+#             from src.agent.llm.ollama_client import CopilotClient
             
-            # Read current file content
-            with open(file_path, "r", encoding="utf-8") as f:
-                current_code = f.read()
+#             # Read current file content
+#             with open(file_path, "r", encoding="utf-8") as f:
+#                 current_code = f.read()
             
-            # Build refinement prompt
-            prompt = f"""You are an expert test automation engineer. 
-Refine the following Playwright test code based on the user's feedback.
+#             # Build refinement prompt
+#             prompt = f"""You are an expert test automation engineer. 
+# Refine the following Playwright test code based on the user's feedback.
 
-CURRENT CODE:
-```python
-{current_code}
-```
+# CURRENT CODE:
+# ```python
+# {current_code}
+# ```
 
-USER FEEDBACK:
-{feedback}
+# USER FEEDBACK:
+# {feedback}
 
-REQUIREMENTS:
-1. Apply the user's feedback to improve the test code
-2. Maintain the same test structure and naming
-3. Keep all existing functionality unless explicitly asked to change
-4. Use Playwright best practices (explicit waits, proper assertions)
-5. Return ONLY the complete updated Python code, no explanations
+# REQUIREMENTS:
+# 1. Apply the user's feedback to improve the test code
+# 2. Maintain the same test structure and naming
+# 3. Keep all existing functionality unless explicitly asked to change
+# 4. Use Playwright best practices (explicit waits, proper assertions)
+# 5. Return ONLY the complete updated Python code, no explanations
 
-OUTPUT:
-Return the complete updated Python file content."""
+# OUTPUT:
+# Return the complete updated Python file content."""
 
-            # Call LLM
-            client = CopilotClient(model=model_name or "gpt-4o")
-            response = client.chat([
-                {"role": "system", "content": "You are an expert Playwright test automation engineer."},
-                {"role": "user", "content": prompt}
-            ])
+#             # Call LLM
+#             client = CopilotClient(model=model_name or "gpt-4o")
+#             response = client.chat([
+#                 {"role": "system", "content": "You are an expert Playwright test automation engineer."},
+#                 {"role": "user", "content": prompt}
+#             ])
             
-            # Extract code from response
-            refined_code = response.strip()
-            if refined_code.startswith("```python"):
-                refined_code = refined_code[9:]
-            if refined_code.startswith("```"):
-                refined_code = refined_code[3:]
-            if refined_code.endswith("```"):
-                refined_code = refined_code[:-3]
-            refined_code = refined_code.strip()
+#             # Extract code from response
+#             refined_code = response.strip()
+#             if refined_code.startswith("```python"):
+#                 refined_code = refined_code[9:]
+#             if refined_code.startswith("```"):
+#                 refined_code = refined_code[3:]
+#             if refined_code.endswith("```"):
+#                 refined_code = refined_code[:-3]
+#             refined_code = refined_code.strip()
             
-            # Validate it's valid Python
-            import ast
-            ast.parse(refined_code)
+#             # Validate it's valid Python
+#             import ast
+#             ast.parse(refined_code)
             
-            # Write back to file
-            with open(file_path, "w", encoding="utf-8") as f:
-                f.write(refined_code)
+#             # Write back to file
+#             with open(file_path, "w", encoding="utf-8") as f:
+#                 f.write(refined_code)
             
-            return True
+#             return True
             
-        except Exception as e:
-            print(f"Error refining {file_path}: {e}")
-            return False
+#         except Exception as e:
+#             print(f"Error refining {file_path}: {e}")
+#             return False

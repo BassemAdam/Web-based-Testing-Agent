@@ -5,6 +5,7 @@ import json
 
 import streamlit as st
 import asyncio
+import pandas as pd
 
 if sys.platform.startswith("win"):
     asyncio.set_event_loop_policy(asyncio.WindowsProactorEventLoopPolicy())
@@ -24,6 +25,7 @@ from agent.visualization.coverage_overlay import create_page_coverage_overlay
 from agent.models.site_graph import SiteGraph, PageNode, NavEdge
 from agent.models.page_snapshot import PageSnapshot
 from agent.models.element_descriptor import ElementDescriptor
+from agent.metrics.metrics_recorder import get_metrics_tracker, get_global_metrics, clear_global_metrics
 from test_runner import TestRunner
 from dataclasses import asdict
 
@@ -424,6 +426,12 @@ def main():
         st.markdown("---")
         st.subheader("🧪 Test Execution")
         
+        selfheal_enabled = st.checkbox(
+            "🔄 Enable Self-Healing",
+            value=True,
+            help="Automatically regenerate failed tests with error feedback"
+        )
+        
         col_gen, col_run_tests = st.columns(2)
         generate_tests_btn = col_gen.button("🔧 Generate Tests", use_container_width=True)
         run_tests_btn = col_run_tests.button("▶️ Run Tests", use_container_width=True, type="primary")
@@ -453,12 +461,17 @@ def main():
         st.session_state.tests_generated = False
     if "show_exploration" not in st.session_state:
         st.session_state.show_exploration = True
+    if "metrics" not in st.session_state:
+        st.session_state.metrics = None
 
     # --- Load from files --------------------------------------------------
     if load_btn:
         with st.spinner("Loading from JSON files..."):
             graph, snapshot_data = load_snapshot_from_file()
             plan = load_plan_from_file()
+            
+            # Clear metrics for fresh session
+            clear_global_metrics()
             
             if graph:
                 st.session_state.graph = graph
@@ -500,6 +513,10 @@ def main():
 
     # --- Run full pipeline ------------------------------------------------
     if run_btn:
+        # Clear metrics for new exploration
+        metrics_tracker = get_metrics_tracker()
+        metrics_tracker.reset()
+        
         with st.spinner("Exploring site and generating initial test plan..."):
             graph = run_exploration(start_url, max_depth, max_pages, max_links, use_agent)
             designer = get_designer(model_name or None)
@@ -578,6 +595,11 @@ def main():
                             feedback=fb,
                             test_filename=target_test_file
                         )
+                        
+                        # Update metrics after code generation with feedback
+                        metrics_tracker = get_metrics_tracker()
+                        st.session_state.metrics = metrics_tracker.get_session_metrics().to_dict()
+                        
                         if success:
                             st.success(f"✅ Regenerated {target_test_file} with feedback!")
                         else:
@@ -589,11 +611,19 @@ def main():
                             feedback=fb,
                             test_filename=None
                         )
+                        
+                        # Update metrics after code generation with feedback
+                        metrics_tracker = get_metrics_tracker()
+                        st.session_state.metrics = metrics_tracker.get_session_metrics().to_dict()
+                        
                         if success:
                             st.success("✅ Regenerated all test files with feedback!")
                         else:
                             st.error("❌ Failed to regenerate test files")
-    
+                
+                # Force rerun to update metrics display
+                st.rerun()
+
     # --- Generate Tests ---------------------------------------------------
     if generate_tests_btn:
         plan_path = None
@@ -620,6 +650,9 @@ def main():
                     st.success("✅ Test code generated successfully!")
                 else:
                     st.error("❌ Failed to generate test code.")
+        
+        # Force UI refresh to show updated metrics
+        st.rerun()
     
     # --- Run Tests --------------------------------------------------------
     if run_tests_btn:
@@ -628,7 +661,7 @@ def main():
             st.warning("Please generate tests first using the '🔧 Generate Tests' button.")
         else:
             with st.spinner("Running tests..."):
-                test_execution_result = test_runner.run_tests()
+                test_execution_result = test_runner.run_tests(selfheal=selfheal_enabled)
                 st.session_state.test_results = test_execution_result
                 
                 # Clear exploration state to show only test results
@@ -649,6 +682,92 @@ def main():
     start_url_state = st.session_state.start_url
     test_results = st.session_state.test_results
     show_exploration = st.session_state.show_exploration
+    
+    # Always get metrics from global storage
+    metrics = get_global_metrics()
+
+    # Display Performance Metrics Section
+    if metrics and metrics.get("phases"):
+        st.markdown("---")
+        st.header("📊 Performance Metrics")
+        
+        # Display totals in a nice format
+        totals = metrics.get("totals", {})
+        col1, col2, col3, col4 = st.columns(4)
+        
+        with col1:
+            st.metric(
+                "⏱️ Total Time",
+                f"{totals.get('total_response_time_seconds', 0):.2f}s"
+            )
+        with col2:
+            st.metric(
+                "🔤 Total Tokens",
+                f"{totals.get('total_tokens', 0):,}"
+            )
+        with col3:
+            st.metric(
+                "🔄 LLM Calls",
+                totals.get('total_llm_calls', 0)
+            )
+        with col4:
+            st.metric(
+                "⚡ Avg Time/Call",
+                f"{totals.get('avg_response_time_per_call', 0):.2f}s"
+            )
+        
+        # Display per-phase breakdown
+        st.subheader("Phase Breakdown")
+        
+        phases = metrics.get("phases", {})
+        if phases:
+            # Create a DataFrame for the table
+            phase_rows = []
+            for phase_name, phase_metrics in phases.items():
+                phase_rows.append({
+                    "Phase": phase_name,
+                    "Response Time (s)": round(phase_metrics.get('response_time_seconds', 0), 3),
+                    "Prompt Tokens": phase_metrics.get('prompt_tokens', 0),
+                    "Completion Tokens": phase_metrics.get('completion_tokens', 0),
+                    "Total Tokens": phase_metrics.get('total_tokens', 0),
+                    "LLM Calls": phase_metrics.get('llm_calls', 0),
+                    "Avg Time/Call (s)": round(phase_metrics.get('avg_response_time_per_call', 0), 3),
+                })
+            
+            # Add totals row if more than one phase
+            if len(phase_rows) > 1:
+                phase_rows.append({
+                    "Phase": "📊 TOTAL",
+                    "Response Time (s)": round(totals.get('total_response_time_seconds', 0), 3),
+                    "Prompt Tokens": totals.get('total_prompt_tokens', 0),
+                    "Completion Tokens": totals.get('total_completion_tokens', 0),
+                    "Total Tokens": totals.get('total_tokens', 0),
+                    "LLM Calls": totals.get('total_llm_calls', 0),
+                    "Avg Time/Call (s)": round(totals.get('avg_response_time_per_call', 0), 3),
+                })
+            
+            df = pd.DataFrame(phase_rows)
+            st.dataframe(df, use_container_width=True, hide_index=True)
+            
+            # Add bar charts for visual comparison (only if multiple phases)
+            if len(phases) > 1:
+                col_chart1, col_chart2 = st.columns(2)
+                
+                with col_chart1:
+                    st.markdown("**⏱️ Response Time by Phase**")
+                    time_df = pd.DataFrame({
+                        "Phase": [p["Phase"] for p in phase_rows if p["Phase"] != "📊 TOTAL"],
+                        "Seconds": [p["Response Time (s)"] for p in phase_rows if p["Phase"] != "📊 TOTAL"]
+                    })
+                    st.bar_chart(time_df.set_index("Phase"))
+                
+                with col_chart2:
+                    st.markdown("**🔤 Tokens Used by Phase**")
+                    token_df = pd.DataFrame({
+                        "Phase": [p["Phase"] for p in phase_rows if p["Phase"] != "📊 TOTAL"],
+                        "Tokens": [p["Total Tokens"] for p in phase_rows if p["Phase"] != "📊 TOTAL"]
+                    })
+                    st.bar_chart(token_df.set_index("Phase"))
 
     # Show test results if available
     if test_results:
