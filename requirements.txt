@@ -1,0 +1,20 @@
+# Web automation and testing
+playwright==1.48.0
+pytest==8.3.4
+pytest-playwright==0.5.2
+openai>=1.0.0
+# AI/LLM
+ollama==0.4.4
+openai>=1.0.0
+python-dotenv==1.0.1
+# Web UI
+streamlit==1.40.2
+
+# Logging
+loguru==0.7.3
+
+# Image processing
+pillow==11.0.0
+
+# Data handling
+pandas==2.2.3
