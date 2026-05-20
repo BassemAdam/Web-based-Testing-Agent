@@ -835,7 +835,7 @@ def main():
                                             st.image(
                                                 str(screenshot_path),
                                                 caption=f"Step {i + j + 1}: {step_name}",
-                                                use_container_width=True
+                                                use_column_width=True
                                             )
                     else:
                         st.info("No screenshots captured for this test.")
