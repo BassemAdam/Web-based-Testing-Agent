@@ -34,19 +34,25 @@ class SiteExplorer:
     def _pick_navigation_elements(self, snapshot) -> List[Tuple[str, str]]:
         """
         Decide which elements on the page are worth clicking to navigate.
-        For now: pick the first N anchors with href, plus obvious nav items.
+        Main-content links are preferred; navbar / sidebar links are explored
+        last (or skipped when the page limit is reached first).
         Returns list of (element_key, human_label).
         """
-        candidates: List[Tuple[str, str]] = []
+        main_candidates: List[Tuple[str, str]] = []
+        nav_candidates: List[Tuple[str, str]] = []
+
         for e in snapshot.elements:
-            if len(candidates) >= self.max_links_per_page:
-                break
             if e.tag == "a" and e.text:
                 key = build_element_key(e.tag, e.text, e.id)
                 label = e.text.strip()
-                candidates.append((key, label))
+                if e.is_nav_or_sidebar():
+                    nav_candidates.append((key, label))
+                else:
+                    main_candidates.append((key, label))
 
-        return candidates
+        # Main content links first, nav/sidebar links appended at the end.
+        combined = main_candidates + nav_candidates
+        return combined[: self.max_links_per_page]
 
     def explore(self, start_url: str) -> SiteGraph:
         graph = SiteGraph()

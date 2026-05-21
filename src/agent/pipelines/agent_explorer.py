@@ -23,11 +23,13 @@ Given information about the current page and its elements, you will decide:
 2. Which areas of the site are most important for testing
 3. When to stop exploring a particular path
 
-You should prioritize:
-- Main navigation elements (nav bars, menus)
-- Core functionality (login, signup, search, forms)
-- Product/content pages
-- User actions (add to cart, submit forms)
+PRIORITY ORDER (highest → lowest):
+1. Main content area: forms, primary action buttons, content pages
+2. Core functionality: login, signup, search, product/content pages
+3. User actions: add to cart, submit forms
+4. LOWEST PRIORITY — explore these only after exhausting main content:
+   - Navigation bars, sidebars, menus, breadcrumbs, headers, footers
+   - These are marked with [nav/sidebar] in the element list
 
 You should avoid:
 - External links (different domains)
@@ -54,25 +56,35 @@ You should avoid:
 
     def _build_page_context(self, snapshot: PageSnapshot, visited_urls: Set[str]) -> str:
         """Build a context string describing the current page for the agent."""
-        # Collect clickable elements
-        clickable = []
+        # Collect clickable elements — main content first, nav/sidebar last.
+        main_clickable = []
+        nav_clickable = []
         for i, e in enumerate(snapshot.elements):
             if e.tag in ["a", "button"] and e.text:
                 href = e.attributes.get("href", "") if e.attributes else ""
-                clickable.append({
+                entry = {
                     "index": i,
                     "tag": e.tag,
                     "text": e.text.strip()[:100],
                     "href": href[:100] if href else None,
                     "css_selector": e.css_selector,
-                })
+                }
+                if e.is_nav_or_sidebar():
+                    entry["zone"] = "nav/sidebar"
+                    nav_clickable.append(entry)
+                else:
+                    entry["zone"] = "main_content"
+                    main_clickable.append(entry)
+        
+        # Cap total: main content elements get the first slots.
+        clickable = (main_clickable + nav_clickable)[:50]
         
         context = {
             "current_url": snapshot.url,
             "page_title": snapshot.title,
             "page_summary": snapshot.summary,
             "visited_urls": list(visited_urls)[:20],  # Limit for context
-            "clickable_elements": clickable[:50],  # Limit elements
+            "clickable_elements": clickable,
         }
         return json.dumps(context, indent=2)
 

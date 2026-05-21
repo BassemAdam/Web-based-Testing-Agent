@@ -188,12 +188,22 @@ def save_plan_to_file(plan: dict):
                 "name": tc.name,
                 "description": tc.description,
                 "tags": tc.tags,
+                "preconditions": tc.preconditions,
+                "expected_final_state": tc.expected_final_state,
+                "start_url": tc.start_url,
+                "final_page_id": tc.final_page_id,
                 "steps": [
                     {
                         "action": s.action,
                         "page_id": s.page_id,
                         "target": s.target,
                         "details": s.details,
+                        "step_number": s.step_number,
+                        "page_url": s.page_url,
+                        "input_value": s.input_value,
+                        "expected_result": s.expected_result,
+                        "css_selector": s.css_selector,
+                        "playwright_locator": s.playwright_locator,
                     }
                     for s in tc.steps
                 ],
@@ -598,7 +608,7 @@ def main():
                         
                         # Update metrics after code generation with feedback
                         metrics_tracker = get_metrics_tracker()
-                        st.session_state.metrics = metrics_tracker.get_session_metrics().to_dict()
+                        st.session_state.metrics = metrics_tracker.get_metrics()
                         
                         if success:
                             st.success(f"✅ Regenerated {target_test_file} with feedback!")
@@ -614,7 +624,7 @@ def main():
                         
                         # Update metrics after code generation with feedback
                         metrics_tracker = get_metrics_tracker()
-                        st.session_state.metrics = metrics_tracker.get_session_metrics().to_dict()
+                        st.session_state.metrics = metrics_tracker.get_metrics()
                         
                         if success:
                             st.success("✅ Regenerated all test files with feedback!")

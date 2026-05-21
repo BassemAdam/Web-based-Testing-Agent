@@ -71,6 +71,13 @@ class BrowserDriver:
 
                 try:
                     box = handle.bounding_box()
+                    # Skip elements that have no layout (inside display:none containers
+                    # such as collapsed modals, hidden tabs, off-canvas menus, etc.).
+                    # These cannot be interacted with directly and would produce
+                    # misleading element descriptors that break test design.
+                    if box is None or (box["width"] == 0 and box["height"] == 0):
+                        continue
+
                     tag = handle.evaluate("e => e.tagName.toLowerCase()")
                     text = handle.inner_text().strip()[:200] if tag not in ["input", "select", "textarea"] else ""
                     element_id = handle.get_attribute("id") or ""
@@ -112,7 +119,47 @@ class BrowserDriver:
                     if element_key in seen:
                         continue
                     seen.add(element_key)
-                    
+
+                    # Detect CSS-hidden <select> elements that use a custom dropdown widget.
+                    # The native <select> is display:none; the visible control is a div
+                    # with class="custom-dropdown-control" inside a wrapper div whose id
+                    # follows the pattern "div_id_{element_id}".
+                    if tag == "select" and element_id:
+                        computed_display = handle.evaluate(
+                            "el => window.getComputedStyle(el).display"
+                        )
+                        if computed_display == "none":
+                            wrapper_id = f"div_id_{element_id}"
+                            control = self.page.query_selector(
+                                f"#{wrapper_id} .custom-dropdown-control"
+                            )
+                            if control:
+                                ctrl_box = control.bounding_box()
+                                desc = ElementDescriptor(
+                                    id=element_id,
+                                    tag=tag,
+                                    text=text,
+                                    role=None,
+                                    aria_label=aria_label,
+                                    name=name_attr,
+                                    type=type_attr,
+                                    css_selector=f"#{wrapper_id} .custom-dropdown-control",
+                                    xpath=self._build_xpath(
+                                        handle, tag, text, element_id, name_attr
+                                    ),
+                                    attributes={
+                                        **attributes,
+                                        "native_select_id": element_id,
+                                        "is_custom_dropdown": "true",
+                                        "wrapper_id": wrapper_id,
+                                    },
+                                    classes=classes,
+                                    bounding_box=ctrl_box,
+                                )
+                                elements.append(desc)
+                            # Skip normal descriptor — element is not directly interactable
+                            continue
+
                     # Build CSS selector
                     css_selector = self._build_specific_selector(
                         handle, tag, element_id, classes, text, 
@@ -138,6 +185,10 @@ class BrowserDriver:
 
                 except Exception:
                     continue
+
+        # Put main-content elements first; nav/sidebar/header/footer last.
+        # stable sort preserves relative document order within each tier.
+        elements.sort(key=lambda e: 1 if e.is_nav_or_sidebar() else 0)
 
         return elements
 

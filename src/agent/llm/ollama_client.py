@@ -67,23 +67,19 @@ class LLMClient:
         if ollama_options:
             create_kwargs["extra_body"] = {"options": ollama_options}
 
-        # Estimate prompt tokens (approx 4 chars per token)
-        prompt_text = " ".join(m.get("content", "") for m in messages)
-        estimated_prompt_tokens = len(prompt_text) // 4
-
         resp = self.client.chat.completions.create(**create_kwargs)
         content = resp.choices[0].message.content.strip()
 
-        # Get token usage from response or estimate
+        # Use token counts from the API response; fall back to zero if not provided
         usage = getattr(resp, 'usage', None)
         if usage:
-            prompt_tokens = getattr(usage, 'prompt_tokens', estimated_prompt_tokens)
-            completion_tokens = getattr(usage, 'completion_tokens', len(content) // 4)
+            prompt_tokens = getattr(usage, 'prompt_tokens', 0)
+            completion_tokens = getattr(usage, 'completion_tokens', 0)
             total_tokens = getattr(usage, 'total_tokens', prompt_tokens + completion_tokens)
         else:
-            prompt_tokens = estimated_prompt_tokens
-            completion_tokens = len(content) // 4
-            total_tokens = prompt_tokens + completion_tokens
+            prompt_tokens = 0
+            completion_tokens = 0
+            total_tokens = 0
 
         # Record metrics
         self._metrics_tracker.record_llm_call(
@@ -114,10 +110,6 @@ class CopilotClient:
     
     def chat(self, messages: List[Dict[str, str]]) -> str:
         """Send a chat completion request."""
-        # Estimate prompt tokens (approx 4 chars per token)
-        prompt_text = " ".join(m.get("content", "") for m in messages)
-        estimated_prompt_tokens = len(prompt_text) // 4
-
         response = self.client.chat.completions.create(
             model=self.model,
             messages=messages,
@@ -126,16 +118,16 @@ class CopilotClient:
         )
         content = response.choices[0].message.content
 
-        # Get token usage from response or estimate
+        # Use token counts from the API response; fall back to zero if not provided
         usage = getattr(response, 'usage', None)
         if usage:
-            prompt_tokens = getattr(usage, 'prompt_tokens', estimated_prompt_tokens)
-            completion_tokens = getattr(usage, 'completion_tokens', len(content) // 4)
+            prompt_tokens = getattr(usage, 'prompt_tokens', 0)
+            completion_tokens = getattr(usage, 'completion_tokens', 0)
             total_tokens = getattr(usage, 'total_tokens', prompt_tokens + completion_tokens)
         else:
-            prompt_tokens = estimated_prompt_tokens
-            completion_tokens = len(content) // 4
-            total_tokens = prompt_tokens + completion_tokens
+            prompt_tokens = 0
+            completion_tokens = 0
+            total_tokens = 0
 
         # Record metrics
         self._metrics_tracker.record_llm_call(
